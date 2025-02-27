@@ -1,6 +1,40 @@
-export const ALL_OFFERS_CARDS_COUNT = 6;
+export type NavLocationsType = {
+  id: number;
+  location: string;
+}
 
-export const OffersCitiesCount = {
+export type PlacesFoundCountType = {
+  [key: string]: number;
+}
+
+export const NavLocations: NavLocationsType[] = [
+  {
+    id: 1,
+    location: 'Paris'
+  },
+  {
+    id: 2,
+    location: 'Cologne'
+  },
+  {
+    id: 3,
+    location: 'Brussels'
+  },
+  {
+    id: 4,
+    location: 'Amsterdam'
+  },
+  {
+    id: 5,
+    location: 'Hamburg'
+  },
+  {
+    id: 6,
+    location: 'Dusseldorf'
+  },
+];
+
+export const PlacesFoundCount: PlacesFoundCountType = {
   AllOffersParis: 100,
   AllOffersCologne: 200,
   AllOffersBrussels: 300,

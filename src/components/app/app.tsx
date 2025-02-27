@@ -1,13 +1,10 @@
 import MainPage from '../../pages/main-page/main-page';
+import {PlacesFoundCountType} from '../../constants';
 
-type AppProps = {
-  allOffersCount: number;
-}
-
-export default function App({allOffersCount}: AppProps): JSX.Element {
+export default function App({allPlacesCount}: PlacesFoundCountType): JSX.Element {
   return (
     <MainPage
-      allOffersCount = {allOffersCount}
+      allPlacesCount={allPlacesCount}
     />
   );
 }
