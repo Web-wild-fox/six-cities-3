@@ -1,3 +1,5 @@
+import {Helmet} from 'react-helmet-async';
+import {PlacesFoundCountType} from '../../constants';
 import Header from '../../components/header/header';
 import HeaderLogo from '../../components/header-logo/header-logo';
 import HeaderNavigate from '../../components/header-navigate/header-navigate';
@@ -5,11 +7,14 @@ import NavList from '../../components/nav-list/nav-list';
 import PlacesFound from '../../components/places-found/places-found';
 import PlacesSorting from '../../components/places-sorting/places-sorting';
 import OffersList from '../../components/offers-list/offers-list';
-import {PlacesFoundCountType} from '../../constants';
 
 export default function MainPage({allPlacesCount}: PlacesFoundCountType): JSX.Element {
   return (
     <div className="page page--gray page--main">
+
+      <Helmet>
+        <title>6 cities | Главная страница</title>
+      </Helmet>
 
       <Header>
         <HeaderLogo />

@@ -1,9 +1,14 @@
+import {Helmet} from 'react-helmet-async';
 import Header from '../../components/header/header';
 import HeaderLogo from '../../components/header-logo/header-logo';
 
 export default function LoginPage(): JSX.Element {
   return (
     <div className="page page--gray page--login">
+
+      <Helmet>
+        <title>6 cities | Страница авторизации</title>
+      </Helmet>
 
       <Header>
         <HeaderLogo />

@@ -1,3 +1,4 @@
+import {Helmet} from 'react-helmet-async';
 import Header from '../../components/header/header';
 import HeaderLogo from '../../components/header-logo/header-logo';
 import HeaderNavigate from '../../components/header-navigate/header-navigate';
@@ -5,6 +6,10 @@ import HeaderNavigate from '../../components/header-navigate/header-navigate';
 export default function OfferPage(): JSX.Element {
   return (
     <div className="page">
+
+      <Helmet>
+        <title>6 cities | Предложения</title>
+      </Helmet>
 
       <Header>
         <HeaderLogo />

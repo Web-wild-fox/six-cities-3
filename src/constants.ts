@@ -42,3 +42,16 @@ export const PlacesFoundCount: PlacesFoundCountType = {
   AllOffersHamburg: 500,
   AllOffersDusseldorf: 600,
 };
+
+export enum AppRoute {
+  Root = '/',
+  Login = '/login',
+  Favourites = '/favourites',
+  Offer = '/offer/:id',
+}
+
+export enum AuthorizationStatus {
+  Auth = 'AUTH',
+  NoAuth = 'NO_AUTH',
+  Unknown = 'UNKNOWN',
+}

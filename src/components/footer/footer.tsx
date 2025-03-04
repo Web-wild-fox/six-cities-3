@@ -1,9 +1,15 @@
-export default function Footer() {
+import {ReactNode} from 'react';
+
+type ChildrenType = {
+  children: ReactNode;
+}
+
+export default function Footer({children}: ChildrenType): JSX.Element {
   return (
     <footer className="footer container">
-      <a className="footer__logo-link" href="main.html">
-        <img className="footer__logo" src="img/logo.svg" alt="6 cities logo" width="64" height="33"/>
-      </a>
+
+      {children}
+
     </footer>
   );
 }
