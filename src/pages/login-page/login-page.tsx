@@ -1,6 +1,5 @@
 import {Helmet} from 'react-helmet-async';
-import Header from '../../components/header/header';
-import HeaderLogo from '../../components/header-logo/header-logo';
+import Header from '@/components/header/header';
 
 export default function LoginPage(): JSX.Element {
   return (
@@ -10,9 +9,7 @@ export default function LoginPage(): JSX.Element {
         <title>6 cities | Страница авторизации</title>
       </Helmet>
 
-      <Header>
-        <HeaderLogo />
-      </Header>
+      <Header isViewLogin />
 
       <main className="page__main page__main--login">
         <div className="page__login-container container">

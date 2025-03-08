@@ -1,4 +1,4 @@
-export default function HeaderNavigate(): JSX.Element {
+export default function UserNav(): JSX.Element {
   return (
     <nav className="header__nav">
       <ul className="header__nav-list">

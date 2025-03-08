@@ -1,14 +1,11 @@
 import {Helmet} from 'react-helmet-async';
-import {PlacesFoundCountType} from '../../constants';
-import Header from '../../components/header/header';
-import HeaderLogo from '../../components/header-logo/header-logo';
-import HeaderNavigate from '../../components/header-navigate/header-navigate';
-import NavList from '../../components/nav-list/nav-list';
-import PlacesFound from '../../components/places-found/places-found';
-import PlacesSorting from '../../components/places-sorting/places-sorting';
-import OffersList from '../../components/offers-list/offers-list';
+import {PlacesFoundCount} from '@/constants';
+import Header from '@/components/header/header';
+import NavList from '@/components/nav-list/nav-list';
+import PlacesSorting from '@/components/places-sorting/places-sorting';
+import OffersList from '@/components/offers-list/offers-list';
 
-export default function MainPage({allPlacesCount}: PlacesFoundCountType): JSX.Element {
+export default function MainPage(): JSX.Element {
   return (
     <div className="page page--gray page--main">
 
@@ -16,10 +13,7 @@ export default function MainPage({allPlacesCount}: PlacesFoundCountType): JSX.El
         <title>6 cities | Главная страница</title>
       </Helmet>
 
-      <Header>
-        <HeaderLogo />
-        <HeaderNavigate />
-      </Header>
+      <Header isViewLogin={false} />
 
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
@@ -31,9 +25,10 @@ export default function MainPage({allPlacesCount}: PlacesFoundCountType): JSX.El
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
 
-              <PlacesFound
-                allPlacesCount={allPlacesCount}
-              />
+              <b className="places__found">
+                {PlacesFoundCount.AllOffersAmsterdam} places to stay in Amsterdam
+              </b>
+
               <PlacesSorting />
               <OffersList />
 

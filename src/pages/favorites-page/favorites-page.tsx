@@ -1,9 +1,7 @@
 import {Helmet} from 'react-helmet-async';
-import Header from '../../components/header/header';
-import HeaderLogo from '../../components/header-logo/header-logo';
-import HeaderNavigate from '../../components/header-navigate/header-navigate';
-import Footer from '../../components/footer/footer';
-import FooterLogo from '../../components/footer-logo/footer-logo';
+import Header from '@/components/header/header';
+import Footer from '@/components/footer/footer';
+import Logo from '@/components/logo/logo';
 
 export default function FavoritesPage(): JSX.Element {
   return (
@@ -13,10 +11,7 @@ export default function FavoritesPage(): JSX.Element {
         <title>6 cities | Избранное</title>
       </Helmet>
 
-      <Header>
-        <HeaderLogo />
-        <HeaderNavigate />
-      </Header>
+      <Header isViewLogin={false} />
 
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
@@ -149,7 +144,7 @@ export default function FavoritesPage(): JSX.Element {
       </main>
 
       <Footer>
-        <FooterLogo />
+        <Logo type='footer' />
       </Footer>
 
     </div>

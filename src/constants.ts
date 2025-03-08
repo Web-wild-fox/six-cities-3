@@ -1,40 +1,15 @@
-export type NavLocationsType = {
-  id: number;
-  location: string;
-}
+export const PERCENT_COUNT = 20;
 
-export type PlacesFoundCountType = {
-  [key: string]: number;
-}
-
-export const NavLocations: NavLocationsType[] = [
-  {
-    id: 1,
-    location: 'Paris'
-  },
-  {
-    id: 2,
-    location: 'Cologne'
-  },
-  {
-    id: 3,
-    location: 'Brussels'
-  },
-  {
-    id: 4,
-    location: 'Amsterdam'
-  },
-  {
-    id: 5,
-    location: 'Hamburg'
-  },
-  {
-    id: 6,
-    location: 'Dusseldorf'
-  },
+export const locations = [
+  'Paris',
+  'Cologne',
+  'Brussels',
+  'Amsterdam',
+  'Hamburg',
+  'Dusseldorf',
 ];
 
-export const PlacesFoundCount: PlacesFoundCountType = {
+export const PlacesFoundCount = {
   AllOffersParis: 100,
   AllOffersCologne: 200,
   AllOffersBrussels: 300,

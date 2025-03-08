@@ -1,13 +1,6 @@
-type OfferCardType = {
-  id: string;
-  title: string;
-  type: string;
-  price: number;
-  isFavorite: boolean;
-  isPremium: boolean;
-  rating: number;
-  previewImage: string;
-}
+import clsx from 'clsx';
+import {PERCENT_COUNT} from '@/constants';
+import {OfferCardProps} from '@/types';
 
 export default function OfferCard(
   {
@@ -19,16 +12,16 @@ export default function OfferCard(
     isPremium,
     rating,
     previewImage
-  }: OfferCardType): JSX.Element {
+  }: OfferCardProps): JSX.Element {
 
   return (
     <article className="cities__card place-card" id={id}>
       {
-        isPremium ?
+        isPremium && (
           <div className="place-card__mark">
             <span>Premium</span>
-          </div> :
-          ''
+          </div>
+        )
       }
       <div className="cities__image-wrapper place-card__image-wrapper">
         <a href="#">
@@ -50,11 +43,8 @@ export default function OfferCard(
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
 
-          <button className={
-            isFavorite ?
-              'place-card__bookmark-button--active button' :
-              'place-card__bookmark-button button'
-          } type="button"
+          <button
+            className={clsx('place-card__bookmark-button button', isFavorite && 'place-card__bookmark-button--active')} type="button"
           >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
@@ -67,7 +57,7 @@ export default function OfferCard(
           <div className="place-card__stars rating__stars">
             <span
               style={{
-                width: `${rating * 20}%`
+                width: `${rating * PERCENT_COUNT}%`
               }}
             >
             </span>
@@ -80,7 +70,7 @@ export default function OfferCard(
           </a>
         </h2>
         <p className="place-card__type">
-          {type}
+          {type.charAt(0).toUpperCase() + type.slice(1)}
         </p>
       </div>
     </article>

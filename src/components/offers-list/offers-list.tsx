@@ -1,12 +1,11 @@
-import OfferCard from '../../components/offer-card/offer-card';
-import {Offers} from '../../mock-data/offers';
+import OfferCard from '@/components/offer-card/offer-card';
+import {offers} from '@/mock-data/offers';
 
 export default function OffersList(): JSX.Element {
   return (
     <div className="cities__places-list places__list tabs__content">
-
       {
-        Offers.map((offer) => (
+        offers.map((offer) => (
           <OfferCard
             key={offer.id}
             id={offer.id}
@@ -20,7 +19,6 @@ export default function OffersList(): JSX.Element {
           />
         ))
       }
-
     </div>
   );
 }

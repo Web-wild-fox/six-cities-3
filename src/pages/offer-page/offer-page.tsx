@@ -1,7 +1,5 @@
 import {Helmet} from 'react-helmet-async';
-import Header from '../../components/header/header';
-import HeaderLogo from '../../components/header-logo/header-logo';
-import HeaderNavigate from '../../components/header-navigate/header-navigate';
+import Header from '@/components/header/header';
 
 export default function OfferPage(): JSX.Element {
   return (
@@ -11,10 +9,7 @@ export default function OfferPage(): JSX.Element {
         <title>6 cities | Предложения</title>
       </Helmet>
 
-      <Header>
-        <HeaderLogo />
-        <HeaderNavigate />
-      </Header>
+      <Header isViewLogin={false} />
 
       <main className="page__main page__main--offer">
         <section className="offer">

@@ -1,8 +1,10 @@
-import {NavLocationsType} from '../../constants';
+export type NavLocationsProps = {
+  location: string;
+}
 
-export default function NavItem({id, location}: NavLocationsType): JSX.Element {
+export default function NavItem({location}: NavLocationsProps): JSX.Element {
   return (
-    <li className="locations__item" id={`${id}`}>
+    <li className="locations__item">
       <a className="locations__item-link tabs__item" href="#">
         <span>{location}</span>
       </a>
