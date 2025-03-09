@@ -1,0 +1,23 @@
+.image__main {
+  margin: 0 auto;
+  max-width: 900px;
+}
+
+.title__main {
+  margin: 0 auto;
+  padding-bottom: 20px;
+  font-size: 50px;
+}
+
+.text__main {
+  margin: 0 auto;
+  padding-bottom: 20px;
+  font-size: 16px;
+  opacity: 0.6;
+}
+
+.link__main {
+  margin: 0 auto;
+  color: #4481c3;
+  font-size: 20px;
+}
