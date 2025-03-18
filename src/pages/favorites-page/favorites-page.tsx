@@ -11,7 +11,7 @@ export default function FavoritesPage(): JSX.Element {
         <title>6 cities | Избранное</title>
       </Helmet>
 
-      <Header isViewLogin={false} />
+      <Header />
 
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">

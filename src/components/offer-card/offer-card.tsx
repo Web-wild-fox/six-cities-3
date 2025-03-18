@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import {PERCENT_COUNT} from '@/constants';
+import {MAX_RATING} from '@/constants';
 import {OfferCardProps} from '@/types';
 
 export default function OfferCard(
@@ -57,7 +57,7 @@ export default function OfferCard(
           <div className="place-card__stars rating__stars">
             <span
               style={{
-                width: `${rating * PERCENT_COUNT}%`
+                width: `${rating * (100 / MAX_RATING)}%`
               }}
             >
             </span>

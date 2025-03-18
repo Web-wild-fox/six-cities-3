@@ -1,4 +1,4 @@
-export const PERCENT_COUNT = 20;
+export const MAX_RATING = 5;
 
 export const locations = [
   'Paris',

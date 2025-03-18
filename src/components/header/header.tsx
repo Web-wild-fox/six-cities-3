@@ -23,3 +23,7 @@ export default function Header({isViewLogin}: headerProps): JSX.Element {
     </header>
   );
 }
+
+Header.defaultProps = {
+  isViewLogin: false
+};

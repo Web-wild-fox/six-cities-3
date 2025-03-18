@@ -13,7 +13,7 @@ export default function MainPage(): JSX.Element {
         <title>6 cities | Главная страница</title>
       </Helmet>
 
-      <Header isViewLogin={false} />
+      <Header />
 
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>

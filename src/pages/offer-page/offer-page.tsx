@@ -9,7 +9,7 @@ export default function OfferPage(): JSX.Element {
         <title>6 cities | Предложения</title>
       </Helmet>
 
-      <Header isViewLogin={false} />
+      <Header />
 
       <main className="page__main page__main--offer">
         <section className="offer">

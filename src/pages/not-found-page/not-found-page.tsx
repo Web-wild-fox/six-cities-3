@@ -14,7 +14,7 @@ export default function NotFoundPage(): JSX.Element {
         <title>6 cities | Страница не найдена</title>
       </Helmet>
 
-      <Header isViewLogin />
+      <Header />
 
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Page 404</h1>
