@@ -1,6 +1,7 @@
 import clsx from 'clsx';
+import {useState} from 'react';
 import {MAX_RATING} from '@/constants';
-import {OfferCardProps} from '@/types';
+import {OfferCardProps} from '@/types/offers';
 
 export default function OfferCard(
   {
@@ -14,8 +15,35 @@ export default function OfferCard(
     previewImage
   }: OfferCardProps): JSX.Element {
 
+  const [hoverCardData, setHoverCardData] = useState({});
+
+  const handleMouseEnter = () => {
+    const cardData = {
+      id,
+      title,
+      type,
+      price,
+      isFavorite,
+      isPremium,
+      rating,
+      previewImage
+    };
+
+    setHoverCardData({
+      ...hoverCardData,
+      ...cardData,
+    });
+
+    // Получение объекта карточки при наведении мышки
+    // console.log(cardData);
+  };
+
   return (
-    <article className="cities__card place-card" id={id}>
+    <article
+      className="cities__card place-card"
+      id={id}
+      onMouseEnter={handleMouseEnter}
+    >
       {
         isPremium && (
           <div className="place-card__mark">
