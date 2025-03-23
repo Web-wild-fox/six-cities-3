@@ -21,8 +21,9 @@ export const PlacesFoundCount = {
 export enum AppRoute {
   Root = '/',
   Login = '/login',
-  Favourites = '/favourites',
-  Offer = '/offer/:id',
+  Favorites = '/favorites',
+  Offer = '/offer/',
+  OfferId = '/offer/:id',
 }
 
 export enum AuthorizationStatus {

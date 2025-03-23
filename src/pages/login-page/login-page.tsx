@@ -9,7 +9,7 @@ export default function LoginPage(): JSX.Element {
         <title>6 cities | Страница авторизации</title>
       </Helmet>
 
-      <Header isViewLogin />
+      <Header hiddenUserNav />
 
       <main className="page__main page__main--login">
         <div className="page__login-container container">

@@ -1,10 +1,25 @@
-export interface OfferCardProps {
+interface OfferProps extends PageOfferProps {
+  type: string;
+  previewImage: string;
+}
+
+export interface PageOfferProps {
   id: string;
   title: string;
-  type: string;
   price: number;
   isFavorite: boolean;
   isPremium: boolean;
   rating: number;
-  previewImage: string;
+}
+
+export interface MainOfferProps extends OfferProps {
+  city: {
+    name: string;
+  };
+}
+
+export interface OfferCardProps extends OfferProps {
+  currentPage: 'cities' | 'favorites';
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
 }

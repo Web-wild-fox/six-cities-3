@@ -1,0 +1,14 @@
+.preloader {
+  width: 240px;
+  margin: 0 auto;
+  margin-top: 300px;
+}
+
+.preloader__text {
+  font-size: 36px;
+  text-align: center;
+}
+
+.preloader__image {
+  width: 100%;
+}

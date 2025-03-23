@@ -20,7 +20,7 @@ export default function NotFoundPage(): JSX.Element {
         <h1 className="visually-hidden">Page 404</h1>
 
         <img className={styles.image__main}
-          src="markup/img/page-not-found.jpg" alt="Страница не найдена"
+          src="img/page-not-found.jpg" alt="Страница не найдена"
         />
 
         <p className={styles.title__main}>

@@ -1,4 +1,4 @@
-export const offers = [
+export const favorites = [
   {
     id: '001',
     title: 'Beautiful & luxurious studio at great location',
@@ -11,32 +11,6 @@ export const offers = [
     isPremium: true,
     rating: 4,
     previewImage: '../../markup/img/apartment-01.jpg'
-  },
-  {
-    id: '002',
-    title: 'Wood and stone place',
-    type: 'room',
-    price: 80,
-    city: {
-      name: 'Paris',
-    },
-    isFavorite: false,
-    isPremium: false,
-    rating: 3,
-    previewImage: '../../markup/img/room.jpg'
-  },
-  {
-    id: '003',
-    title: 'Canal View Prinsengracht',
-    type: 'apartment',
-    price: 132,
-    city: {
-      name: 'Cologne',
-    },
-    isFavorite: false,
-    isPremium: false,
-    rating: 4,
-    previewImage: '../../markup/img/apartment-02.jpg'
   },
   {
     id: '004',

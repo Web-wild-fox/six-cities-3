@@ -1,7 +1,18 @@
 import clsx from 'clsx';
-import {useState} from 'react';
-import {MAX_RATING} from '@/constants';
+import {Link} from 'react-router-dom';
 import {OfferCardProps} from '@/types/offers';
+import {AppRoute, MAX_RATING} from '@/constants';
+
+const sizes = {
+  cities: {
+    width: 260,
+    height: 200,
+  },
+  favorites: {
+    width: 150,
+    height: 110,
+  }
+};
 
 export default function OfferCard(
   {
@@ -12,37 +23,20 @@ export default function OfferCard(
     isFavorite,
     isPremium,
     rating,
-    previewImage
+    previewImage,
+    currentPage,
+    onMouseEnter,
+    onMouseLeave
   }: OfferCardProps): JSX.Element {
 
-  const [hoverCardData, setHoverCardData] = useState({});
-
-  const handleMouseEnter = () => {
-    const cardData = {
-      id,
-      title,
-      type,
-      price,
-      isFavorite,
-      isPremium,
-      rating,
-      previewImage
-    };
-
-    setHoverCardData({
-      ...hoverCardData,
-      ...cardData,
-    });
-
-    // Получение объекта карточки при наведении мышки
-    // console.log(cardData);
-  };
+  const size = sizes[currentPage];
 
   return (
     <article
-      className="cities__card place-card"
+      className={`${currentPage}__card place-card`}
       id={id}
-      onMouseEnter={handleMouseEnter}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
     >
       {
         isPremium && (
@@ -51,18 +45,17 @@ export default function OfferCard(
           </div>
         )
       }
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div className={`${currentPage}__image-wrapper place-card__image-wrapper`}>
         <a href="#">
           <img
             className="place-card__image"
             src={previewImage}
-            width="260"
-            height="200"
             alt="Place image"
+            {...size}
           />
         </a>
       </div>
-      <div className="place-card__info">
+      <div className={`${currentPage}__card-info place-card__info`}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">
@@ -72,7 +65,8 @@ export default function OfferCard(
           </div>
 
           <button
-            className={clsx('place-card__bookmark-button button', isFavorite && 'place-card__bookmark-button--active')} type="button"
+            className={clsx('place-card__bookmark-button button', isFavorite && 'place-card__bookmark-button--active')}
+            type="button"
           >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
@@ -93,9 +87,11 @@ export default function OfferCard(
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">
+          <Link
+            to={AppRoute.Offer + id}
+          >
             {title}
-          </a>
+          </Link>
         </h2>
         <p className="place-card__type">
           {type.charAt(0).toUpperCase() + type.slice(1)}
