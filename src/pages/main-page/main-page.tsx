@@ -1,13 +1,13 @@
 import {Helmet} from 'react-helmet-async';
 import {PlacesFoundCount} from '@/constants';
-import {MainOfferProps} from '@/types/offers';
+import {OfferListItem} from '@/types/offers';
 import Header from '@/components/header/header';
 import NavList from '@/components/nav-list/nav-list';
 import PlacesSorting from '@/components/places-sorting/places-sorting';
 import OffersList from '@/components/offers-list/offers-list';
 
 interface MainPageProps {
-  offers: MainOfferProps[];
+  offers: OfferListItem[];
 }
 
 export default function MainPage({offers}: MainPageProps): JSX.Element {

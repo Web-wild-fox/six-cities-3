@@ -1,24 +1,17 @@
 import {useState} from 'react';
-import {MainOfferProps} from '@/types/offers';
+import {OfferListItem} from '@/types/offers';
+import {TypesCard} from '@/constants';
 import OfferCard from '@/components/offer-card/offer-card';
 
 interface OfferListProps {
-  offers: MainOfferProps[];
+  offers: OfferListItem[];
 }
 
 export default function OffersList({offers}: OfferListProps): JSX.Element {
-  const [activeCard, setActiveCard] = useState({});
+  const [activeCardId, setActiveCardId] = useState<string | null>(null);
 
-  const handleMouseEnter = (id: string) => () => {
-    setActiveCard({
-      ...activeCard,
-      id
-    });
-  };
-
-  const handleMouseLeave = () => {
-    setActiveCard({});
-  };
+  const handleCardAction = (id: string | null) =>
+    activeCardId === null ? setActiveCardId(id) : setActiveCardId(null);
 
   return (
     <div className="cities__places-list places__list tabs__content">
@@ -34,9 +27,8 @@ export default function OffersList({offers}: OfferListProps): JSX.Element {
             isPremium={offer.isPremium}
             rating={offer.rating}
             previewImage={offer.previewImage}
-            onMouseEnter={handleMouseEnter(offer.id)}
-            onMouseLeave={handleMouseLeave}
-            currentPage={'cities'}
+            typeCard={TypesCard.VerticalCard}
+            onCardHover={handleCardAction}
           />
         ))
       }

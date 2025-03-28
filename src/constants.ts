@@ -1,6 +1,29 @@
 export const MAX_RATING = 5;
 
-export const locations = [
+export const OfferRatings = [
+  {
+    title: 'perfect',
+    rating: 5
+  },
+  {
+    title: 'good',
+    rating: 4
+  },
+  {
+    title: 'not bad',
+    rating: 3
+  },
+  {
+    title: 'badly',
+    rating: 2
+  },
+  {
+    title: 'terribly',
+    rating: 1
+  }
+];
+
+export const Locations = [
   'Paris',
   'Cologne',
   'Brussels',
@@ -30,4 +53,9 @@ export enum AuthorizationStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN',
+}
+
+export enum TypesCard {
+  VerticalCard = 'VERTICAL_CARD',
+  HorizontalCard = 'HORIZONTAL_CARD',
 }

@@ -1,13 +1,13 @@
 import clsx from 'clsx';
 import {Helmet} from 'react-helmet-async';
 import {useParams, Navigate} from 'react-router-dom';
-import {PageOfferProps} from '@/types/offers';
+import {OfferListItem} from '@/types/offers';
 import {MAX_RATING} from '@/constants';
 import Header from '@/components/header/header';
-import ReviewsForm from '@/components/reviews-form/reviews-form';
+import ReviewsForm from '@/components/review-form/review-form';
 
 interface OfferPageProps {
-  offers: PageOfferProps[];
+  offers: OfferListItem[];
 }
 
 export default function OfferPage({offers}: OfferPageProps): JSX.Element {

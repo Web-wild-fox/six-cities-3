@@ -1,18 +1,12 @@
 import clsx from 'clsx';
 import {Link} from 'react-router-dom';
-import {OfferCardProps} from '@/types/offers';
-import {AppRoute, MAX_RATING} from '@/constants';
+import {OfferListItem} from '@/types/offers';
+import {AppRoute, TypesCard, MAX_RATING} from '@/constants';
 
-const sizes = {
-  cities: {
-    width: 260,
-    height: 200,
-  },
-  favorites: {
-    width: 150,
-    height: 110,
-  }
-};
+interface OfferCardProps extends OfferListItem {
+  typeCard: TypesCard;
+  onCardHover?: (id: string | null) => void;
+}
 
 export default function OfferCard(
   {
@@ -24,19 +18,43 @@ export default function OfferCard(
     isPremium,
     rating,
     previewImage,
-    currentPage,
-    onMouseEnter,
-    onMouseLeave
+    typeCard,
+    onCardHover,
   }: OfferCardProps): JSX.Element {
 
-  const size = sizes[currentPage];
+  const typesCard = {
+    [TypesCard.VerticalCard]: {
+      className: 'cities',
+      size: {
+        width: 260,
+        height: 200
+      }
+    },
+    [TypesCard.HorizontalCard]: {
+      className: 'favorites',
+      size: {
+        width: 150,
+        height: 110
+      }
+    },
+  };
+
+  const {className, size} =
+    typesCard[typeCard] ||
+    {
+      className: '',
+      size: {
+        width: 0,
+        height: 0
+      }
+    };
 
   return (
     <article
-      className={`${currentPage}__card place-card`}
+      className={`${className}__card place-card`}
       id={id}
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
+      onMouseEnter={() => onCardHover?.(id)}
+      onMouseLeave={() => onCardHover?.(null)}
     >
       {
         isPremium && (
@@ -45,7 +63,7 @@ export default function OfferCard(
           </div>
         )
       }
-      <div className={`${currentPage}__image-wrapper place-card__image-wrapper`}>
+      <div className={`${className}__image-wrapper place-card__image-wrapper`}>
         <a href="#">
           <img
             className="place-card__image"
@@ -55,7 +73,7 @@ export default function OfferCard(
           />
         </a>
       </div>
-      <div className={`${currentPage}__card-info place-card__info`}>
+      <div className={`${className}__card-info place-card__info`}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">

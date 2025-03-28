@@ -1,13 +1,18 @@
-import {MainOfferProps} from '@/types/offers';
+import {OfferListItem} from '@/types/offers';
+import {TypesCard} from '@/constants';
 import OfferCard from '@/components/offer-card/offer-card';
 
 interface FavoritesItemProps {
-  offers: MainOfferProps[];
+  offers: OfferListItem[];
   location: string;
 }
 
 export default function FavoriteItem({offers, location}: FavoritesItemProps): JSX.Element | null {
-  const cityOffers = offers.filter((offer) => offer.city.name === location);
+  const cityOffers = offers.filter((offer) => {
+    if (offer.city) {
+      return offer.city.name === location;
+    }
+  });
 
   if (!cityOffers.length) {
     return null;
@@ -35,7 +40,7 @@ export default function FavoriteItem({offers, location}: FavoritesItemProps): JS
               isPremium={offer.isPremium}
               rating={offer.rating}
               previewImage={offer.previewImage}
-              currentPage={'favorites'}
+              typeCard={TypesCard.HorizontalCard}
             />
           ))
         }

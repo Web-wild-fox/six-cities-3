@@ -10,7 +10,7 @@ export const offers = [
     isFavorite: true,
     isPremium: true,
     rating: 4,
-    previewImage: '../../markup/img/apartment-01.jpg'
+    previewImage: 'img/apartment-01.jpg'
   },
   {
     id: '002',
@@ -23,7 +23,7 @@ export const offers = [
     isFavorite: false,
     isPremium: false,
     rating: 3,
-    previewImage: '../../markup/img/room.jpg'
+    previewImage: 'img/room.jpg'
   },
   {
     id: '003',
@@ -36,7 +36,7 @@ export const offers = [
     isFavorite: false,
     isPremium: false,
     rating: 4,
-    previewImage: '../../markup/img/apartment-02.jpg'
+    previewImage: 'img/apartment-02.jpg'
   },
   {
     id: '004',
@@ -49,7 +49,7 @@ export const offers = [
     isFavorite: true,
     isPremium: true,
     rating: 5,
-    previewImage: '../../markup/img/apartment-03.jpg'
+    previewImage: 'img/apartment-03.jpg'
   },
   {
     id: '005',
@@ -62,7 +62,7 @@ export const offers = [
     isFavorite: true,
     isPremium: false,
     rating: 2,
-    previewImage: '../../markup/img/room.jpg'
+    previewImage: 'img/room.jpg'
   },
   {
     id: '006',
@@ -75,6 +75,6 @@ export const offers = [
     isFavorite: true,
     isPremium: false,
     rating: 2,
-    previewImage: '../../markup/img/room.jpg'
+    previewImage: 'img/room.jpg'
   }
 ];

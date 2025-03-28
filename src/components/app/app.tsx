@@ -2,7 +2,7 @@ import {lazy, Suspense} from 'react';
 import {createBrowserRouter, RouterProvider} from 'react-router-dom';
 import {HelmetProvider} from 'react-helmet-async';
 import {AppRoute, AuthorizationStatus} from '@/constants';
-import {MainOfferProps} from '@/types/offers';
+import {OfferListItem} from '@/types/offers';
 import MainPage from '@/pages/main-page/main-page';
 import PrivateRoute from '@/components/private-route/private-route';
 import Preloader from '@/components/preloader/preloader';
@@ -13,8 +13,8 @@ const LoginPage = lazy(() => import('@/pages/login-page/login-page'));
 const NotFoundPage = lazy(() => import('@/pages/not-found-page/not-found-page'));
 
 interface AppProps {
-  offers: MainOfferProps[];
-  favorites: MainOfferProps[];
+  offers: OfferListItem[];
+  favorites: OfferListItem[];
 }
 
 const fallBack = <Preloader/>;
