@@ -1,7 +1,18 @@
+import {useState} from 'react';
+import {OfferListItem} from '@/types/offers';
+import {TypesCard} from '@/constants';
 import OfferCard from '@/components/offer-card/offer-card';
-import {offers} from '@/mock-data/offers';
 
-export default function OffersList(): JSX.Element {
+interface OfferListProps {
+  offers: OfferListItem[];
+}
+
+export default function OffersList({offers}: OfferListProps): JSX.Element {
+  const [activeCardId, setActiveCardId] = useState<string | null>(null);
+
+  const handleCardAction = (id: string | null) =>
+    activeCardId === null ? setActiveCardId(id) : setActiveCardId(null);
+
   return (
     <div className="cities__places-list places__list tabs__content">
       {
@@ -16,6 +27,8 @@ export default function OffersList(): JSX.Element {
             isPremium={offer.isPremium}
             rating={offer.rating}
             previewImage={offer.previewImage}
+            typeCard={TypesCard.VerticalCard}
+            onCardHover={handleCardAction}
           />
         ))
       }

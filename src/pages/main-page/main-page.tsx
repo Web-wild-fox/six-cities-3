@@ -1,11 +1,16 @@
 import {Helmet} from 'react-helmet-async';
 import {PlacesFoundCount} from '@/constants';
+import {OfferListItem} from '@/types/offers';
 import Header from '@/components/header/header';
 import NavList from '@/components/nav-list/nav-list';
 import PlacesSorting from '@/components/places-sorting/places-sorting';
 import OffersList from '@/components/offers-list/offers-list';
 
-export default function MainPage(): JSX.Element {
+interface MainPageProps {
+  offers: OfferListItem[];
+}
+
+export default function MainPage({offers}: MainPageProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
 
@@ -13,7 +18,7 @@ export default function MainPage(): JSX.Element {
         <title>6 cities | Главная страница</title>
       </Helmet>
 
-      <Header isViewLogin={false} />
+      <Header />
 
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
@@ -30,7 +35,9 @@ export default function MainPage(): JSX.Element {
               </b>
 
               <PlacesSorting />
-              <OffersList />
+              <OffersList
+                offers={offers}
+              />
 
             </section>
             <div className="cities__right-section">

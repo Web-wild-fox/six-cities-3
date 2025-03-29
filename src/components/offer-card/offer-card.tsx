@@ -1,6 +1,12 @@
 import clsx from 'clsx';
-import {PERCENT_COUNT} from '@/constants';
-import {OfferCardProps} from '@/types';
+import {Link} from 'react-router-dom';
+import {OfferListItem} from '@/types/offers';
+import {AppRoute, TypesCard, MAX_RATING} from '@/constants';
+
+interface OfferCardProps extends OfferListItem {
+  typeCard: TypesCard;
+  onCardHover?: (id: string | null) => void;
+}
 
 export default function OfferCard(
   {
@@ -11,11 +17,45 @@ export default function OfferCard(
     isFavorite,
     isPremium,
     rating,
-    previewImage
+    previewImage,
+    typeCard,
+    onCardHover,
   }: OfferCardProps): JSX.Element {
 
+  const typesCard = {
+    [TypesCard.VerticalCard]: {
+      className: 'cities',
+      size: {
+        width: 260,
+        height: 200
+      }
+    },
+    [TypesCard.HorizontalCard]: {
+      className: 'favorites',
+      size: {
+        width: 150,
+        height: 110
+      }
+    },
+  };
+
+  const {className, size} =
+    typesCard[typeCard] ||
+    {
+      className: '',
+      size: {
+        width: 0,
+        height: 0
+      }
+    };
+
   return (
-    <article className="cities__card place-card" id={id}>
+    <article
+      className={`${className}__card place-card`}
+      id={id}
+      onMouseEnter={() => onCardHover?.(id)}
+      onMouseLeave={() => onCardHover?.(null)}
+    >
       {
         isPremium && (
           <div className="place-card__mark">
@@ -23,18 +63,17 @@ export default function OfferCard(
           </div>
         )
       }
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div className={`${className}__image-wrapper place-card__image-wrapper`}>
         <a href="#">
           <img
             className="place-card__image"
             src={previewImage}
-            width="260"
-            height="200"
             alt="Place image"
+            {...size}
           />
         </a>
       </div>
-      <div className="place-card__info">
+      <div className={`${className}__card-info place-card__info`}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">
@@ -44,7 +83,8 @@ export default function OfferCard(
           </div>
 
           <button
-            className={clsx('place-card__bookmark-button button', isFavorite && 'place-card__bookmark-button--active')} type="button"
+            className={clsx('place-card__bookmark-button button', isFavorite && 'place-card__bookmark-button--active')}
+            type="button"
           >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
@@ -57,7 +97,7 @@ export default function OfferCard(
           <div className="place-card__stars rating__stars">
             <span
               style={{
-                width: `${rating * PERCENT_COUNT}%`
+                width: `${rating * (100 / MAX_RATING)}%`
               }}
             >
             </span>
@@ -65,9 +105,11 @@ export default function OfferCard(
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">
+          <Link
+            to={AppRoute.Offer + id}
+          >
             {title}
-          </a>
+          </Link>
         </h2>
         <p className="place-card__type">
           {type.charAt(0).toUpperCase() + type.slice(1)}

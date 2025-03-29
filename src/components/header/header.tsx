@@ -2,22 +2,19 @@ import Logo from '@/components/logo/logo';
 import UserNav from '@/components/user-nav/user-nav';
 
 type headerProps = {
-  isViewLogin: boolean;
+  hiddenUserNav?: boolean;
 }
 
-export default function Header({isViewLogin}: headerProps): JSX.Element {
+export default function Header({hiddenUserNav = false}: headerProps): JSX.Element {
   return (
     <header className="header">
       <div className="container">
         <div className="header__wrapper">
           <div className="header__left">
-
             <Logo type='header' />
-
           </div>
-          {
-            isViewLogin || <UserNav />
-          }
+
+          {hiddenUserNav || <UserNav />}
         </div>
       </div>
     </header>

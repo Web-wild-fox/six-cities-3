@@ -1,5 +1,5 @@
 import NavItem from '@/components/nav-item/nav-item';
-import {locations} from '@/constants';
+import {Locations} from '@/constants';
 
 export default function NavList(): JSX.Element {
   return (
@@ -7,7 +7,7 @@ export default function NavList(): JSX.Element {
       <section className="locations container">
         <ul className="locations__list tabs__list">
           {
-            locations.map((location) => (
+            Locations.map((location) => (
               <NavItem
                 key={location}
                 location={location}
