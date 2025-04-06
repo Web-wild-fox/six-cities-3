@@ -1,9 +1,9 @@
-import {OfferListItem} from '@/types/offers';
+import {ListItem} from '@/types/offers';
 import {TypesCard} from '@/constants';
 import OfferCard from '@/components/offer-card/offer-card';
 
 interface FavoritesItemProps {
-  offers: OfferListItem[];
+  offers: ListItem[];
   location: string;
 }
 

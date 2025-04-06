@@ -1,5 +1,5 @@
 import {Helmet} from 'react-helmet-async';
-import {OfferListItem} from '@/types/offers';
+import {ListItem} from '@/types/offers';
 import {Locations} from '@/constants';
 import Header from '@/components/header/header';
 import Footer from '@/components/footer/footer';
@@ -7,7 +7,7 @@ import Logo from '@/components/logo/logo';
 import FavoriteItem from '@/components/favorite-item/favorite-item';
 
 interface FavoritesPageProps {
-  offers: OfferListItem[];
+  offers: ListItem[];
 }
 
 export default function FavoritesPage({offers}: FavoritesPageProps): JSX.Element {
