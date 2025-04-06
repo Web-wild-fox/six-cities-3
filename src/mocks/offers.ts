@@ -6,6 +6,16 @@ export const offers = [
     price: 120,
     city: {
       name: 'Amsterdam',
+      location: {
+        latitude: 52.37,
+        longitude: 4.89,
+        zoom: 8
+      }
+    },
+    location: {
+      latitude: 52.37,
+      longitude: 4.89,
+      zoom: 8
     },
     isFavorite: true,
     isPremium: true,
@@ -19,6 +29,16 @@ export const offers = [
     price: 80,
     city: {
       name: 'Paris',
+      location: {
+        latitude: 48.85,
+        longitude: 2.35,
+        zoom: 8
+      }
+    },
+    location: {
+      latitude: 48.85,
+      longitude: 2.35,
+      zoom: 8
     },
     isFavorite: false,
     isPremium: false,
@@ -32,6 +52,16 @@ export const offers = [
     price: 132,
     city: {
       name: 'Cologne',
+      location: {
+        latitude: 50.93,
+        longitude: 6.95,
+        zoom: 8
+      }
+    },
+    location: {
+      latitude: 50.93,
+      longitude: 6.95,
+      zoom: 8
     },
     isFavorite: false,
     isPremium: false,
@@ -45,6 +75,16 @@ export const offers = [
     price: 180,
     city: {
       name: 'Brussels',
+      location: {
+        latitude: 50.85,
+        longitude: 4.35,
+        zoom: 8
+      }
+    },
+    location: {
+      latitude: 50.85,
+      longitude: 4.35,
+      zoom: 8
     },
     isFavorite: true,
     isPremium: true,
@@ -58,6 +98,16 @@ export const offers = [
     price: 60,
     city: {
       name: 'Dusseldorf',
+      location: {
+        latitude: 51.22,
+        longitude: 6.78,
+        zoom: 8
+      }
+    },
+    location: {
+      latitude: 51.22,
+      longitude: 6.78,
+      zoom: 8
     },
     isFavorite: true,
     isPremium: false,
@@ -71,6 +121,16 @@ export const offers = [
     price: 60,
     city: {
       name: 'Brussels',
+      location: {
+        latitude: 50.75,
+        longitude: 4.23,
+        zoom: 8
+      }
+    },
+    location: {
+      latitude: 50.75,
+      longitude: 4.23,
+      zoom: 8
     },
     isFavorite: true,
     isPremium: false,

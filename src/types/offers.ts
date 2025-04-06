@@ -3,17 +3,20 @@ export interface OfferListItem {
   title: string;
   type: string;
   price: number;
-  city?: City;
-  location?: Location;
   isFavorite: boolean;
   isPremium: boolean;
   rating: number;
   previewImage: string;
 }
 
-interface City {
+export interface ListItem extends OfferListItem {
+  city: City;
+  location: Location;
+}
+
+export interface City {
   name: string;
-  location?: Location;
+  location: Location;
 }
 
 interface Location {

@@ -1,16 +1,28 @@
+import {useState} from 'react';
 import {Helmet} from 'react-helmet-async';
 import {PlacesFoundCount} from '@/constants';
-import {OfferListItem} from '@/types/offers';
+import {ListItem, City} from '@/types/offers';
 import Header from '@/components/header/header';
 import NavList from '@/components/nav-list/nav-list';
 import PlacesSorting from '@/components/places-sorting/places-sorting';
 import OffersList from '@/components/offers-list/offers-list';
+import Map from '@/components/map/map';
 
 interface MainPageProps {
-  offers: OfferListItem[];
+  offers: ListItem[];
 }
 
 export default function MainPage({offers}: MainPageProps): JSX.Element {
+  const [selectedPoint, setSelectedPoint] = useState<City | undefined>(undefined);
+
+  const getSelectedPointId = (id: string | null) => {
+    setSelectedPoint(
+      id ?
+        offers.find((offer) => offer.id === id)?.city :
+        undefined
+    );
+  };
+
   return (
     <div className="page page--gray page--main">
 
@@ -37,11 +49,20 @@ export default function MainPage({offers}: MainPageProps): JSX.Element {
               <PlacesSorting />
               <OffersList
                 offers={offers}
+                selectedPointId={getSelectedPointId}
               />
 
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <section className="cities__map map">
+
+                <Map
+                  startPoint={offers[0].city}
+                  points={offers}
+                  selectedPoint={selectedPoint}
+                />
+
+              </section>
             </div>
           </div>
         </div>
