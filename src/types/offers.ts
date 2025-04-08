@@ -1,19 +1,30 @@
-export interface OfferListItem {
+export interface ListItem {
   id: string;
   title: string;
   type: string;
   price: number;
-  city?: City;
-  location?: Location;
   isFavorite: boolean;
   isPremium: boolean;
   rating: number;
   previewImage: string;
 }
 
-interface City {
+export interface OfferListItem {
+  id: string;
+  title: string;
+  type: string;
+  price: number;
+  city: City;
+  location: Location;
+  isFavorite: boolean;
+  isPremium: boolean;
+  rating: number;
+  previewImage: string;
+}
+
+export interface City {
   name: string;
-  location?: Location;
+  location: Location;
 }
 
 interface Location {

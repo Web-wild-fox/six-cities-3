@@ -6,6 +6,16 @@ export const favorites = [
     price: 120,
     city: {
       name: 'Amsterdam',
+      location: {
+        latitude: 52.37,
+        longitude: 4.89,
+        zoom: 8
+      }
+    },
+    location: {
+      latitude: 52.35,
+      longitude: 4.88,
+      zoom: 8
     },
     isFavorite: true,
     isPremium: true,
@@ -19,6 +29,16 @@ export const favorites = [
     price: 180,
     city: {
       name: 'Brussels',
+      location: {
+        latitude: 50.85,
+        longitude: 4.35,
+        zoom: 8
+      }
+    },
+    location: {
+      latitude: 50.83,
+      longitude: 4.31,
+      zoom: 8
     },
     isFavorite: true,
     isPremium: true,
@@ -32,6 +52,16 @@ export const favorites = [
     price: 60,
     city: {
       name: 'Dusseldorf',
+      location: {
+        latitude: 51.22,
+        longitude: 6.78,
+        zoom: 8
+      }
+    },
+    location: {
+      latitude: 51.24,
+      longitude: 6.80,
+      zoom: 8
     },
     isFavorite: true,
     isPremium: false,
@@ -45,6 +75,16 @@ export const favorites = [
     price: 60,
     city: {
       name: 'Brussels',
+      location: {
+        latitude: 50.85,
+        longitude: 4.35,
+        zoom: 8
+      }
+    },
+    location: {
+      latitude: 50.87,
+      longitude: 4.38,
+      zoom: 8
     },
     isFavorite: true,
     isPremium: false,

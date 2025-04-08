@@ -1,17 +1,14 @@
-import {useState} from 'react';
 import {OfferListItem} from '@/types/offers';
 import {TypesCard} from '@/constants';
 import OfferCard from '@/components/offer-card/offer-card';
 
 interface OfferListProps {
   offers: OfferListItem[];
+  onCardAction: (id: string | null) => void;
 }
 
-export default function OffersList({offers}: OfferListProps): JSX.Element {
-  const [activeCardId, setActiveCardId] = useState<string | null>(null);
-
-  const handleCardAction = (id: string | null) =>
-    activeCardId === null ? setActiveCardId(id) : setActiveCardId(null);
+export default function OffersList({offers, onCardAction}: OfferListProps): JSX.Element {
+  const handleCardAction = (id: string | null) => onCardAction(id);
 
   return (
     <div className="cities__places-list places__list tabs__content">
