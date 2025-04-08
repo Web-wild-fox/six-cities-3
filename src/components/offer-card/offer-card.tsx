@@ -1,9 +1,9 @@
 import clsx from 'clsx';
 import {Link} from 'react-router-dom';
-import {OfferListItem} from '@/types/offers';
+import {ListItem} from '@/types/offers';
 import {AppRoute, TypesCard, MAX_RATING} from '@/constants';
 
-interface OfferCardProps extends OfferListItem {
+interface OfferCardProps extends ListItem {
   typeCard: TypesCard;
   onCardHover?: (id: string | null) => void;
 }

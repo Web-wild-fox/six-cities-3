@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import {Helmet} from 'react-helmet-async';
 import {PlacesFoundCount} from '@/constants';
-import {ListItem, City} from '@/types/offers';
+import {OfferListItem} from '@/types/offers';
 import Header from '@/components/header/header';
 import NavList from '@/components/nav-list/nav-list';
 import PlacesSorting from '@/components/places-sorting/places-sorting';
@@ -9,17 +9,15 @@ import OffersList from '@/components/offers-list/offers-list';
 import Map from '@/components/map/map';
 
 interface MainPageProps {
-  offers: ListItem[];
+  offers: OfferListItem[];
 }
 
 export default function MainPage({offers}: MainPageProps): JSX.Element {
-  const [selectedPoint, setSelectedPoint] = useState<City | undefined>(undefined);
+  const [selectedPointId, setSelectedPointId] = useState<string | undefined>(undefined);
 
   const getSelectedPointId = (id: string | null) => {
-    setSelectedPoint(
-      id ?
-        offers.find((offer) => offer.id === id)?.city :
-        undefined
+    setSelectedPointId(
+      typeof id === 'string' ? id : undefined
     );
   };
 
@@ -49,7 +47,7 @@ export default function MainPage({offers}: MainPageProps): JSX.Element {
               <PlacesSorting />
               <OffersList
                 offers={offers}
-                selectedPointId={getSelectedPointId}
+                onCardAction={getSelectedPointId}
               />
 
             </section>
@@ -59,7 +57,7 @@ export default function MainPage({offers}: MainPageProps): JSX.Element {
                 <Map
                   startPoint={offers[0].city}
                   points={offers}
-                  selectedPoint={selectedPoint}
+                  selectedPointId={selectedPointId}
                 />
 
               </section>

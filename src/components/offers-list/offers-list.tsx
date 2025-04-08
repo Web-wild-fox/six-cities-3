@@ -4,12 +4,11 @@ import OfferCard from '@/components/offer-card/offer-card';
 
 interface OfferListProps {
   offers: OfferListItem[];
-  selectedPointId: (id: string | null) => void;
+  onCardAction: (id: string | null) => void;
 }
 
-export default function OffersList({offers, selectedPointId}: OfferListProps): JSX.Element {
-  const handleCardAction = (id: string | null) =>
-    id ? selectedPointId(id) : selectedPointId(null);
+export default function OffersList({offers, onCardAction}: OfferListProps): JSX.Element {
+  const handleCardAction = (id: string | null) => onCardAction(id);
 
   return (
     <div className="cities__places-list places__list tabs__content">

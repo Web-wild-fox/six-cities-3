@@ -1,4 +1,4 @@
-export interface OfferListItem {
+export interface ListItem {
   id: string;
   title: string;
   type: string;
@@ -9,9 +9,17 @@ export interface OfferListItem {
   previewImage: string;
 }
 
-export interface ListItem extends OfferListItem {
+export interface OfferListItem {
+  id: string;
+  title: string;
+  type: string;
+  price: number;
   city: City;
   location: Location;
+  isFavorite: boolean;
+  isPremium: boolean;
+  rating: number;
+  previewImage: string;
 }
 
 export interface City {

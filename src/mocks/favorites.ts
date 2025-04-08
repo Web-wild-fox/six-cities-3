@@ -13,8 +13,8 @@ export const favorites = [
       }
     },
     location: {
-      latitude: 52.37,
-      longitude: 4.89,
+      latitude: 52.35,
+      longitude: 4.88,
       zoom: 8
     },
     isFavorite: true,
@@ -36,8 +36,8 @@ export const favorites = [
       }
     },
     location: {
-      latitude: 50.85,
-      longitude: 4.35,
+      latitude: 50.83,
+      longitude: 4.31,
       zoom: 8
     },
     isFavorite: true,
@@ -59,8 +59,8 @@ export const favorites = [
       }
     },
     location: {
-      latitude: 51.22,
-      longitude: 6.78,
+      latitude: 51.24,
+      longitude: 6.80,
       zoom: 8
     },
     isFavorite: true,
@@ -76,14 +76,14 @@ export const favorites = [
     city: {
       name: 'Brussels',
       location: {
-        latitude: 50.75,
-        longitude: 4.23,
+        latitude: 50.85,
+        longitude: 4.35,
         zoom: 8
       }
     },
     location: {
-      latitude: 50.75,
-      longitude: 4.23,
+      latitude: 50.87,
+      longitude: 4.38,
       zoom: 8
     },
     isFavorite: true,

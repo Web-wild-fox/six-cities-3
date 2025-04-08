@@ -1,29 +1,29 @@
 import {useRef, useEffect} from 'react';
 import {Marker, Icon, layerGroup} from 'leaflet';
 import useMap from '@/hooks/use-map';
-import {ListItem, City} from '@/types/offers';
+import {OfferListItem, City} from '@/types/offers';
 import {URL_MARKER_DEFAULT, URL_MARKER_CURRENT} from '@/constants';
 import 'leaflet/dist/leaflet.css';
 
 interface MapProps {
-  points: ListItem[];
+  points: OfferListItem[];
   startPoint: City;
-  selectedPoint: City | undefined;
+  selectedPointId?: string;
 }
 
 const defaultCustomIcon = new Icon({
   iconUrl: URL_MARKER_DEFAULT,
-  iconSize: [40, 40],
-  iconAnchor: [20, 40],
+  iconSize: [27, 39],
+  iconAnchor: [19.5, 27],
 });
 
 const currentCustomIcon = new Icon({
   iconUrl: URL_MARKER_CURRENT,
-  iconSize: [40, 40],
-  iconAnchor: [20, 40],
+  iconSize: [27, 39],
+  iconAnchor: [19.5, 27],
 });
 
-export default function Map({points, startPoint, selectedPoint}: MapProps) {
+export default function Map({points, startPoint, selectedPointId}: MapProps) {
   const mapRef = useRef(null);
   const map = useMap(mapRef, startPoint);
 
@@ -31,7 +31,7 @@ export default function Map({points, startPoint, selectedPoint}: MapProps) {
     if (map) {
       const markerLayer = layerGroup().addTo(map);
 
-      points.forEach(({city, location}) => {
+      points.forEach(({id, location}) => {
         const marker = new Marker({
           lat: location.latitude,
           lng: location.longitude,
@@ -39,8 +39,8 @@ export default function Map({points, startPoint, selectedPoint}: MapProps) {
 
         marker
           .setIcon(
-            selectedPoint !== undefined &&
-            city.location === selectedPoint.location
+            selectedPointId !== undefined &&
+            id === selectedPointId
               ? currentCustomIcon
               : defaultCustomIcon
           )
@@ -51,7 +51,7 @@ export default function Map({points, startPoint, selectedPoint}: MapProps) {
         map.removeLayer(markerLayer);
       };
     }
-  }, [map, points, selectedPoint]);
+  }, [map, points, selectedPointId]);
 
   return (
     <div
