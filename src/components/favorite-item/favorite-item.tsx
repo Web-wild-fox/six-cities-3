@@ -1,5 +1,5 @@
 import {OfferListItem} from '@/types/offers';
-import {TypesCard} from '@/constants';
+import {TypeCard} from '@/constants';
 import OfferCard from '@/components/offer-card/offer-card';
 
 interface FavoritesItemProps {
@@ -40,7 +40,7 @@ export default function FavoriteItem({offers, location}: FavoritesItemProps): JS
               isPremium={offer.isPremium}
               rating={offer.rating}
               previewImage={offer.previewImage}
-              typeCard={TypesCard.HorizontalCard}
+              typeCard={TypeCard.HorizontalCard}
             />
           ))
         }

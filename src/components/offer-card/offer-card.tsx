@@ -1,12 +1,37 @@
 import clsx from 'clsx';
 import {Link} from 'react-router-dom';
-import {ListItem} from '@/types/offers';
-import {AppRoute, TypesCard, MAX_RATING} from '@/constants';
+import {OfferListItem} from '@/types/offers';
+import {AppRoute, TypeCard, MAX_RATING} from '@/constants';
 
-interface OfferCardProps extends ListItem {
-  typeCard: TypesCard;
+interface OfferCardProps {
+  id: OfferListItem['id'];
+  title: OfferListItem['title'];
+  type: OfferListItem['type'];
+  price: OfferListItem['price'];
+  isFavorite: OfferListItem['isFavorite'];
+  isPremium: OfferListItem['isPremium'];
+  rating: OfferListItem['rating'];
+  previewImage: OfferListItem['previewImage'];
+  typeCard: TypeCard;
   onCardHover?: (id: string | null) => void;
 }
+
+const typesCard = {
+  [TypeCard.VerticalCard]: {
+    className: 'cities',
+    size: {
+      width: 260,
+      height: 200
+    }
+  },
+  [TypeCard.HorizontalCard]: {
+    className: 'favorites',
+    size: {
+      width: 150,
+      height: 110
+    }
+  },
+};
 
 export default function OfferCard(
   {
@@ -22,37 +47,11 @@ export default function OfferCard(
     onCardHover,
   }: OfferCardProps): JSX.Element {
 
-  const typesCard = {
-    [TypesCard.VerticalCard]: {
-      className: 'cities',
-      size: {
-        width: 260,
-        height: 200
-      }
-    },
-    [TypesCard.HorizontalCard]: {
-      className: 'favorites',
-      size: {
-        width: 150,
-        height: 110
-      }
-    },
-  };
-
-  const {className, size} =
-    typesCard[typeCard] ||
-    {
-      className: '',
-      size: {
-        width: 0,
-        height: 0
-      }
-    };
+  const {className, size} = typesCard[typeCard];
 
   return (
     <article
       className={`${className}__card place-card`}
-      id={id}
       onMouseEnter={() => onCardHover?.(id)}
       onMouseLeave={() => onCardHover?.(null)}
     >

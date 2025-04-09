@@ -57,7 +57,7 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
-export enum TypesCard {
+export enum TypeCard {
   VerticalCard = 'VERTICAL_CARD',
   HorizontalCard = 'HORIZONTAL_CARD',
 }
