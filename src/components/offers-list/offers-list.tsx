@@ -1,15 +1,53 @@
+import clsx from 'clsx';
+import {
+  TypeCard,
+  MAIN_PAGE_CLASS,
+  FAVORITES_PAGE_CLASS,
+  OFFER_PAGE_CLASS
+} from '@/constants';
 import {OfferListItem} from '@/types/offers';
-import {TypeCard} from '@/constants';
 import OfferCard from '@/components/offer-card/offer-card';
 
 interface OfferListProps {
   offers: OfferListItem[];
-  onCardAction: (id: string | null) => void;
+  typeCard: TypeCard;
+  onCardAction?: (id: string | null) => void;
 }
 
-export default function OffersList({offers, onCardAction}: OfferListProps): JSX.Element {
+const typesCard = {
+  [TypeCard.MainPageCardType]: {
+    className: MAIN_PAGE_CLASS,
+    size: {
+      width: 260,
+      height: 200
+    }
+  },
+  [TypeCard.FavoritesPageCardType]: {
+    className: FAVORITES_PAGE_CLASS,
+    size: {
+      width: 150,
+      height: 110
+    }
+  },
+  [TypeCard.OfferPageCardType]: {
+    className: OFFER_PAGE_CLASS,
+    size: {
+      width: 260,
+      height: 200
+    }
+  }
+};
+
+export default function OffersList({offers, typeCard, onCardAction}: OfferListProps): JSX.Element {
+  const {className, size} = typesCard[typeCard];
+
   return (
-    <div className="cities__places-list places__list tabs__content">
+    <div className={clsx(
+      className === MAIN_PAGE_CLASS && `${className}__places-list places__list tabs__content`,
+      className === FAVORITES_PAGE_CLASS && `${className}__places`,
+      className === OFFER_PAGE_CLASS && `${className}__list places__list`
+    )}
+    >
       {
         offers.map((offer) => (
           <OfferCard
@@ -22,7 +60,8 @@ export default function OffersList({offers, onCardAction}: OfferListProps): JSX.
             isPremium={offer.isPremium}
             rating={offer.rating}
             previewImage={offer.previewImage}
-            typeCard={TypeCard.VerticalCard}
+            className={className}
+            size={size}
             onCardHover={onCardAction}
           />
         ))

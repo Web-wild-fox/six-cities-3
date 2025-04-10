@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import {Link} from 'react-router-dom';
 import {OfferListItem} from '@/types/offers';
-import {AppRoute, TypeCard, MAX_RATING} from '@/constants';
+import {AppRoute, MAX_RATING} from '@/constants';
 
 interface OfferCardProps {
   id: OfferListItem['id'];
@@ -12,26 +12,10 @@ interface OfferCardProps {
   isPremium: OfferListItem['isPremium'];
   rating: OfferListItem['rating'];
   previewImage: OfferListItem['previewImage'];
-  typeCard: TypeCard;
+  className: string;
+  size: {width: number; height: number};
   onCardHover?: (id: string | null) => void;
 }
-
-const typesCard = {
-  [TypeCard.VerticalCard]: {
-    className: 'cities',
-    size: {
-      width: 260,
-      height: 200
-    }
-  },
-  [TypeCard.HorizontalCard]: {
-    className: 'favorites',
-    size: {
-      width: 150,
-      height: 110
-    }
-  },
-};
 
 export default function OfferCard(
   {
@@ -43,11 +27,10 @@ export default function OfferCard(
     isPremium,
     rating,
     previewImage,
-    typeCard,
+    className,
+    size,
     onCardHover,
   }: OfferCardProps): JSX.Element {
-
-  const {className, size} = typesCard[typeCard];
 
   return (
     <article
@@ -72,7 +55,7 @@ export default function OfferCard(
           />
         </a>
       </div>
-      <div className={`${className}__card-info place-card__info`}>
+      <div className="place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">
