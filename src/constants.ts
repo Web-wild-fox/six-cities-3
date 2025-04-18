@@ -1,9 +1,6 @@
 export const MAX_RATING = 5;
 export const URL_MARKER_DEFAULT = 'img/pin.svg';
 export const URL_MARKER_CURRENT = 'img/pin-active.svg';
-export const MAIN_PAGE_CLASS = 'cities';
-export const FAVORITES_PAGE_CLASS = 'favorites';
-export const OFFER_PAGE_CLASS = 'near-places';
 
 export const OfferRatings = [
   {
@@ -46,6 +43,12 @@ export const PlacesFoundCount = {
   AllOffersDusseldorf: 600,
 };
 
+export const ClassByTypeCard = {
+  MainPageCardType: 'cities',
+  OfferPageCardType: 'near-places',
+  FavoritesPageCardType: 'favorites',
+};
+
 export enum AppRoute {
   Root = '/',
   Login = '/login',
@@ -58,10 +61,4 @@ export enum AuthorizationStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN',
-}
-
-export enum TypeCard {
-  MainPageCardType = 'MAIN_PAGE_CARD_TYPE',
-  FavoritesPageCardType = 'FAVORITES_PAGE_CARD_TYPE',
-  OfferPageCardType = 'OFFER_PAGE_CARD_TYPE',
 }

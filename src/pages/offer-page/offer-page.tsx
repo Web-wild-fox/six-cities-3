@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import {useState} from 'react';
 import {Helmet} from 'react-helmet-async';
 import {useParams, Navigate} from 'react-router-dom';
-import {MAX_RATING, TypeCard} from '@/constants';
+import {MAX_RATING, ClassByTypeCard} from '@/constants';
 import {OfferListItem, FullOfferItem, Comment} from '@/types/offers';
 import Header from '@/components/header/header';
 import ReviewsList from '@/components/reviews-list/reviews-list';
@@ -208,7 +208,7 @@ export default function OfferPage({offers, fullOffer, comments}:OfferPageProps):
 
             <OffersList
               offers={offers.slice(0, 3)}
-              typeCard={TypeCard.OfferPageCardType}
+              cardClassName={ClassByTypeCard.OfferPageCardType}
               onCardAction={getSelectedPointId}
             />
 
