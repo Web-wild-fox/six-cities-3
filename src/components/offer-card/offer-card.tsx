@@ -74,14 +74,16 @@ export default function OfferCard(
         )
       }
       <div className={`${className}__image-wrapper place-card__image-wrapper`}>
-        <a href="#">
+        <Link
+          to={AppRoute.Offer + id}
+        >
           <img
             className="place-card__image"
             src={previewImage}
             alt="Place image"
             {...size}
           />
-        </a>
+        </Link>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
@@ -93,7 +95,10 @@ export default function OfferCard(
           </div>
 
           <button
-            className={clsx('place-card__bookmark-button button', isFavorite && 'place-card__bookmark-button--active')}
+            className={clsx(
+              'place-card__bookmark-button button',
+              isFavorite && 'place-card__bookmark-button--active'
+            )}
             type="button"
           >
             <svg className="place-card__bookmark-icon" width="18" height="19">

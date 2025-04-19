@@ -92,7 +92,10 @@ export default function OfferPage({offers, fullOffer, comments}:OfferPageProps):
                   {title}
                 </h1>
                 <button
-                  className={clsx('offer__bookmark-button button', isFavorite && 'offer__bookmark-button--active')}
+                  className={clsx(
+                    'offer__bookmark-button button',
+                    isFavorite && 'offer__bookmark-button--active'
+                  )}
                   type="button"
                 >
                   <svg className="offer__bookmark-icon" width="31" height="33">
