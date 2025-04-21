@@ -1,18 +1,7 @@
 import {MAX_RATING} from '@/constants';
 import {
-  DateOptionsType,
   ReviewItemProps
 } from './types';
-
-const DateOptions: DateOptionsType = {
-  language: {
-    english: 'en-US'
-  },
-  options: {
-    month: 'long',
-    year: 'numeric',
-  }
-};
 
 export default function ReviewItem(
   {
@@ -70,8 +59,11 @@ export default function ReviewItem(
         >
           {
             dateTime.toLocaleDateString(
-              DateOptions.language.english,
-              DateOptions.options
+              'en-US',
+              {
+                year: 'numeric',
+                month: 'long'
+              }
             )
           }
         </time>

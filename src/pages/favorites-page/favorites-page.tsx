@@ -1,6 +1,6 @@
 import {Helmet} from 'react-helmet-async';
 import {OfferListItem} from '@/types/offers';
-import {Locations} from '@/constants';
+import {LOCATIONS} from '@/constants';
 import Header from '@/components/header/header';
 import Footer from '@/components/footer/footer';
 import Logo from '@/components/logo/logo';
@@ -27,7 +27,7 @@ export default function FavoritesPage({offers}: FavoritesPageProps): JSX.Element
             <h1 className="favorites__title">Saved listing</h1>
             <ul className="favorites__list">
               {
-                Locations.map((location) => (
+                LOCATIONS.map((location) => (
                   <FavoriteItem
                     key={location}
                     location={location}
