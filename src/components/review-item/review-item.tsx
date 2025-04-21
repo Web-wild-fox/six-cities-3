@@ -3,16 +3,6 @@ import {
   ReviewItemProps
 } from './types';
 
-const DateOptions = {
-  language: {
-    english: 'en-US'
-  },
-  options: {
-    [Symbol('year')]: 'numeric',
-    [Symbol('month')]: 'long',
-  }
-};
-
 export default function ReviewItem(
   {
     date,
@@ -69,8 +59,11 @@ export default function ReviewItem(
         >
           {
             dateTime.toLocaleDateString(
-              DateOptions.language.english,
-              DateOptions.options
+              'en-US',
+              {
+                year: 'numeric',
+                month: 'long'
+              }
             )
           }
         </time>

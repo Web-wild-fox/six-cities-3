@@ -1,6 +1,5 @@
 import {createAction} from '@reduxjs/toolkit';
 
-export const cityСhange = createAction('city change', (value: string) => ({
+export const cityСhange = createAction('ui/changeCity', (value: string) => ({
   payload: value
 }));
-export const searchOffers = createAction('search for offers');

@@ -3,7 +3,7 @@ export const URL_MARKER_DEFAULT = 'img/pin.svg';
 export const URL_MARKER_CURRENT = 'img/pin-active.svg';
 const START_LOCATION_INDEX = 0;
 
-export const Locations = [
+export const LOCATIONS = [
   'Paris',
   'Cologne',
   'Brussels',
@@ -12,7 +12,7 @@ export const Locations = [
   'Dusseldorf',
 ];
 
-export const DEFAULT_CITY = Locations[START_LOCATION_INDEX];
+export const DEFAULT_CITY = LOCATIONS[START_LOCATION_INDEX];
 
 export const OfferRatings = [
   {

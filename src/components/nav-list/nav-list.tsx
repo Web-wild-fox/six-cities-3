@@ -1,5 +1,5 @@
 import NavItem from '@/components/nav-item/nav-item';
-import {Locations} from '@/constants';
+import {LOCATIONS} from '@/constants';
 
 interface NavListProps {
   city: string;
@@ -12,7 +12,7 @@ export default function NavList({city, onCityChangeClick}:NavListProps): JSX.Ele
       <section className="locations container">
         <ul className="locations__list tabs__list">
           {
-            Locations.map((location) => (
+            LOCATIONS.map((location) => (
               <NavItem
                 key={location}
                 location={location}

@@ -18,7 +18,7 @@ export default function NavItem({location, isActive, onCityChangeClick}: NavItem
           isActive && 'locations__item-link tabs__item tabs__item--active'
         )}
         onClick={
-          (evt) => onCityChangeClick(evt.currentTarget.textContent || '')
+          () => onCityChangeClick(location)
         }
       >
         <span>{location}</span>

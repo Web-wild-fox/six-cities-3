@@ -75,7 +75,7 @@ export default function OfferCard(
       }
       <div className={`${className}__image-wrapper place-card__image-wrapper`}>
         <Link
-          to={AppRoute.Offer + id}
+          to={`${AppRoute.Offer}${id}`}
         >
           <img
             className="place-card__image"
@@ -121,7 +121,7 @@ export default function OfferCard(
         </div>
         <h2 className="place-card__name">
           <Link
-            to={AppRoute.Offer + id}
+            to={`${AppRoute.Offer}${id}`}
           >
             {title}
           </Link>

@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import {Helmet} from 'react-helmet-async';
 import {useAppDispatch, useAppSelector} from '@/hooks';
-import {cityСhange, searchOffers} from '@/store/action';
+import {cityСhange} from '@/store/action';
 import {ClassByTypeCard} from '@/constants';
 import Header from '@/components/header/header';
 import NavList from '@/components/nav-list/nav-list';
@@ -13,8 +13,7 @@ export default function MainPage(): JSX.Element {
   const [selectedPointId, setSelectedPointId] = useState<string | undefined>(undefined);
 
   const currentCity = useAppSelector((state) => state.city);
-  const offersForCity = useAppSelector((state) => state.offers);
-  const isOffersList = offersForCity[0];
+  const offers = useAppSelector((state) => state.offers);
   const dispatch = useAppDispatch();
 
   const getSelectedPointId = (id: string | null) => {
@@ -23,10 +22,16 @@ export default function MainPage(): JSX.Element {
     );
   };
 
+  const getFilterOffers = (city: string) => offers.filter(
+    (offer) => offer.city.name === city
+  );
+
   const handleCityChangeClick = (city: string): void => {
     dispatch(cityСhange(city));
-    dispatch(searchOffers());
   };
+
+  const offersForCity = getFilterOffers(currentCity);
+  const isOffersList = offersForCity[0];
 
   return (
     <div className="page page--gray page--main">
