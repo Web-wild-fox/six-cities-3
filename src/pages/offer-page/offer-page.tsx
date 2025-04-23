@@ -19,10 +19,8 @@ interface OfferPageProps {
 export default function OfferPage({offers, fullOffer, comments}:OfferPageProps): JSX.Element {
   const [selectedPointId, setSelectedPointId] = useState<string | undefined>(undefined);
 
-  const getSelectedPointId = (id: string | null) => {
-    setSelectedPointId(
-      typeof id === 'string' ? id : undefined
-    );
+  const getSelectedPointId = (id: string | undefined) => {
+    setSelectedPointId(id ? id : undefined);
   };
 
   const {id} = useParams();
