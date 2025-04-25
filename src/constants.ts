@@ -43,6 +43,15 @@ export const ClassByTypeCard = {
   FavoritesPageCardType: 'favorites',
 };
 
+export enum SortingType {
+  popular = 'Popular',
+  priceUp = 'Price: low to high',
+  priceDown = 'Price: high to low',
+  rating = 'Top rated first'
+}
+
+export const DEFAULT_SORTING_TYPE = SortingType.popular;
+
 export enum AppRoute {
   Root = '/',
   Login = '/login',

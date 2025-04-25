@@ -1,16 +1,20 @@
 import {createReducer} from '@reduxjs/toolkit';
-import {cityСhange} from '@/store/action';
+import {changeCity, changeSorting} from '@/store/action';
 import {offers} from '@/mocks/offers';
-import {DEFAULT_CITY} from '@/constants';
+import {DEFAULT_CITY, DEFAULT_SORTING_TYPE} from '@/constants';
 
 const initialPoint = {
   city: DEFAULT_CITY,
   offers,
+  sorting: DEFAULT_SORTING_TYPE,
 };
 
 export const reducer = createReducer(initialPoint, (builder) => {
   builder
-    .addCase(cityСhange, (state, action) => {
+    .addCase(changeCity, (state, action) => {
       state.city = action.payload;
+    })
+    .addCase(changeSorting, (state, action) => {
+      state.sorting = action.payload;
     });
 });

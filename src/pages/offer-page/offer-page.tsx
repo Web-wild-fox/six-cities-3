@@ -1,5 +1,4 @@
 import clsx from 'clsx';
-import {useState} from 'react';
 import {Helmet} from 'react-helmet-async';
 import {useParams, Navigate} from 'react-router-dom';
 import {MAX_RATING, ClassByTypeCard} from '@/constants';
@@ -17,14 +16,6 @@ interface OfferPageProps {
 }
 
 export default function OfferPage({offers, fullOffer, comments}:OfferPageProps): JSX.Element {
-  const [selectedPointId, setSelectedPointId] = useState<string | undefined>(undefined);
-
-  const getSelectedPointId = (id: string | null) => {
-    setSelectedPointId(
-      typeof id === 'string' ? id : undefined
-    );
-  };
-
   const {id} = useParams();
   const isOfferId = id === fullOffer.id;
 
@@ -198,7 +189,7 @@ export default function OfferPage({offers, fullOffer, comments}:OfferPageProps):
             <Map
               startPoint={fullOffer.city}
               points={offers.slice(0, 3)}
-              selectedPointId={selectedPointId}
+              selectedPointId={fullOffer.id}
             />
 
           </section>
@@ -212,7 +203,6 @@ export default function OfferPage({offers, fullOffer, comments}:OfferPageProps):
             <OffersList
               offers={offers.slice(0, 3)}
               cardClassName={ClassByTypeCard.OfferPageCardType}
-              onCardAction={getSelectedPointId}
             />
 
           </section>

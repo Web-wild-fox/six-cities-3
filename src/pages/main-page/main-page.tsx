@@ -1,10 +1,15 @@
+import clsx from 'clsx';
 import {useState} from 'react';
 import {Helmet} from 'react-helmet-async';
 import {useAppDispatch, useAppSelector} from '@/hooks';
-import {cityСhange} from '@/store/action';
-import {ClassByTypeCard} from '@/constants';
+import {changeCity} from '@/store/action';
+import {
+  ClassByTypeCard
+} from '@/constants';
+import {getSortedOffers} from '@/utils';
 import Header from '@/components/header/header';
 import NavList from '@/components/nav-list/nav-list';
+import PlacesEmpty from '@/components/places-empty/places-empty';
 import PlacesSorting from '@/components/places-sorting/places-sorting';
 import OffersList from '@/components/offers-list/offers-list';
 import Map from '@/components/map/map';
@@ -13,25 +18,24 @@ export default function MainPage(): JSX.Element {
   const [selectedPointId, setSelectedPointId] = useState<string | undefined>(undefined);
 
   const currentCity = useAppSelector((state) => state.city);
+  const currentSorting = useAppSelector((state) => state.sorting);
   const offers = useAppSelector((state) => state.offers);
-  const dispatch = useAppDispatch();
 
-  const getSelectedPointId = (id: string | null) => {
-    setSelectedPointId(
-      typeof id === 'string' ? id : undefined
-    );
-  };
+  const dispatch = useAppDispatch();
 
   const getFilterOffers = (city: string) => offers.filter(
     (offer) => offer.city.name === city
   );
 
-  const handleCityChangeClick = (city: string): void => {
-    dispatch(cityСhange(city));
-  };
+  const filteredOffers = getFilterOffers(currentCity);
+  const isOffersList = filteredOffers[0];
+  const sortedOffers = getSortedOffers(currentSorting, filteredOffers);
 
-  const offersForCity = getFilterOffers(currentCity);
-  const isOffersList = offersForCity[0];
+  const handleCardHover = (id?: string) => setSelectedPointId(id);
+
+  const handleCityChangeClick = (city: string): void => {
+    dispatch(changeCity(city));
+  };
 
   return (
     <div className="page page--gray page--main">
@@ -42,7 +46,12 @@ export default function MainPage(): JSX.Element {
 
       <Header />
 
-      <main className="page__main page__main--index">
+      <main
+        className={clsx(
+          'page__main page__main--index',
+          !isOffersList && 'page__main--index-empty'
+        )}
+      >
         <h1 className="visually-hidden">Cities</h1>
 
         <NavList
@@ -51,37 +60,50 @@ export default function MainPage(): JSX.Element {
         />
 
         <div className="cities">
-          <div className="cities__places-container container">
-            <section className="cities__places places">
-              <h2 className="visually-hidden">Places</h2>
-
-              <b className="places__found">
-                {offersForCity.length} places to stay in {currentCity}
-              </b>
-              {
-                isOffersList && (
-                  <>
-                    <PlacesSorting />
-                    <OffersList
-                      offers={offersForCity}
-                      cardClassName={ClassByTypeCard.MainPageCardType}
-                      onCardAction={getSelectedPointId}
-                    />
-                  </>
-                )
-              }
-            </section>
+          <div
+            className={clsx(
+              'cities__places-container container',
+              !isOffersList && 'cities__places-container--empty'
+            )}
+          >
+            {
+              !isOffersList && (
+                <PlacesEmpty
+                  cityName={currentCity}
+                />
+              )
+            }
             {
               isOffersList && (
-                <div className="cities__right-section">
-                  <section className="cities__map map">
-                    <Map
-                      points={offersForCity}
-                      startPoint={offersForCity[0].city}
-                      selectedPointId={selectedPointId}
+                <>
+                  <section className="cities__places places">
+                    <h2 className="visually-hidden">Places</h2>
+                    <b className="places__found">
+                      {filteredOffers.length} places to stay in {currentCity}
+                    </b>
+
+                    <PlacesSorting
+                      currentSorting={currentSorting}
                     />
+                    <OffersList
+                      offers={sortedOffers}
+                      cardClassName={ClassByTypeCard.MainPageCardType}
+                      onCardAction={handleCardHover}
+                    />
+
                   </section>
-                </div>
+                  <div className="cities__right-section">
+                    <section className="cities__map map">
+
+                      <Map
+                        points={filteredOffers}
+                        startPoint={filteredOffers[0].city}
+                        selectedPointId={selectedPointId}
+                      />
+
+                    </section>
+                  </div>
+                </>
               )
             }
           </div>
