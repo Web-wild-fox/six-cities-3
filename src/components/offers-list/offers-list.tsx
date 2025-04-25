@@ -6,7 +6,7 @@ import OfferCard from '@/components/offer-card/offer-card';
 interface OfferListProps {
   offers: OfferListItem[];
   cardClassName: string;
-  onCardAction?: (id: string | undefined) => void;
+  onCardAction?: (id?: string) => void;
 }
 
 export default function OffersList({offers, cardClassName, onCardAction}: OfferListProps): JSX.Element {

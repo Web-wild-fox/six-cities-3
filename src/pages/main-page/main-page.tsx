@@ -1,30 +1,27 @@
+import clsx from 'clsx';
 import {useState} from 'react';
 import {Helmet} from 'react-helmet-async';
 import {useAppDispatch, useAppSelector} from '@/hooks';
-import {cityСhange} from '@/store/action';
+import {changeCity} from '@/store/action';
 import {
-  ClassByTypeCard,
-  SortingType,
-  DEFAULT_SORTING_TYPE
+  ClassByTypeCard
 } from '@/constants';
+import {getSortedOffers} from '@/utils';
 import Header from '@/components/header/header';
 import NavList from '@/components/nav-list/nav-list';
+import PlacesEmpty from '@/components/places-empty/places-empty';
 import PlacesSorting from '@/components/places-sorting/places-sorting';
 import OffersList from '@/components/offers-list/offers-list';
 import Map from '@/components/map/map';
 
 export default function MainPage(): JSX.Element {
   const [selectedPointId, setSelectedPointId] = useState<string | undefined>(undefined);
-  const [currentSorting, setCurrentSortingType] = useState<string>(DEFAULT_SORTING_TYPE);
-  const [isActive, setIsActive] = useState<boolean>(false);
 
   const currentCity = useAppSelector((state) => state.city);
+  const currentSorting = useAppSelector((state) => state.sorting);
   const offers = useAppSelector((state) => state.offers);
-  const dispatch = useAppDispatch();
 
-  const getSelectedPointId = (id: string | undefined) => {
-    setSelectedPointId(id ? id : undefined);
-  };
+  const dispatch = useAppDispatch();
 
   const getFilterOffers = (city: string) => offers.filter(
     (offer) => offer.city.name === city
@@ -32,47 +29,12 @@ export default function MainPage(): JSX.Element {
 
   const filteredOffers = getFilterOffers(currentCity);
   const isOffersList = filteredOffers[0];
+  const sortedOffers = getSortedOffers(currentSorting, filteredOffers);
 
-  const typesSort = {
-    [SortingType.priceUp]:[...filteredOffers].sort(
-      (a, b) => a.price - b.price),
-    [SortingType.priceDown]:[...filteredOffers].sort(
-      (a, b) => b.price - a.price),
-    [SortingType.rating]:[...filteredOffers].sort(
-      (a, b) => b.rating - a.rating),
-    [SortingType.popular]: [...filteredOffers],
-  };
-
-  const getSortedOffers = (sort: string) => {
-    switch (sort) {
-      case SortingType.popular:
-        return typesSort[sort];
-      case SortingType.priceUp:
-        return typesSort[sort];
-      case SortingType.priceDown:
-        return typesSort[sort];
-      case SortingType.rating:
-        return typesSort[sort];
-      default:
-        return filteredOffers;
-    }
-  };
-
-  const sortedOffers = getSortedOffers(currentSorting);
-
-  const handleSortingChangeClick = (type: string) => {
-    setCurrentSortingType(type);
-  };
-
-  const handleSortingViewClick = () => {
-    setIsActive((boolean) => !boolean);
-  };
+  const handleCardHover = (id?: string) => setSelectedPointId(id);
 
   const handleCityChangeClick = (city: string): void => {
-    setCurrentSortingType(DEFAULT_SORTING_TYPE);
-    setIsActive(false);
-
-    dispatch(cityСhange(city));
+    dispatch(changeCity(city));
   };
 
   return (
@@ -84,7 +46,12 @@ export default function MainPage(): JSX.Element {
 
       <Header />
 
-      <main className="page__main page__main--index">
+      <main
+        className={clsx(
+          'page__main page__main--index',
+          !isOffersList && 'page__main--index-empty'
+        )}
+      >
         <h1 className="visually-hidden">Cities</h1>
 
         <NavList
@@ -93,42 +60,50 @@ export default function MainPage(): JSX.Element {
         />
 
         <div className="cities">
-          <div className="cities__places-container container">
-            <section className="cities__places places">
-              <h2 className="visually-hidden">Places</h2>
+          <div
+            className={clsx(
+              'cities__places-container container',
+              !isOffersList && 'cities__places-container--empty'
+            )}
+          >
+            {
+              !isOffersList && (
+                <PlacesEmpty
+                  cityName={currentCity}
+                />
+              )
+            }
+            {
+              isOffersList && (
+                <>
+                  <section className="cities__places places">
+                    <h2 className="visually-hidden">Places</h2>
+                    <b className="places__found">
+                      {filteredOffers.length} places to stay in {currentCity}
+                    </b>
 
-              <b className="places__found">
-                {filteredOffers.length} places to stay in {currentCity}
-              </b>
-              {
-                isOffersList && (
-                  <>
                     <PlacesSorting
-                      isActive={isActive}
                       currentSorting={currentSorting}
-                      onSortingChange={handleSortingChangeClick}
-                      onSortingView={handleSortingViewClick}
                     />
                     <OffersList
                       offers={sortedOffers}
                       cardClassName={ClassByTypeCard.MainPageCardType}
-                      onCardAction={getSelectedPointId}
+                      onCardAction={handleCardHover}
                     />
-                  </>
-                )
-              }
-            </section>
-            {
-              isOffersList && (
-                <div className="cities__right-section">
-                  <section className="cities__map map">
-                    <Map
-                      points={filteredOffers}
-                      startPoint={filteredOffers[0].city}
-                      selectedPointId={selectedPointId}
-                    />
+
                   </section>
-                </div>
+                  <div className="cities__right-section">
+                    <section className="cities__map map">
+
+                      <Map
+                        points={filteredOffers}
+                        startPoint={filteredOffers[0].city}
+                        selectedPointId={selectedPointId}
+                      />
+
+                    </section>
+                  </div>
+                </>
               )
             }
           </div>

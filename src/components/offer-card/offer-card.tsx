@@ -17,7 +17,7 @@ interface OfferCardProps {
   rating: OfferListItem['rating'];
   previewImage: OfferListItem['previewImage'];
   cardClassName: string;
-  onCardHover?: (id: string | undefined) => void;
+  onCardHover?: (id?: string) => void;
 }
 
 const typesCard = {
@@ -64,7 +64,7 @@ export default function OfferCard(
     <article
       className={`${className}__card place-card`}
       onMouseEnter={() => onCardHover?.(id)}
-      onMouseLeave={() => onCardHover?.(undefined)}
+      onMouseLeave={() => onCardHover?.()}
     >
       {
         isPremium && (
