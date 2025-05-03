@@ -1,17 +1,12 @@
 import clsx from 'clsx';
 import {useRef, useState} from 'react';
 import {useClickAway} from 'react-use';
-import {useAppDispatch} from '@/hooks';
+import {useAppSelector, useAppDispatch} from '@/hooks';
 import {SortingType} from '@/constants';
 import {changeSorting} from '@/store/action';
 
-interface PlacesSortingProps {
-  currentSorting: string;
-}
-
-export default function PlacesSorting({
-  currentSorting,
-}: PlacesSortingProps): JSX.Element {
+export default function PlacesSorting(): JSX.Element {
+  const currentSorting = useAppSelector((state) => state.sorting);
   const [isOpened, setIsOpened] = useState(false);
   const sortRef = useRef(null);
 
@@ -59,7 +54,10 @@ export default function PlacesSorting({
                 String(type) === currentSorting && 'places__option--active',
               )}
               tabIndex={0}
-              onClick={() => dispatch(changeSorting(type))}
+              onClick={() => {
+                dispatch(changeSorting(type));
+                setIsOpened((prevActive) => !prevActive);
+              }}
             >
               {type}
             </li>

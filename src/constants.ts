@@ -1,4 +1,6 @@
 export const MAX_RATING = 5;
+export const MAX_COMMENTS = 10;
+export const MAX_NEAR_OFFERS = 4;
 export const URL_MARKER_DEFAULT = 'img/pin.svg';
 export const URL_MARKER_CURRENT = 'img/pin-active.svg';
 const START_LOCATION_INDEX = 0;
@@ -58,6 +60,15 @@ export enum AppRoute {
   Favorites = '/favorites',
   Offer = '/offer/',
   OfferId = '/offer/:id',
+}
+
+export enum APIRoute {
+  Offers = '/offers/',
+  Comments = '/comments/',
+  Nearby = '/nearby',
+  Favorites = '/favorite',
+  Login = '/login',
+  Logout = '/logout',
 }
 
 export enum AuthorizationStatus {

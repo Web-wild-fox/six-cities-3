@@ -1,23 +1,34 @@
 import clsx from 'clsx';
 import {Helmet} from 'react-helmet-async';
-import {useParams, Navigate} from 'react-router-dom';
-import {MAX_RATING, ClassByTypeCard} from '@/constants';
-import {OfferListItem, FullOfferItem, Comment} from '@/types/offers';
+import {Navigate} from 'react-router-dom';
+import {useAppSelector} from '@/hooks';
+import {
+  ClassByTypeCard,
+  MAX_RATING,
+  MAX_COMMENTS,
+  MAX_NEAR_OFFERS
+} from '@/constants';
 import Header from '@/components/header/header';
 import ReviewsList from '@/components/reviews-list/reviews-list';
 import ReviewsForm from '@/components/review-form/review-form';
 import Map from '@/components/map/map';
 import OffersList from '@/components/offers-list/offers-list';
 
-interface OfferPageProps {
-  offers: OfferListItem[];
-  fullOffer: FullOfferItem;
-  comments: Comment[];
-}
+export default function OfferPage(): JSX.Element {
+  const offers = useAppSelector((state) => state.offers);
+  const fullOffer = useAppSelector((state) => state.fullOffer);
+  const allOffersNearby = useAppSelector((state) => state.offersNearby);
+  const comments = useAppSelector((state) => state.comments);
 
-export default function OfferPage({offers, fullOffer, comments}:OfferPageProps): JSX.Element {
-  const {id} = useParams();
-  const isOfferId = id === fullOffer.id;
+  const getNearOffers = () => [
+    ...offers.filter((offer) => offer.id === fullOffer?.id),
+    ...allOffersNearby
+  ].slice(0, MAX_NEAR_OFFERS);
+
+  const commentsList = comments.slice(0, MAX_COMMENTS);
+  const nearOffersList = allOffersNearby.slice(0, MAX_NEAR_OFFERS - 1);
+  const currentWithNearOffers = getNearOffers();
+  const isOfferId = fullOffer?.id;
 
   if (!isOfferId) {
     return (
@@ -177,7 +188,7 @@ export default function OfferPage({offers, fullOffer, comments}:OfferPageProps):
                 </h2>
 
                 <ReviewsList
-                  comments={comments}
+                  comments={commentsList}
                 />
                 <ReviewsForm />
 
@@ -188,8 +199,7 @@ export default function OfferPage({offers, fullOffer, comments}:OfferPageProps):
 
             <Map
               startPoint={fullOffer.city}
-              points={offers.slice(0, 3)}
-              selectedPointId={fullOffer.id}
+              points={currentWithNearOffers}
             />
 
           </section>
@@ -201,7 +211,7 @@ export default function OfferPage({offers, fullOffer, comments}:OfferPageProps):
             </h2>
 
             <OffersList
-              offers={offers.slice(0, 3)}
+              offers={nearOffersList}
               cardClassName={ClassByTypeCard.OfferPageCardType}
             />
 

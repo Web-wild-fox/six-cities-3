@@ -1,6 +1,7 @@
 import {useRef, useEffect} from 'react';
 import {Marker, Icon, layerGroup} from 'leaflet';
 import useMap from '@/hooks/use-map';
+import {useAppSelector} from '@/hooks';
 import {OfferListItem, City} from '@/types/offers';
 import {URL_MARKER_DEFAULT, URL_MARKER_CURRENT} from '@/constants';
 import 'leaflet/dist/leaflet.css';
@@ -8,7 +9,6 @@ import 'leaflet/dist/leaflet.css';
 interface MapProps {
   points: OfferListItem[];
   startPoint: City;
-  selectedPointId?: string;
 }
 
 const defaultCustomIcon = new Icon({
@@ -23,7 +23,9 @@ const currentCustomIcon = new Icon({
   iconAnchor: [13.5, 39],
 });
 
-export default function Map({points, startPoint, selectedPointId}: MapProps) {
+export default function Map({points, startPoint}: MapProps) {
+  const selectedPointId = useAppSelector((state) => state.id);
+
   const mapRef = useRef(null);
   const map = useMap(mapRef, startPoint);
 

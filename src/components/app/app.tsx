@@ -2,26 +2,25 @@ import {lazy, Suspense} from 'react';
 import {createBrowserRouter, RouterProvider} from 'react-router-dom';
 import {HelmetProvider} from 'react-helmet-async';
 import {AppRoute, AuthorizationStatus} from '@/constants';
-import {Comment, OfferListItem, FullOfferItem} from '@/types/offers';
 import PrivateRoute from '@/components/private-route/private-route';
 import Preloader from '@/components/preloader/preloader';
 import MainPage from '@/pages/main-page/main-page';
+import {useAppSelector} from '@/hooks';
 
 const OfferPage = lazy(() => import('@/pages/offer-page/offer-page'));
 const FavoritesPage = lazy(() => import('@/pages/favorites-page/favorites-page'));
 const LoginPage = lazy(() => import('@/pages/login-page/login-page'));
 const NotFoundPage = lazy(() => import('@/pages/not-found-page/not-found-page'));
 
-interface AppProps {
-  offers: OfferListItem[];
-  fullOffer: FullOfferItem;
-  favorites: OfferListItem[];
-  comments: Comment[];
-}
-
 const fallBack = <Preloader/>;
 
-export default function App({offers, fullOffer, favorites, comments}: AppProps): JSX.Element {
+export default function App(): JSX.Element {
+  const isOffersDataLoading = useAppSelector((state) => state.isLoading);
+
+  if (isOffersDataLoading) {
+    return fallBack;
+  }
+
   const router = createBrowserRouter([
     {
       path:`${AppRoute.Root}`,
@@ -34,11 +33,7 @@ export default function App({offers, fullOffer, favorites, comments}: AppProps):
         <Suspense
           fallback={fallBack}
         >
-          <OfferPage
-            offers={offers}
-            fullOffer={fullOffer}
-            comments={comments}
-          />
+          <OfferPage />
         </Suspense>
     },
     {
@@ -50,9 +45,7 @@ export default function App({offers, fullOffer, favorites, comments}: AppProps):
           <Suspense
             fallback={fallBack}
           >
-            <FavoritesPage
-              offers={favorites}
-            />
+            <FavoritesPage />
           </Suspense>
 
         </PrivateRoute>

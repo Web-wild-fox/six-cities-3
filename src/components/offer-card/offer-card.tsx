@@ -6,6 +6,9 @@ import {
   MAX_RATING,
   ClassByTypeCard
 } from '@/constants';
+import {useAppDispatch} from '@/hooks';
+import {setOfferId} from '@/store/action';
+import {fetchFullOfferAction} from '@/store/api-actions';
 
 interface OfferCardProps {
   id: OfferListItem['id'];
@@ -17,7 +20,6 @@ interface OfferCardProps {
   rating: OfferListItem['rating'];
   previewImage: OfferListItem['previewImage'];
   cardClassName: string;
-  onCardHover?: (id?: string) => void;
 }
 
 const typesCard = {
@@ -55,16 +57,20 @@ export default function OfferCard(
     rating,
     previewImage,
     cardClassName,
-    onCardHover,
   }: OfferCardProps): JSX.Element {
 
+  const dispatch = useAppDispatch();
   const {className, size} = typesCard[cardClassName];
 
   return (
     <article
       className={`${className}__card place-card`}
-      onMouseEnter={() => onCardHover?.(id)}
-      onMouseLeave={() => onCardHover?.()}
+      onMouseEnter={() =>
+        cardClassName === ClassByTypeCard.MainPageCardType &&
+        dispatch(setOfferId(id))}
+      onMouseLeave={() =>
+        cardClassName === ClassByTypeCard.MainPageCardType &&
+        dispatch(setOfferId())}
     >
       {
         isPremium && (
@@ -76,6 +82,9 @@ export default function OfferCard(
       <div className={`${className}__image-wrapper place-card__image-wrapper`}>
         <Link
           to={`${AppRoute.Offer}${id}`}
+          onClick={() => {
+            dispatch(fetchFullOfferAction(id));
+          }}
         >
           <img
             className="place-card__image"
@@ -122,6 +131,9 @@ export default function OfferCard(
         <h2 className="place-card__name">
           <Link
             to={`${AppRoute.Offer}${id}`}
+            onClick={() => {
+              dispatch(fetchFullOfferAction(id));
+            }}
           >
             {title}
           </Link>
