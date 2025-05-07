@@ -60,6 +60,7 @@ export enum AppRoute {
   Favorites = '/favorites',
   Offer = '/offer/',
   OfferId = '/offer/:id',
+  PageNotFound = '/*',
 }
 
 export enum APIRoute {

@@ -6,8 +6,7 @@
 }
 
 .image__main {
-  margin: 0 auto;
-  max-width: 900px;
+  width: 600px;
 }
 
 .title__main {
@@ -27,5 +26,6 @@
 .link__main {
   color: #4481c3;
   font-size: 24px;
+  padding: 12px 30px;
+  cursor: pointer;
 }
-

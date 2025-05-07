@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import {fetchOfferListAction} from './store/api-actions';
 import {Provider} from 'react-redux';
 import {store} from './store';
-import App from '@/components/app/app';
-import {fetchOfferListAction} from './store/api-actions';
+import App from '@/app';
 
 store.dispatch(fetchOfferListAction());
 

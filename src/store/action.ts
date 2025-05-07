@@ -1,5 +1,9 @@
 import {createAction} from '@reduxjs/toolkit';
-import {OfferListItem, FullOfferItem, Comment} from '@/types/offers';
+import {
+  OfferListItem,
+  FullOfferItem,
+  Comment
+} from '@/types/offers';
 import {SortingType} from '@/constants';
 
 export const changeCity = createAction('ui/changeCity', (value: string) => ({
@@ -25,4 +29,7 @@ export const setOfferId = createAction('data/setOfferId', (id?: string) => ({
   payload: id
 }));
 
-export const setOffersDataLoadingStatus = createAction<boolean>('data/setOffersDataLoadingStatus');
+export const setError = createAction('load/setError', (error: string) => ({
+  payload: error
+}));
+

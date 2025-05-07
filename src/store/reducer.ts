@@ -7,7 +7,7 @@ import {
   loadFullOffer,
   loadComments,
   setOfferId,
-  setOffersDataLoadingStatus
+  setError
 } from '@/store/action';
 import {OfferListItem, FullOfferItem, Comment} from '@/types/offers';
 import {DEFAULT_CITY, DEFAULT_SORTING_TYPE} from '@/constants';
@@ -15,23 +15,23 @@ import {DEFAULT_CITY, DEFAULT_SORTING_TYPE} from '@/constants';
 interface InitialPoint {
   id?: string;
   city: string;
-  offers: OfferListItem[];
-  offersNearby: OfferListItem[];
-  fullOffer?: FullOfferItem;
-  comments: Comment[];
+  offers: OfferListItem[] | null;
+  offersNearby: OfferListItem[] | null;
+  fullOffer: FullOfferItem | null;
+  comments: Comment[] | null;
   sorting: string;
-  isLoading: boolean;
+  error: string | null;
 }
 
 const initialPoint: InitialPoint = {
   id: undefined,
   city: DEFAULT_CITY,
-  offers: [],
-  offersNearby: [],
-  fullOffer: undefined,
-  comments: [],
+  offers: null,
+  offersNearby: null,
+  fullOffer: null,
+  comments: null,
   sorting: DEFAULT_SORTING_TYPE,
-  isLoading: false
+  error: null,
 };
 
 export const reducer = createReducer(initialPoint, (builder) => {
@@ -57,7 +57,7 @@ export const reducer = createReducer(initialPoint, (builder) => {
     .addCase(setOfferId, (state, action) => {
       state.id = action.payload;
     })
-    .addCase(setOffersDataLoadingStatus, (state, action) => {
-      state.isLoading = action.payload;
+    .addCase(setError, (state, action) => {
+      state.error = action.payload;
     });
 });

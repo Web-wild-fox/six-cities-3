@@ -8,7 +8,6 @@ import {
 } from '@/constants';
 import {useAppDispatch} from '@/hooks';
 import {setOfferId} from '@/store/action';
-import {fetchFullOfferAction} from '@/store/api-actions';
 
 interface OfferCardProps {
   id: OfferListItem['id'];
@@ -61,16 +60,21 @@ export default function OfferCard(
 
   const dispatch = useAppDispatch();
   const {className, size} = typesCard[cardClassName];
+  const shouldHover = cardClassName === ClassByTypeCard.MainPageCardType;
 
   return (
     <article
       className={`${className}__card place-card`}
-      onMouseEnter={() =>
-        cardClassName === ClassByTypeCard.MainPageCardType &&
-        dispatch(setOfferId(id))}
-      onMouseLeave={() =>
-        cardClassName === ClassByTypeCard.MainPageCardType &&
-        dispatch(setOfferId())}
+      onMouseEnter={() => {
+        if (shouldHover) {
+          dispatch(setOfferId(id));
+        }
+      }}
+      onMouseLeave={() => {
+        if (shouldHover) {
+          dispatch(setOfferId());
+        }
+      }}
     >
       {
         isPremium && (
@@ -82,9 +86,6 @@ export default function OfferCard(
       <div className={`${className}__image-wrapper place-card__image-wrapper`}>
         <Link
           to={`${AppRoute.Offer}${id}`}
-          onClick={() => {
-            dispatch(fetchFullOfferAction(id));
-          }}
         >
           <img
             className="place-card__image"
@@ -131,9 +132,6 @@ export default function OfferCard(
         <h2 className="place-card__name">
           <Link
             to={`${AppRoute.Offer}${id}`}
-            onClick={() => {
-              dispatch(fetchFullOfferAction(id));
-            }}
           >
             {title}
           </Link>

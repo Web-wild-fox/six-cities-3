@@ -4,7 +4,7 @@ import {OfferListItem} from '@/types/offers';
 import OfferCard from '@/components/offer-card/offer-card';
 
 interface OfferListProps {
-  offers: OfferListItem[];
+  offers?: OfferListItem[];
   cardClassName: string;
 }
 
@@ -21,7 +21,7 @@ export default function OffersList({offers, cardClassName}: OfferListProps): JSX
     )}
     >
       {
-        offers.map((offer) => (
+        offers?.map((offer) => (
           <OfferCard
             key={offer.id}
             id={offer.id}

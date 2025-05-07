@@ -7,7 +7,7 @@ import {URL_MARKER_DEFAULT, URL_MARKER_CURRENT} from '@/constants';
 import 'leaflet/dist/leaflet.css';
 
 interface MapProps {
-  points: OfferListItem[];
+  points?: OfferListItem[];
   startPoint: City;
 }
 
@@ -42,7 +42,7 @@ export default function Map({points, startPoint}: MapProps) {
     if (map) {
       const markerLayer = layerGroup().addTo(map);
 
-      points.forEach(({id, location}) => {
+      points?.forEach(({id, location}) => {
         const marker = new Marker({
           lat: location.latitude,
           lng: location.longitude,

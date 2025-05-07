@@ -9,11 +9,22 @@ import PlacesEmpty from '@/components/places-empty/places-empty';
 import PlacesSorting from '@/components/places-sorting/places-sorting';
 import OffersList from '@/components/offers-list/offers-list';
 import Map from '@/components/map/map';
+import Preloader from '@/components/preloader/preloader';
+import ErrorMessage from '@/components/error-message/error-message';
 
 export default function MainPage(): JSX.Element {
   const currentCity = useAppSelector((state) => state.city);
   const currentSorting = useAppSelector((state) => state.sorting);
   const offers = useAppSelector((state) => state.offers);
+  const error = useAppSelector((state) => state.error);
+
+  if (error) {
+    return <ErrorMessage/>;
+  }
+
+  if (!offers) {
+    return <Preloader/>;
+  }
 
   const getFilterOffers = (city: string) => offers.filter(
     (offer) => offer.city.name === city

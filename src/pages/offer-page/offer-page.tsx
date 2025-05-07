@@ -1,7 +1,9 @@
 import clsx from 'clsx';
+import {useEffect} from 'react';
 import {Helmet} from 'react-helmet-async';
-import {Navigate} from 'react-router-dom';
-import {useAppSelector} from '@/hooks';
+import {useParams} from 'react-router-dom';
+import {useAppDispatch, useAppSelector} from '@/hooks';
+import {fetchFullOfferAction} from '@/store/api-actions';
 import {
   ClassByTypeCard,
   MAX_RATING,
@@ -13,26 +15,36 @@ import ReviewsList from '@/components/reviews-list/reviews-list';
 import ReviewsForm from '@/components/review-form/review-form';
 import Map from '@/components/map/map';
 import OffersList from '@/components/offers-list/offers-list';
+import Preloader from '@/components/preloader/preloader';
+import ErrorMessage from '@/components/error-message/error-message';
 
 export default function OfferPage(): JSX.Element {
-  const offers = useAppSelector((state) => state.offers);
   const fullOffer = useAppSelector((state) => state.fullOffer);
   const allOffersNearby = useAppSelector((state) => state.offersNearby);
   const comments = useAppSelector((state) => state.comments);
+  const error = useAppSelector((state) => state.error);
 
-  const getNearOffers = () => [
-    ...offers.filter((offer) => offer.id === fullOffer?.id),
-    ...allOffersNearby
-  ].slice(0, MAX_NEAR_OFFERS);
+  const {id} = useParams();
 
-  const commentsList = comments.slice(0, MAX_COMMENTS);
-  const nearOffersList = allOffersNearby.slice(0, MAX_NEAR_OFFERS - 1);
-  const currentWithNearOffers = getNearOffers();
-  const isOfferId = fullOffer?.id;
+  const dispatch = useAppDispatch();
 
-  if (!isOfferId) {
+  useEffect(() => {
+    if (id) {
+      dispatch(fetchFullOfferAction(id));
+    }
+  }, [dispatch, id]);
+
+  const commentsList = comments?.slice(0, MAX_COMMENTS);
+  const nearOffersList = allOffersNearby?.slice(0, MAX_NEAR_OFFERS - 1);
+  const currentWithNearOffers = allOffersNearby?.slice(0, MAX_NEAR_OFFERS);
+
+  if (error && !fullOffer) {
+    return <ErrorMessage/>;
+  }
+
+  if (!fullOffer) {
     return (
-      <Navigate to={'*'} />
+      <Preloader />
     );
   }
 
@@ -180,43 +192,67 @@ export default function OfferPage(): JSX.Element {
                 </div>
               </div>
               <section className="offer__reviews reviews">
-                <h2 className="reviews__title">
-                  Reviews &middot;&nbsp;
-                  <span className="reviews__amount">
-                    {comments.length}
-                  </span>
-                </h2>
+                {
+                  error && !comments && (
+                    <h2 className="reviews__title">
+                      Ошибка загрузки комментариев: {error}
+                    </h2>
+                  )
+                }
+                {
+                  comments && (
+                    <>
+                      <h2 className="reviews__title">
+                        Reviews &middot;&nbsp;
+                        <span className="reviews__amount">
+                          {comments.length}
+                        </span>
+                      </h2>
+                      <ReviewsList
+                        comments={commentsList}
+                      />
+                    </>
+                  )
+                }
 
-                <ReviewsList
-                  comments={commentsList}
-                />
                 <ReviewsForm />
 
               </section>
             </div>
           </div>
-          <section className="offer__map map">
-
-            <Map
-              startPoint={fullOffer.city}
-              points={currentWithNearOffers}
-            />
-
-          </section>
+          {
+            error && !allOffersNearby && (
+              <h2 className="reviews__title">
+                Ошибка загрузки карты: {error}
+              </h2>
+            )
+          }
+          {
+            allOffersNearby && (
+              <section className="offer__map map">
+                <Map
+                  startPoint={fullOffer.city}
+                  points={currentWithNearOffers}
+                />
+              </section>
+            )
+          }
         </section>
-        <div className="container">
-          <section className="near-places places">
-            <h2 className="near-places__title">
-              Other places in the neighbourhood
-            </h2>
-
-            <OffersList
-              offers={nearOffersList}
-              cardClassName={ClassByTypeCard.OfferPageCardType}
-            />
-
-          </section>
-        </div>
+        {
+          allOffersNearby && (
+            <div className="container">
+              <section className="near-places places">
+                <h2 className="near-places__title">
+                  Other places in the neighbourhood
+                </h2>
+                <OffersList
+                  offers={nearOffersList}
+                  cardClassName={ClassByTypeCard.OfferPageCardType}
+                />
+              </section>
+            </div>
+          )
+        }
       </main>
     </div>
   );
