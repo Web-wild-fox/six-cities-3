@@ -5,7 +5,7 @@ export default function Preloader() {
     <div className={styles.preloader}>
       <img
         className={styles.preloader__image}
-        src="img/preloader.gif"
+        src="img/preloader.svg"
         alt="preloader"
       />
       <p className={styles.preloader__text}>

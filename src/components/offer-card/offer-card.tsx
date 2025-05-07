@@ -6,6 +6,8 @@ import {
   MAX_RATING,
   ClassByTypeCard
 } from '@/constants';
+import {useAppDispatch} from '@/hooks';
+import {setOfferId} from '@/store/action';
 
 interface OfferCardProps {
   id: OfferListItem['id'];
@@ -17,7 +19,6 @@ interface OfferCardProps {
   rating: OfferListItem['rating'];
   previewImage: OfferListItem['previewImage'];
   cardClassName: string;
-  onCardHover?: (id?: string) => void;
 }
 
 const typesCard = {
@@ -55,16 +56,25 @@ export default function OfferCard(
     rating,
     previewImage,
     cardClassName,
-    onCardHover,
   }: OfferCardProps): JSX.Element {
 
+  const dispatch = useAppDispatch();
   const {className, size} = typesCard[cardClassName];
+  const shouldHover = cardClassName === ClassByTypeCard.MainPageCardType;
 
   return (
     <article
       className={`${className}__card place-card`}
-      onMouseEnter={() => onCardHover?.(id)}
-      onMouseLeave={() => onCardHover?.()}
+      onMouseEnter={() => {
+        if (shouldHover) {
+          dispatch(setOfferId(id));
+        }
+      }}
+      onMouseLeave={() => {
+        if (shouldHover) {
+          dispatch(setOfferId());
+        }
+      }}
     >
       {
         isPremium && (

@@ -1,16 +1,12 @@
 import {Helmet} from 'react-helmet-async';
-import {OfferListItem} from '@/types/offers';
 import {LOCATIONS} from '@/constants';
+import {favorites} from '@/mocks/favorites';
 import Header from '@/components/header/header';
 import Footer from '@/components/footer/footer';
 import Logo from '@/components/logo/logo';
 import FavoriteItem from '@/components/favorite-item/favorite-item';
 
-interface FavoritesPageProps {
-  offers: OfferListItem[];
-}
-
-export default function FavoritesPage({offers}: FavoritesPageProps): JSX.Element {
+export default function FavoritesPage(): JSX.Element {
 
   return (
     <div className="page">
@@ -31,7 +27,7 @@ export default function FavoritesPage({offers}: FavoritesPageProps): JSX.Element
                   <FavoriteItem
                     key={location}
                     location={location}
-                    offers={offers}
+                    offers={favorites}
                   />
                 ))
               }

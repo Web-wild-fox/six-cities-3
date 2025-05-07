@@ -1,5 +1,7 @@
 import {Link} from 'react-router-dom';
-import {AppRoute} from '@/constants';
+import {useAppDispatch} from '@/hooks';
+import {changeCity, changeSorting} from '@/store/action';
+import {AppRoute, DEFAULT_CITY, DEFAULT_SORTING_TYPE} from '@/constants';
 
 type LogoProps = {
   type: 'header' | 'footer';
@@ -17,12 +19,19 @@ const sizes = {
 };
 
 export default function Logo({type}: LogoProps): JSX.Element {
+  const dispatch = useAppDispatch();
   const size = sizes[type];
 
   return (
     <Link
-      className={`${type}__logo-link`}
       to={AppRoute.Root}
+      className={`${type}__logo-link`}
+      onClick={
+        () => {
+          dispatch(changeCity(DEFAULT_CITY));
+          dispatch(changeSorting(DEFAULT_SORTING_TYPE));
+        }
+      }
     >
       <img
         className={`${type}__logo`}

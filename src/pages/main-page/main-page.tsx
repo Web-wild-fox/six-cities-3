@@ -1,27 +1,30 @@
 import clsx from 'clsx';
-import {useState} from 'react';
 import {Helmet} from 'react-helmet-async';
-import {useAppDispatch, useAppSelector} from '@/hooks';
-import {changeCity} from '@/store/action';
-import {
-  ClassByTypeCard
-} from '@/constants';
+import {useAppSelector} from '@/hooks';
 import {getSortedOffers} from '@/utils';
+import {ClassByTypeCard} from '@/constants';
 import Header from '@/components/header/header';
 import NavList from '@/components/nav-list/nav-list';
 import PlacesEmpty from '@/components/places-empty/places-empty';
 import PlacesSorting from '@/components/places-sorting/places-sorting';
 import OffersList from '@/components/offers-list/offers-list';
 import Map from '@/components/map/map';
+import Preloader from '@/components/preloader/preloader';
+import ErrorMessage from '@/components/error-message/error-message';
 
 export default function MainPage(): JSX.Element {
-  const [selectedPointId, setSelectedPointId] = useState<string | undefined>(undefined);
-
   const currentCity = useAppSelector((state) => state.city);
   const currentSorting = useAppSelector((state) => state.sorting);
   const offers = useAppSelector((state) => state.offers);
+  const error = useAppSelector((state) => state.error);
 
-  const dispatch = useAppDispatch();
+  if (error) {
+    return <ErrorMessage/>;
+  }
+
+  if (!offers) {
+    return <Preloader/>;
+  }
 
   const getFilterOffers = (city: string) => offers.filter(
     (offer) => offer.city.name === city
@@ -30,12 +33,6 @@ export default function MainPage(): JSX.Element {
   const filteredOffers = getFilterOffers(currentCity);
   const isOffersList = filteredOffers[0];
   const sortedOffers = getSortedOffers(currentSorting, filteredOffers);
-
-  const handleCardHover = (id?: string) => setSelectedPointId(id);
-
-  const handleCityChangeClick = (city: string): void => {
-    dispatch(changeCity(city));
-  };
 
   return (
     <div className="page page--gray page--main">
@@ -56,7 +53,6 @@ export default function MainPage(): JSX.Element {
 
         <NavList
           city={currentCity}
-          onCityChangeClick={handleCityChangeClick}
         />
 
         <div className="cities">
@@ -82,13 +78,10 @@ export default function MainPage(): JSX.Element {
                       {filteredOffers.length} places to stay in {currentCity}
                     </b>
 
-                    <PlacesSorting
-                      currentSorting={currentSorting}
-                    />
+                    <PlacesSorting />
                     <OffersList
                       offers={sortedOffers}
                       cardClassName={ClassByTypeCard.MainPageCardType}
-                      onCardAction={handleCardHover}
                     />
 
                   </section>
@@ -98,7 +91,6 @@ export default function MainPage(): JSX.Element {
                       <Map
                         points={filteredOffers}
                         startPoint={filteredOffers[0].city}
-                        selectedPointId={selectedPointId}
                       />
 
                     </section>

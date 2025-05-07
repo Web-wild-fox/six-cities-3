@@ -3,10 +3,9 @@ import {LOCATIONS} from '@/constants';
 
 interface NavListProps {
   city: string;
-  onCityChangeClick: (city: string) => void;
 }
 
-export default function NavList({city, onCityChangeClick}:NavListProps): JSX.Element {
+export default function NavList({city}:NavListProps): JSX.Element {
   return (
     <div className="tabs">
       <section className="locations container">
@@ -17,7 +16,6 @@ export default function NavList({city, onCityChangeClick}:NavListProps): JSX.Ele
                 key={location}
                 location={location}
                 isActive={location === city}
-                onCityChangeClick={onCityChangeClick}
               />
             ))
           }

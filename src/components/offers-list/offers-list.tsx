@@ -4,22 +4,24 @@ import {OfferListItem} from '@/types/offers';
 import OfferCard from '@/components/offer-card/offer-card';
 
 interface OfferListProps {
-  offers: OfferListItem[];
+  offers?: OfferListItem[];
   cardClassName: string;
-  onCardAction?: (id?: string) => void;
 }
 
-export default function OffersList({offers, cardClassName, onCardAction}: OfferListProps): JSX.Element {
+export default function OffersList({offers, cardClassName}: OfferListProps): JSX.Element {
 
   return (
     <div className={clsx(
-      cardClassName === ClassByTypeCard.MainPageCardType && `${cardClassName}__places-list places__list tabs__content`,
-      cardClassName === ClassByTypeCard.FavoritesPageCardType && `${cardClassName}__places`,
-      cardClassName === ClassByTypeCard.OfferPageCardType && `${cardClassName}__list places__list`
+      cardClassName === ClassByTypeCard.MainPageCardType &&
+      `${cardClassName}__places-list places__list tabs__content`,
+      cardClassName === ClassByTypeCard.FavoritesPageCardType &&
+      `${cardClassName}__places`,
+      cardClassName === ClassByTypeCard.OfferPageCardType &&
+      `${cardClassName}__list places__list`
     )}
     >
       {
-        offers.map((offer) => (
+        offers?.map((offer) => (
           <OfferCard
             key={offer.id}
             id={offer.id}
@@ -31,7 +33,6 @@ export default function OffersList({offers, cardClassName, onCardAction}: OfferL
             rating={offer.rating}
             previewImage={offer.previewImage}
             cardClassName={cardClassName}
-            onCardHover={onCardAction}
           />
         ))
       }
