@@ -2,14 +2,12 @@ import {useEffect} from 'react';
 import {Helmet} from 'react-helmet-async';
 import {useParams} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from '@/hooks';
-import {resetFullOffer} from '@/store/load-action/load-action';
-import {fetchCommentsAction, fetchFullOfferAction, fetchOffersNearbyAction} from '@/store/api-actions';
-import {
-  getFullOffer,
-  getComments,
-  getOffersNearby,
-  getError,
-} from '@/store/load-action/selectors';
+import {getFullOffer, selectFullOfferStatus} from '@/store/full-offer/full-offer.selectors';
+import {getComments, selectCommentsStatus} from '@/store/comments/comments.selectors';
+import {getOffersNearby, selectOffersNearbyStatus} from '@/store/offers-nearby/offers-nearby.selectors';
+import {fetchFullOfferAction} from '@/store/full-offer/full-offer.api';
+import {fetchCommentsAction} from '@/store/comments/comments.api';
+import {fetchOffersNearbyAction} from '@/store/offers-nearby/offers-nearby.api';
 import {
   ClassByTypeCard,
   MAX_COMMENTS,
@@ -30,19 +28,19 @@ export default function OfferPage(): JSX.Element {
   const fullOffer = useAppSelector(getFullOffer);
   const allOffersNearby = useAppSelector(getOffersNearby);
   const comments = useAppSelector(getComments);
-  const error = useAppSelector(getError);
+  const isCommentLoadingError = !useAppSelector(selectCommentsStatus).isFailed;
+  const isOffersNearbyLoadingError = !useAppSelector(selectOffersNearbyStatus).isFailed;
+  const {isLoading, isFailed} = useAppSelector(selectFullOfferStatus);
 
   const {id} = useParams();
 
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(resetFullOffer());
-
     if (id) {
       dispatch(fetchFullOfferAction(id));
-      dispatch(fetchOffersNearbyAction(id));
       dispatch(fetchCommentsAction(id));
+      dispatch(fetchOffersNearbyAction(id));
     }
   }, [dispatch, id]);
 
@@ -50,14 +48,12 @@ export default function OfferPage(): JSX.Element {
   const nearOffersList = allOffersNearby?.slice(0, MAX_NEAR_OFFERS - 1);
   const currentWithNearOffers = allOffersNearby?.slice(0, MAX_NEAR_OFFERS);
 
-  if (error && !fullOffer) {
+  if (isFailed) {
     return <ErrorMessage/>;
   }
 
-  if (!fullOffer) {
-    return (
-      <Preloader />
-    );
+  if (isLoading || !fullOffer) {
+    return <Preloader/>;
   }
 
   const {
@@ -113,61 +109,41 @@ export default function OfferPage(): JSX.Element {
 
               <section className="offer__reviews reviews">
                 {
-                  error && !comments && (
-                    <h2 className="reviews__title">
-                      Ошибка загрузки комментариев: {error}
-                    </h2>
-                  )
+                  isCommentLoadingError &&
+                  <ReviewsList
+                    comments={commentsList}
+                  />
                 }
-                {
-                  comments && (
-                    <ReviewsList
-                      comments={commentsList}
-                    />
-                  )
-                }
-
                 <ReviewsForm />
 
               </section>
             </div>
           </div>
-          {
-            error && !allOffersNearby && (
-              <h2 className="reviews__title">
-                Ошибка загрузки карты: {error}
-              </h2>
-            )
-          }
-          {
-            allOffersNearby && (
-              <section className="offer__map map">
-
-                <Map
-                  startPoint={fullOffer.city}
-                  points={currentWithNearOffers}
-                />
-
-              </section>
-            )
-          }
+          <section className="offer__map map">
+            {
+              isOffersNearbyLoadingError &&
+              <Map
+                startPoint={fullOffer.city}
+                points={currentWithNearOffers}
+              />
+            }
+          </section>
         </section>
         {
-          allOffersNearby && (
-            <div className="container">
-              <section className="near-places places">
-                <h2 className="near-places__title">
-                  Other places in the neighbourhood
-                </h2>
+          isOffersNearbyLoadingError &&
+          <div className="container">
+            <section className="near-places places">
+              <h2 className="near-places__title">
+                Other places in the neighbourhood
+              </h2>
 
-                <OffersList
-                  offers={nearOffersList}
-                  cardClassName={ClassByTypeCard.OfferPageCardType}
-                />
+              <OffersList
+                offers={nearOffersList}
+                cardClassName={ClassByTypeCard.OfferPageCardType}
+              />
 
-              </section>
-            </div>
-          )
+            </section>
+          </div>
         }
       </main>
     </div>

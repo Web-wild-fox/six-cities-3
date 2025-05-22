@@ -4,7 +4,7 @@ import 'leaflet/dist/leaflet.css';
 import {Marker, Icon, layerGroup} from 'leaflet';
 import {useAppSelector} from '@/hooks';
 import {OfferListItem, City} from '@/types/offers';
-import {getOfferId} from '@/store/user-action/selectors';
+import {getOfferId} from '@/store/user/user.selectors';
 import {
   URL_MARKER_DEFAULT,
   URL_MARKER_CURRENT

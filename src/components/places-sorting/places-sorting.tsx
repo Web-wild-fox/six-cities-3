@@ -2,8 +2,8 @@ import clsx from 'clsx';
 import {useRef, useState} from 'react';
 import {useClickAway} from 'react-use';
 import {useAppSelector, useAppDispatch} from '@/hooks';
-import {changeSorting} from '@/store/user-action/user-action';
-import {getCurrentSorting} from '@/store/user-action/selectors';
+import {changeSorting} from '@/store/user/user.slice';
+import {getCurrentSorting} from '@/store/user/user.selectors';
 import {SortingType} from '@/constants';
 
 export default function PlacesSorting(): JSX.Element {
