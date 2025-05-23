@@ -1,7 +1,11 @@
 import clsx from 'clsx';
 import {Helmet} from 'react-helmet-async';
-import {useAppSelector} from '@/hooks';
+import {useEffect} from 'react';
+import {useAppDispatch, useAppSelector} from '@/hooks';
 import {getSortedOffers} from '@/utils';
+import {getCurrentCity, getCurrentSorting} from '@/store/user/user.selectors';
+import {getOffers, selectOffersStatus} from '@/store/offers/offers.selectors';
+import {fetchOfferListAction} from '@/store/offers/offers.api';
 import {ClassByTypeCard} from '@/constants';
 import Header from '@/components/header/header';
 import NavList from '@/components/nav-list/nav-list';
@@ -13,16 +17,22 @@ import Preloader from '@/components/preloader/preloader';
 import ErrorMessage from '@/components/error-message/error-message';
 
 export default function MainPage(): JSX.Element {
-  const currentCity = useAppSelector((state) => state.city);
-  const currentSorting = useAppSelector((state) => state.sorting);
-  const offers = useAppSelector((state) => state.offers);
-  const error = useAppSelector((state) => state.error);
+  const currentCity = useAppSelector(getCurrentCity);
+  const currentSorting = useAppSelector(getCurrentSorting);
+  const offers = useAppSelector(getOffers);
+  const {isLoading, isFailed} = useAppSelector(selectOffersStatus);
 
-  if (error) {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchOfferListAction());
+  }, [dispatch]);
+
+  if (isFailed) {
     return <ErrorMessage/>;
   }
 
-  if (!offers) {
+  if (isLoading) {
     return <Preloader/>;
   }
 

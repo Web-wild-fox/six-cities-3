@@ -77,3 +77,25 @@ export enum AuthorizationStatus {
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN',
 }
+
+export enum NameSpace {
+  Offers = 'OFFERS',
+  FullOffer = 'FULL_OFFER',
+  Comments = 'COMMENTS',
+  OffersNearby = 'OFFERS_NEARBY',
+  User = 'USER',
+}
+
+export enum RequestStatus {
+  Idle = 'IDLE',
+  Loading = 'LOADING',
+  Succeeded = 'SUCCEEDED',
+  Failed = 'FAILED',
+}
+
+export enum RequestMessageError {
+  CommentsLoadingFailed = 'Ошибка загрузки комментариев:',
+  OffersNearbyLoadingFailed = 'Ошибка загрузки соседних объявлений:',
+  OffersLoadingFailed = 'Ошибка загрузки объявлений:',
+  FullOfferLoadingFailed = 'Ошибка загрузки объявления:',
+}
