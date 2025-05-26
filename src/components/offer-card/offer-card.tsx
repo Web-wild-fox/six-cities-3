@@ -1,12 +1,14 @@
 import clsx from 'clsx';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import {OfferListItem} from '@/types/offers';
 import {
   AppRoute,
   MAX_RATING,
-  ClassByTypeCard
+  ClassByTypeCard,
+  AuthorizationStatus
 } from '@/constants';
-import {useAppDispatch} from '@/hooks';
+import {useAppDispatch, useAppSelector} from '@/hooks';
+import {getAuthStatus} from '@/store/user/user.selectors';
 import {setOfferId} from '@/store/user/user.slice';
 
 interface OfferCardProps {
@@ -57,10 +59,20 @@ export default function OfferCard(
     previewImage,
     cardClassName,
   }: OfferCardProps): JSX.Element {
+  const authStatus = useAppSelector(getAuthStatus);
+  const isAuth = authStatus === String(AuthorizationStatus.Auth);
 
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
   const {className, size} = typesCard[cardClassName];
   const shouldHover = cardClassName === ClassByTypeCard.MainPageCardType;
+
+  const onFavoriteButtonClick = () => {
+    if (!isAuth) {
+      navigate(AppRoute.Login);
+    }
+  };
 
   return (
     <article
@@ -110,6 +122,7 @@ export default function OfferCard(
               isFavorite && 'place-card__bookmark-button--active'
             )}
             type="button"
+            onClick={onFavoriteButtonClick}
           >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>

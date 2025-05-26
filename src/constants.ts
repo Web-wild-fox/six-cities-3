@@ -76,6 +76,7 @@ export enum AuthorizationStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN',
+  InProgress = 'IN_PROGRESS',
 }
 
 export enum NameSpace {
@@ -98,4 +99,12 @@ export enum RequestMessageError {
   OffersNearbyLoadingFailed = 'Ошибка загрузки соседних объявлений:',
   OffersLoadingFailed = 'Ошибка загрузки объявлений:',
   FullOfferLoadingFailed = 'Ошибка загрузки объявления:',
+}
+
+export enum AuthMessageNotification {
+  AuthUnknown = 'Вы не авторизованы',
+  AuthSuccess = 'Авторизация успешна',
+  AuthFailed = 'Авторизация не удалась',
+  LogoutSuccess = 'Вы вышли из системы',
+  LogoutFailed = 'Ошибка выхода из системы',
 }

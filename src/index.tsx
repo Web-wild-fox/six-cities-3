@@ -3,7 +3,10 @@ import ReactDOM from 'react-dom/client';
 import {ToastContainer} from 'react-toastify';
 import {Provider} from 'react-redux';
 import {store} from './store';
+import {checkAuthAction} from './store/user/user.api';
 import App from '@/app';
+
+store.dispatch(checkAuthAction());
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
