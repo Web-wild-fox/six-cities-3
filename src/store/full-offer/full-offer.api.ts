@@ -1,4 +1,5 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
+import {StatusCodes} from 'http-status-codes';
 import {AsyncThunkConfig} from '@/types/state.js';
 import {FullOfferItem} from '@/types/offers';
 import {APIRoute, AppRoute} from '@/constants.js';
@@ -16,7 +17,10 @@ export const fetchFullOfferAction = createAsyncThunk<
 
         return data;
       } catch (err) {
-        if (axios.isAxiosError(err) && err.response?.status === 404) {
+        if (
+          axios.isAxiosError(err) &&
+          err.response?.status === StatusCodes.NOT_FOUND
+        ) {
           router.navigate(AppRoute.PageNotFound);
         }
 

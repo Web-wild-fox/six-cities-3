@@ -1,6 +1,6 @@
 import {Suspense} from 'react';
 import {createBrowserRouter} from 'react-router-dom';
-import {AppRoute, AuthorizationStatus} from '@/constants';
+import {AppRoute} from '@/constants';
 import PrivateRoute from '@/components/private-route/private-route';
 import Preloader from '@/components/preloader/preloader';
 import MainPage from '@/pages/main-page/main-page';
@@ -31,7 +31,7 @@ export const router = createBrowserRouter([
     path:`${AppRoute.Favorites}`,
     element:
       <PrivateRoute
-        authorizationStatus={AuthorizationStatus.Auth}
+        redirectPath={AppRoute.Login}
       >
         <Suspense
           fallback={fallBack}
