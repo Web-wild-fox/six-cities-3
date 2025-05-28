@@ -1,15 +1,13 @@
 import {Link} from 'react-router-dom';
 import {logoutAction} from '@/store/user/user.api';
-import {getAuthStatus, getUserData} from '@/store/user/user.selectors';
+import {getIsAuthStatus, getUserData} from '@/store/user/user.selectors';
 import {useAppDispatch, useAppSelector} from '@/hooks';
-import {AppRoute, AuthorizationStatus} from '@/constants';
+import {AppRoute} from '@/constants';
 
 export default function UserNav(): JSX.Element {
   const userName = useAppSelector(getUserData);
   const userAvatar = useAppSelector(getUserData);
-
-  const authStatus = useAppSelector(getAuthStatus);
-  const isAuth = authStatus === String(AuthorizationStatus.Auth);
+  const isAuth = useAppSelector(getIsAuthStatus);
 
   const dispatch = useAppDispatch();
 
@@ -53,7 +51,7 @@ export default function UserNav(): JSX.Element {
         </li>
         {isAuth && (
           <li className="header__nav-item">
-            <button
+            <a
               className="header__nav-link"
               onClick={() => {
                 dispatch(logoutAction());
@@ -62,7 +60,7 @@ export default function UserNav(): JSX.Element {
               <span className="header__signout">
                 Sign out
               </span>
-            </button>
+            </a>
           </li>
         )}
       </ul>

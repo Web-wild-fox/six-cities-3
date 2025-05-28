@@ -5,7 +5,6 @@ import {
   NameSpace,
   SortingType,
   AuthorizationStatus,
-  AuthMessageNotification,
 } from '@/constants';
 import {
   checkAuthAction,
@@ -13,8 +12,6 @@ import {
   logoutAction,
 } from './user.api';
 import {UserData} from '@/types/user-data';
-import {dropToken, saveToken} from '@/services/token';
-import {toast} from 'react-toastify';
 
 interface InitialStateProps {
   id?: string;
@@ -60,8 +57,6 @@ export const userAction = createSlice({
       })
       .addCase(checkAuthAction.rejected, (state) => {
         state.authorizationStatus = AuthorizationStatus.NoAuth;
-
-        toast.info(AuthMessageNotification.AuthUnknown);
       })
       .addCase(loginAction.pending, (state) => {
         state.authorizationStatus = AuthorizationStatus.InProgress;
@@ -69,23 +64,12 @@ export const userAction = createSlice({
       .addCase(loginAction.fulfilled, (state, action) => {
         state.userData = action.payload;
         state.authorizationStatus = AuthorizationStatus.Auth;
-
-        saveToken(state.userData.token);
-        toast.success(AuthMessageNotification.AuthSuccess);
       })
       .addCase(loginAction.rejected, (state) => {
         state.authorizationStatus = AuthorizationStatus.NoAuth;
-
-        toast.error(AuthMessageNotification.AuthFailed);
       })
       .addCase(logoutAction.fulfilled, (state) => {
         state.authorizationStatus = AuthorizationStatus.NoAuth;
-
-        dropToken();
-        toast.success(AuthMessageNotification.LogoutSuccess);
-      })
-      .addCase(logoutAction.rejected, () => {
-        toast.error(AuthMessageNotification.LogoutFailed);
       });
   }
 });

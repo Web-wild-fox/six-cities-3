@@ -5,10 +5,9 @@ import {
   AppRoute,
   MAX_RATING,
   ClassByTypeCard,
-  AuthorizationStatus
 } from '@/constants';
 import {useAppDispatch, useAppSelector} from '@/hooks';
-import {getAuthStatus} from '@/store/user/user.selectors';
+import {getIsAuthStatus} from '@/store/user/user.selectors';
 import {setOfferId} from '@/store/user/user.slice';
 
 interface OfferCardProps {
@@ -59,8 +58,7 @@ export default function OfferCard(
     previewImage,
     cardClassName,
   }: OfferCardProps): JSX.Element {
-  const authStatus = useAppSelector(getAuthStatus);
-  const isAuth = authStatus === String(AuthorizationStatus.Auth);
+  const isAuth = useAppSelector(getIsAuthStatus);
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();

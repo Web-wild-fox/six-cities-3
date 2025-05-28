@@ -30,7 +30,9 @@ export const router = createBrowserRouter([
   {
     path:`${AppRoute.Favorites}`,
     element:
-      <PrivateRoute>
+      <PrivateRoute
+        redirectPath={AppRoute.Login}
+      >
         <Suspense
           fallback={fallBack}
         >
@@ -42,13 +44,11 @@ export const router = createBrowserRouter([
   {
     path:`${AppRoute.Login}`,
     element:
-      <PrivateRoute>
-        <Suspense
-          fallback={fallBack}
-        >
-          <LoginPage />
-        </Suspense>
-      </PrivateRoute>
+      <Suspense
+        fallback={fallBack}
+      >
+        <LoginPage />
+      </Suspense>
   },
   {
     path: `${AppRoute.PageNotFound}`,

@@ -1,26 +1,17 @@
-import {Navigate, useLocation} from 'react-router-dom';
+import {Navigate} from 'react-router-dom';
 import {useAppSelector} from '@/hooks';
-import {getAuthStatus} from '@/store/user/user.selectors';
-import {AppRoute, AuthorizationStatus} from '@/constants';
+import {getIsAuthStatus} from '@/store/user/user.selectors';
+import {AppRoute} from '@/constants';
 
 type PrivateRouteProps = {
   children: JSX.Element;
+  redirectPath: AppRoute;
 }
 
-export default function PrivateRoute(props: PrivateRouteProps): JSX.Element {
-  const authStatus = useAppSelector(getAuthStatus);
-  const currentPathName = useLocation();
+export default function PrivateRoute({children, redirectPath}: PrivateRouteProps): JSX.Element {
+  const isAuth = useAppSelector(getIsAuthStatus);
 
-  const {children} = props;
-  const isLoginPage = currentPathName.pathname === String(AppRoute.Login);
-
-  if (isLoginPage) {
-    return authStatus === String(AuthorizationStatus.Auth)
-      ? <Navigate to={AppRoute.Root} />
-      : children;
-  }
-
-  return authStatus === String(AuthorizationStatus.Auth)
+  return isAuth
     ? children
-    : <Navigate to={AppRoute.Login} />;
+    : <Navigate to={redirectPath} />;
 }
