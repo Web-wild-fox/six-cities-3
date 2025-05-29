@@ -2,9 +2,15 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 import {AsyncThunkConfig} from '@/types/state.js';
 import {AuthData} from '@/types/auth-data';
 import {UserData} from '@/types/user-data';
+import {Comment} from '@/types/offers';
+import {CommentData} from '@/types/comment-data';
 import {dropToken, saveToken} from '@/services/token';
 import {toast} from 'react-toastify';
-import {APIRoute, AuthMessageNotification} from '@/constants.js';
+import {
+  APIRoute,
+  AuthNotification,
+  PostCommentNotification
+} from '@/constants.js';
 
 export const checkAuthAction = createAsyncThunk<
   UserData,
@@ -18,7 +24,7 @@ export const checkAuthAction = createAsyncThunk<
 
         return data;
       } catch (err) {
-        toast.info(AuthMessageNotification.AuthUnknown);
+        toast.info(AuthNotification.AuthUnknown);
 
         throw err;
       }
@@ -36,11 +42,11 @@ export const loginAction = createAsyncThunk<
       const {data} = await api.post<UserData>(APIRoute.Login, {email, password});
 
       saveToken(data.token);
-      toast.success(AuthMessageNotification.AuthSuccess);
+      toast.success(AuthNotification.AuthSuccess);
 
       return data;
     } catch (err) {
-      toast.error(AuthMessageNotification.AuthFailed);
+      toast.error(AuthNotification.AuthFailed);
 
       throw err;
     }
@@ -58,11 +64,34 @@ export const logoutAction = createAsyncThunk<
       await api.delete(APIRoute.Logout);
 
       dropToken();
-      toast.success(AuthMessageNotification.LogoutSuccess);
+      toast.success(AuthNotification.LogoutSuccess);
     } catch (err) {
-      toast.error(AuthMessageNotification.LogoutFailed);
+      toast.error(AuthNotification.LogoutFailed);
 
       throw err;
     }
   },
 );
+
+export const postCommentAction = createAsyncThunk<
+  Comment,
+  CommentData,
+  AsyncThunkConfig
+  >(
+    'user/postComment',
+    async ({id, comment, rating}, {extra: {api}}) => {
+      try {
+        const {data} = await api.post<Comment>(
+          `${APIRoute.Comments}${id}`, {comment, rating}
+        );
+
+        toast.success(PostCommentNotification.CommentPostSuccess);
+
+        return data;
+      } catch (err) {
+        toast.error(PostCommentNotification.CommentPostFailed);
+
+        throw err;
+      }
+    }
+  );

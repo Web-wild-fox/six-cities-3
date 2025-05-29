@@ -7,3 +7,5 @@ export const getCurrentSorting = (state: State) => state[NameSpace.User].sorting
 export const getAuthStatus = (state: State) => state[NameSpace.User].authorizationStatus;
 export const getIsAuthStatus = (state: State) => state[NameSpace.User].authorizationStatus === String(AuthorizationStatus.Auth);
 export const getUserData = (state: State) => state[NameSpace.User].userData;
+export const getAddedComment = (state: State) => state[NameSpace.User].addedComment;
+export const getAddedCommentStatus = (state: State) => state[NameSpace.User].addedCommentStatus;

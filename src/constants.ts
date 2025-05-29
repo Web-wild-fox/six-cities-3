@@ -101,7 +101,12 @@ export enum RequestMessageError {
   FullOfferLoadingFailed = 'Ошибка загрузки объявления:',
 }
 
-export enum AuthMessageNotification {
+export enum PostCommentNotification {
+  CommentPostSuccess = 'Ваш комментарий отправлен',
+  CommentPostFailed = 'Ошибка отправки комментария',
+}
+
+export enum AuthNotification {
   AuthUnknown = 'Вы не авторизованы',
   AuthSuccess = 'Авторизация успешна',
   AuthFailed = 'Авторизация не удалась',
