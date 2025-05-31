@@ -1,21 +1,69 @@
 import {
   useState,
   ChangeEvent,
-  Fragment
+  Fragment,
+  useEffect,
+  useRef
 } from 'react';
-import {OfferRatings} from '@/constants';
+import {useAppDispatch, useAppSelector} from '@/hooks';
+import {getAddedCommentStatus} from '@/store/user/user.selectors';
+import {postCommentAction} from '@/store/user/user.api';
+import {OfferRatings, RequestStatus} from '@/constants';
 
-export default function ReviewsForm(): JSX.Element {
+interface ReviewFormProps {
+  id: string;
+}
+
+const enum TextButtonSubmit {
+  SUBMIT = 'Submit',
+  IN_PROGRESS = 'Submitting…',
+}
+
+export default function ReviewsForm({id}: ReviewFormProps): JSX.Element {
   const [formData, setFormData] = useState({
     review: '',
     rating: ''
   });
 
+  const {review, rating: currentRating} = formData;
+
+  const formRef = useRef<HTMLFormElement>(null);
+  const addedCommentStatus = useAppSelector(getAddedCommentStatus);
+
+  const dispatch = useAppDispatch();
+
+  const isSubmitting = addedCommentStatus === RequestStatus.Loading;
+  const isSubmittingSuccess = addedCommentStatus === RequestStatus.Succeeded;
+
+  const isRatingValid = (
+    Number(currentRating) >= 1 &&
+    Number(currentRating) <= 5
+  );
+  const isReviweValid = (
+    review.length >= 50 &&
+    review.length <= 300
+  );
+  const isValidForm = isRatingValid && isReviweValid;
+
+  useEffect(() => {
+    if (isSubmittingSuccess && formRef.current) {
+      setFormData({
+        review: '',
+        rating: '',
+      });
+
+      formRef.current.reset();
+    }
+  }, [isSubmittingSuccess]);
+
   const handleFormChange = (evt:
     ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const {name, value} = evt.target;
 
-    setFormData({...formData, [name]: value});
+    setFormData({
+      ...formData,
+      [name]: value
+    });
   };
 
   const getRatingList = () =>
@@ -41,9 +89,31 @@ export default function ReviewsForm(): JSX.Element {
       </Fragment>
     ));
 
+  const handleFormSubmit = (evt: ChangeEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+
+    if (!isValidForm) {
+      return;
+    }
+
+    dispatch(postCommentAction({
+      id,
+      comment: review,
+      rating: Number(currentRating),
+    }));
+  };
+
   return (
-    <form className="reviews__form form" action="#" method="post">
-      <label className="reviews__label form__label" htmlFor="review">Your review</label>
+    <form
+      ref={formRef}
+      className="reviews__form form"
+      action="#"
+      method="post"
+      onSubmit={handleFormSubmit}
+    >
+      <label className="reviews__label form__label" htmlFor="review">
+        Your review
+      </label>
       <div className="reviews__rating-form form__rating">
         {getRatingList()}
       </div>
@@ -51,7 +121,7 @@ export default function ReviewsForm(): JSX.Element {
         className="reviews__textarea form__textarea"
         id="review"
         name="review"
-        value={formData.review}
+        value={review}
         placeholder="Tell how was your stay, what you like and what can be improved"
         onChange={handleFormChange}
       >
@@ -71,9 +141,13 @@ export default function ReviewsForm(): JSX.Element {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled
+          disabled={!isValidForm || isSubmitting}
         >
-          Submit
+          {
+            isSubmitting ?
+              TextButtonSubmit.IN_PROGRESS :
+              TextButtonSubmit.SUBMIT
+          }
         </button>
       </div>
     </form>

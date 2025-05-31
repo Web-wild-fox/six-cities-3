@@ -2,6 +2,7 @@ import {useEffect} from 'react';
 import {Helmet} from 'react-helmet-async';
 import {useParams} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from '@/hooks';
+import {getAddedComment, getIsAuthStatus} from '@/store/user/user.selectors';
 import {getFullOffer, selectFullOfferStatus} from '@/store/full-offer/full-offer.selectors';
 import {getComments, selectCommentsStatus} from '@/store/comments/comments.selectors';
 import {getOffersNearby, selectOffersNearbyStatus} from '@/store/offers-nearby/offers-nearby.selectors';
@@ -28,6 +29,8 @@ export default function OfferPage(): JSX.Element {
   const fullOffer = useAppSelector(getFullOffer);
   const allOffersNearby = useAppSelector(getOffersNearby);
   const comments = useAppSelector(getComments);
+  const addedComment = useAppSelector(getAddedComment);
+  const isAuth = useAppSelector(getIsAuthStatus);
   const isCommentLoadingError = !useAppSelector(selectCommentsStatus).isFailed;
   const isOffersNearbyLoadingError = !useAppSelector(selectOffersNearbyStatus).isFailed;
   const {isLoading, isFailed} = useAppSelector(selectFullOfferStatus);
@@ -44,9 +47,15 @@ export default function OfferPage(): JSX.Element {
     }
   }, [dispatch, id]);
 
-  const commentsList = comments?.slice(0, MAX_COMMENTS);
-  const nearOffersList = allOffersNearby?.slice(0, MAX_NEAR_OFFERS - 1);
-  const currentWithNearOffers = allOffersNearby?.slice(0, MAX_NEAR_OFFERS);
+  const commentsList = addedComment ?
+    comments
+      .concat([addedComment])
+      .slice(0, MAX_COMMENTS) :
+    comments
+      .slice(0, MAX_COMMENTS);
+
+  const nearOffersList = allOffersNearby.slice(0, MAX_NEAR_OFFERS - 1);
+  const currentWithNearOffers = allOffersNearby.slice(0, MAX_NEAR_OFFERS);
 
   if (isFailed) {
     return <ErrorMessage/>;
@@ -114,8 +123,14 @@ export default function OfferPage(): JSX.Element {
                     comments={commentsList}
                   />
                 }
-                <ReviewsForm />
-
+                {
+                  isAuth &&
+                  id && (
+                    <ReviewsForm
+                      id={id}
+                    />
+                  )
+                }
               </section>
             </div>
           </div>

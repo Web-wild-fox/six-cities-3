@@ -5,13 +5,16 @@ import {
   NameSpace,
   SortingType,
   AuthorizationStatus,
+  RequestStatus,
 } from '@/constants';
 import {
   checkAuthAction,
   loginAction,
   logoutAction,
+  postCommentAction,
 } from './user.api';
 import {UserData} from '@/types/user-data';
+import {Comment} from '@/types/offers';
 
 interface InitialStateProps {
   id?: string;
@@ -19,6 +22,8 @@ interface InitialStateProps {
   sorting: SortingType;
   authorizationStatus: string;
   userData: UserData;
+  addedComment: Comment | null;
+  addedCommentStatus: RequestStatus;
 }
 
 const initialState: InitialStateProps = {
@@ -33,6 +38,8 @@ const initialState: InitialStateProps = {
     email: '',
     token: '',
   },
+  addedComment: null,
+  addedCommentStatus: RequestStatus.Idle,
 };
 
 export const userAction = createSlice({
@@ -70,6 +77,16 @@ export const userAction = createSlice({
       })
       .addCase(logoutAction.fulfilled, (state) => {
         state.authorizationStatus = AuthorizationStatus.NoAuth;
+      })
+      .addCase(postCommentAction.pending, (state) => {
+        state.addedCommentStatus = RequestStatus.Loading;
+      })
+      .addCase(postCommentAction.fulfilled, (state, action) => {
+        state.addedComment = action.payload;
+        state.addedCommentStatus = RequestStatus.Succeeded;
+      })
+      .addCase(postCommentAction.rejected, (state) => {
+        state.addedCommentStatus = RequestStatus.Failed;
       });
   }
 });
