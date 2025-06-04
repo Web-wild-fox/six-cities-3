@@ -21,9 +21,9 @@ interface InitialStateProps {
   city: string;
   sorting: SortingType;
   authorizationStatus: string;
-  userData: UserData;
+  userData: UserData | null;
   addedComment: Comment | null;
-  addedCommentStatus: RequestStatus;
+  requestStatus: RequestStatus;
 }
 
 const initialState: InitialStateProps = {
@@ -31,15 +31,9 @@ const initialState: InitialStateProps = {
   city: DEFAULT_CITY,
   sorting: DEFAULT_SORTING_TYPE,
   authorizationStatus: AuthorizationStatus.Unknown,
-  userData: {
-    name: '',
-    avatarUrl: '',
-    isPro: false,
-    email: '',
-    token: '',
-  },
+  userData: null,
   addedComment: null,
-  addedCommentStatus: RequestStatus.Idle,
+  requestStatus: RequestStatus.Idle,
 };
 
 export const userAction = createSlice({
@@ -66,27 +60,29 @@ export const userAction = createSlice({
         state.authorizationStatus = AuthorizationStatus.NoAuth;
       })
       .addCase(loginAction.pending, (state) => {
-        state.authorizationStatus = AuthorizationStatus.InProgress;
+        state.requestStatus = RequestStatus.Loading;
       })
       .addCase(loginAction.fulfilled, (state, action) => {
         state.userData = action.payload;
         state.authorizationStatus = AuthorizationStatus.Auth;
+        state.requestStatus = RequestStatus.Succeeded;
       })
       .addCase(loginAction.rejected, (state) => {
         state.authorizationStatus = AuthorizationStatus.NoAuth;
+        state.requestStatus = RequestStatus.Failed;
       })
       .addCase(logoutAction.fulfilled, (state) => {
         state.authorizationStatus = AuthorizationStatus.NoAuth;
       })
       .addCase(postCommentAction.pending, (state) => {
-        state.addedCommentStatus = RequestStatus.Loading;
+        state.requestStatus = RequestStatus.Loading;
       })
       .addCase(postCommentAction.fulfilled, (state, action) => {
         state.addedComment = action.payload;
-        state.addedCommentStatus = RequestStatus.Succeeded;
+        state.requestStatus = RequestStatus.Succeeded;
       })
       .addCase(postCommentAction.rejected, (state) => {
-        state.addedCommentStatus = RequestStatus.Failed;
+        state.requestStatus = RequestStatus.Failed;
       });
   }
 });

@@ -1,14 +1,12 @@
-import {createAsyncThunk} from '@reduxjs/toolkit';
-import {AsyncThunkConfig} from '@/types/state.js';
+import {createAppAsyncThunk} from '@/hooks';
 import {Comment} from '@/types/offers';
 import {APIRoute, RequestMessageError} from '@/constants.js';
 import {toast} from 'react-toastify';
 import axios from 'axios';
 
-export const fetchCommentsAction = createAsyncThunk<
+export const fetchCommentsAction = createAppAsyncThunk<
   Comment[],
-  string,
-  AsyncThunkConfig
+  string
   >(
     'data/fetchCommentsList',
     async (id, {extra: {api}}) => {

@@ -27,7 +27,7 @@ export default function UserNav(): JSX.Element {
               {isAuth && (
                 <img
                   className="header__avatar user__avatar"
-                  src={userAvatar.avatarUrl}
+                  src={userAvatar?.avatarUrl}
                   alt="User avatar"
                 />
               )}
@@ -35,7 +35,7 @@ export default function UserNav(): JSX.Element {
             {isAuth && (
               <>
                 <span className="header__user-name user__name">
-                  {userName.email}
+                  {userName?.email}
                 </span>
                 <span className="header__favorite-count">
                   3

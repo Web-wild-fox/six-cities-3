@@ -76,7 +76,6 @@ export enum AuthorizationStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN',
-  InProgress = 'IN_PROGRESS',
 }
 
 export enum NameSpace {

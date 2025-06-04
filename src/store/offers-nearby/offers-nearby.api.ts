@@ -1,14 +1,12 @@
-import {createAsyncThunk} from '@reduxjs/toolkit';
-import {AsyncThunkConfig} from '@/types/state.js';
+import {createAppAsyncThunk} from '@/hooks';
 import {OfferListItem} from '@/types/offers';
 import {APIRoute, RequestMessageError} from '@/constants.js';
 import {toast} from 'react-toastify';
 import axios from 'axios';
 
-export const fetchOffersNearbyAction = createAsyncThunk<
+export const fetchOffersNearbyAction = createAppAsyncThunk<
   OfferListItem[],
-  string,
-  AsyncThunkConfig
+  string
   >(
     'data/fetchOffersNearbyList',
     async (id, {extra: {api}}) => {
