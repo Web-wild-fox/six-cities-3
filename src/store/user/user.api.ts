@@ -1,5 +1,4 @@
-import {createAsyncThunk} from '@reduxjs/toolkit';
-import {AsyncThunkConfig} from '@/types/state.js';
+import {createAppAsyncThunk} from '@/hooks';
 import {AuthData} from '@/types/auth-data';
 import {UserData} from '@/types/user-data';
 import {Comment} from '@/types/offers';
@@ -12,10 +11,9 @@ import {
   PostCommentNotification
 } from '@/constants.js';
 
-export const checkAuthAction = createAsyncThunk<
+export const checkAuthAction = createAppAsyncThunk<
   UserData,
-  undefined,
-  AsyncThunkConfig
+  void
   >(
     'user/checkAuth',
     async (_arg, {extra: {api}}) => {
@@ -31,10 +29,9 @@ export const checkAuthAction = createAsyncThunk<
     },
   );
 
-export const loginAction = createAsyncThunk<
+export const loginAction = createAppAsyncThunk<
   UserData,
-  AuthData,
-  AsyncThunkConfig
+  AuthData
 >(
   'user/login',
   async ({login: email, password}, {extra: {api}}) => {
@@ -53,10 +50,9 @@ export const loginAction = createAsyncThunk<
   },
 );
 
-export const logoutAction = createAsyncThunk<
+export const logoutAction = createAppAsyncThunk<
   void,
-  undefined,
-  AsyncThunkConfig
+  void
 >(
   'user/logout',
   async (_arg, {extra: {api}}) => {
@@ -73,10 +69,9 @@ export const logoutAction = createAsyncThunk<
   },
 );
 
-export const postCommentAction = createAsyncThunk<
+export const postCommentAction = createAppAsyncThunk<
   Comment,
-  CommentData,
-  AsyncThunkConfig
+  CommentData
   >(
     'user/postComment',
     async ({id, comment, rating}, {extra: {api}}) => {

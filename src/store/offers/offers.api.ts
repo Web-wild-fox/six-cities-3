@@ -1,12 +1,10 @@
-import {createAsyncThunk} from '@reduxjs/toolkit';
-import {AsyncThunkConfig} from '@/types/state.js';
+import {createAppAsyncThunk} from '@/hooks';
 import {OfferListItem} from '@/types/offers';
 import {APIRoute} from '@/constants.js';
 
-export const fetchOfferListAction = createAsyncThunk<
+export const fetchOfferListAction = createAppAsyncThunk<
   OfferListItem[],
-  undefined,
-  AsyncThunkConfig
+  void
   >(
     'data/fetchOfferList',
     async (_arg, {extra: {api}}) => {

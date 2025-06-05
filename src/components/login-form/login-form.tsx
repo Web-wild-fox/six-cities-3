@@ -1,9 +1,8 @@
-import {ChangeEvent, useEffect, useState} from 'react';
-import {useNavigate} from 'react-router-dom';
-import {getAuthStatus, getIsAuthStatus} from '@/store/user/user.selectors';
+import {ChangeEvent, useState} from 'react';
+import {getRequestStatus} from '@/store/user/user.selectors';
 import {loginAction} from '@/store/user/user.api';
 import {useAppDispatch, useAppSelector} from '@/hooks';
-import {AppRoute, AuthorizationStatus} from '@/constants';
+import {RequestStatus} from '@/constants';
 
 const enum TextButtonSubmit {
   LOGIN = 'Sign in',
@@ -35,18 +34,10 @@ export default function LoginForm () {
   const {email: isEmail, password: isPassword} = isTouched;
 
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
-  const authStatus = useAppSelector(getAuthStatus);
-  const isAuth = useAppSelector(getIsAuthStatus);
+  const loginStatus = useAppSelector(getRequestStatus);
 
-  useEffect(() => {
-    if (isAuth) {
-      navigate(AppRoute.Root);
-    }
-  }, [isAuth, navigate]);
-
-  const isSubmitting = authStatus === String(AuthorizationStatus.InProgress);
+  const isSubmitting = loginStatus === RequestStatus.Loading;
 
   const isLogValid = validateLogin(email);
   const isPassValid = validatePassword(password);

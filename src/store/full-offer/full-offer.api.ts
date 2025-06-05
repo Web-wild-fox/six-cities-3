@@ -1,14 +1,12 @@
-import {createAsyncThunk} from '@reduxjs/toolkit';
+import {createAppAsyncThunk} from '@/hooks';
 import {StatusCodes} from 'http-status-codes';
-import {AsyncThunkConfig} from '@/types/state.js';
 import {FullOfferItem} from '@/types/offers';
 import {APIRoute, AppRoute} from '@/constants.js';
 import axios from 'axios';
 
-export const fetchFullOfferAction = createAsyncThunk<
+export const fetchFullOfferAction = createAppAsyncThunk<
   FullOfferItem,
-  string,
-  AsyncThunkConfig
+  string
   >(
     'data/fetchFullOfferList',
     async (id, {extra: {api, router}}) => {

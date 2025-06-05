@@ -44,11 +44,16 @@ export const router = createBrowserRouter([
   {
     path:`${AppRoute.Login}`,
     element:
-      <Suspense
-        fallback={fallBack}
+      <PrivateRoute
+        redirectPath={AppRoute.Root}
+        onlyUnAuth
       >
-        <LoginPage />
-      </Suspense>
+        <Suspense
+          fallback={fallBack}
+        >
+          <LoginPage />
+        </Suspense>
+      </PrivateRoute>
   },
   {
     path: `${AppRoute.PageNotFound}`,
