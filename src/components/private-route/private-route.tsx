@@ -1,7 +1,7 @@
 import {Navigate, useLocation} from 'react-router-dom';
 import {useAppSelector} from '@/hooks';
 import {AppRoute} from '@/constants';
-import {getToken} from '@/services/token';
+import {getIsAuthStatus} from '@/store/user/user.selectors';
 
 interface PrivateRouteProps {
   children: JSX.Element;
@@ -14,10 +14,10 @@ type FromType = {
 };
 
 export default function PrivateRoute({children, redirectPath, onlyUnAuth}: PrivateRouteProps): JSX.Element {
-  const isToken = Boolean(useAppSelector(getToken));
+  const isAuth = useAppSelector(getIsAuthStatus);
   const location = useLocation();
 
-  if (isToken && onlyUnAuth) {
+  if (isAuth && onlyUnAuth) {
     const from = (location.state as FromType)?.from || {pathname: redirectPath};
 
     return (
@@ -27,7 +27,7 @@ export default function PrivateRoute({children, redirectPath, onlyUnAuth}: Priva
     );
   }
 
-  if (!isToken && !onlyUnAuth) {
+  if (!isAuth && !onlyUnAuth) {
     return (
       <Navigate
         state={{from: location}}
