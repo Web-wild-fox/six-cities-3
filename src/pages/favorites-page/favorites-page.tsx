@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import {memo} from 'react';
 import {Helmet} from 'react-helmet-async';
 import {useAppSelector} from '@/hooks';
 import {getFavorites} from '@/store/favorites/favorites.selectors';
@@ -10,6 +11,12 @@ import FavoriteItem from '@/components/favorite-item/favorite-item';
 import FavoritesEmpty from '@/components/favorites-empty/favorites-empty';
 
 export default function FavoritesPage(): JSX.Element {
+  const MemoHeader = memo(Header);
+  const MemoFooter = memo(Footer);
+  const MemoLogo = memo(Logo);
+  const MemoFavoriteItem = memo(FavoriteItem);
+  const MemoFavoritesEmpty = memo(FavoritesEmpty);
+
   const favorites = useAppSelector(getFavorites);
   const isFavoritesEmpty = !favorites.length;
 
@@ -29,7 +36,7 @@ export default function FavoritesPage(): JSX.Element {
         </title>
       </Helmet>
 
-      <Header />
+      <MemoHeader />
 
       <main
         className={clsx(
@@ -39,7 +46,7 @@ export default function FavoritesPage(): JSX.Element {
       >
         <div className="page__favorites-container container">
           {isFavoritesEmpty && (
-            <FavoritesEmpty />
+            <MemoFavoritesEmpty />
           )}
           {!isFavoritesEmpty && (
             <section className="favorites">
@@ -47,7 +54,7 @@ export default function FavoritesPage(): JSX.Element {
               <ul className="favorites__list">
                 {
                   LOCATIONS.map((location) => (
-                    <FavoriteItem
+                    <MemoFavoriteItem
                       key={location}
                       location={location}
                       offers={favorites}
@@ -60,9 +67,9 @@ export default function FavoritesPage(): JSX.Element {
         </div>
       </main>
 
-      <Footer>
-        <Logo type='footer' />
-      </Footer>
+      <MemoFooter>
+        <MemoLogo type='footer' />
+      </MemoFooter>
 
     </div>
   );

@@ -1,18 +1,21 @@
-import NavItem from '@/components/nav-item/nav-item';
+import {memo} from 'react';
 import {LOCATIONS} from '@/constants';
+import NavItem from '@/components/nav-item/nav-item';
 
 interface NavListProps {
   city: string;
 }
 
 export default function NavList({city}:NavListProps): JSX.Element {
+  const MemoNavItem = memo(NavItem);
+
   return (
     <div className="tabs">
       <section className="locations container">
         <ul className="locations__list tabs__list">
           {
             LOCATIONS.map((location) => (
-              <NavItem
+              <MemoNavItem
                 key={location}
                 location={location}
                 isActive={location === city}

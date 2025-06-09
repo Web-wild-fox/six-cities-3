@@ -1,3 +1,4 @@
+import {memo} from 'react';
 import {Link} from 'react-router-dom';
 import {useAppDispatch} from '@/hooks';
 import {OfferListItem} from '@/types/offers';
@@ -11,6 +12,8 @@ interface FavoritesItemProps {
 }
 
 export default function FavoriteItem({offers, location}: FavoritesItemProps): JSX.Element | null {
+  const MemoOfferList = memo(OffersList);
+
   const dispatch = useAppDispatch();
 
   const cityOffers = offers.filter((offer) => {
@@ -44,7 +47,7 @@ export default function FavoriteItem({offers, location}: FavoritesItemProps): JS
         </div>
       </div>
 
-      <OffersList
+      <MemoOfferList
         offers={cityOffers}
         cardClassName={ClassByTypeCard.FavoritesPageCardType}
       />

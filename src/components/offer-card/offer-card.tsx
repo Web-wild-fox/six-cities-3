@@ -1,3 +1,4 @@
+import {memo} from 'react';
 import {Link} from 'react-router-dom';
 import {OfferListItem} from '@/types/offers';
 import {
@@ -58,6 +59,7 @@ export default function OfferCard(
     previewImage,
     cardClassName,
   }: OfferCardProps): JSX.Element {
+  const MemoBookmarkButton = memo(BookmarkButton);
 
   const dispatch = useAppDispatch();
 
@@ -106,7 +108,7 @@ export default function OfferCard(
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
 
-          <BookmarkButton
+          <MemoBookmarkButton
             id={id}
             isFavorite={isFavorite}
             buttonClassName={ClassByTypeButton.OfferCardButtonType}

@@ -119,7 +119,7 @@ export enum RequestMessageError {
   OffersLoadingFailed = 'Ошибка загрузки объявлений:',
   FullOfferLoadingFailed = 'Ошибка загрузки объявления:',
   FavoritesLoadingFailed = 'Ошибка загрузки избранного:',
-  FavoritesPostingFailed = 'Ошибка добавления объявления в избранное:',
+  FavoritesPostingFailed = 'Ошибка добавления/удаления объявления:',
 }
 
 export enum PostCommentNotification {
@@ -130,6 +130,7 @@ export enum PostCommentNotification {
 export enum AuthNotification {
   AuthUnknown = 'Вы не авторизованы',
   AuthSuccess = 'Авторизация успешна',
+  AuthGreetings = 'Добро пожаловать, ',
   AuthFailed = 'Авторизация не удалась',
   LogoutSuccess = 'Вы вышли из системы',
   LogoutFailed = 'Ошибка выхода из системы',

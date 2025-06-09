@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import {Helmet} from 'react-helmet-async';
-import {useEffect} from 'react';
+import {memo, useEffect} from 'react';
 import {useAppDispatch, useAppSelector} from '@/hooks';
 import {getSortedOffers} from '@/utils';
 import {getCurrentCity, getCurrentSorting} from '@/store/user/user.selectors';
@@ -19,6 +19,13 @@ import Preloader from '@/components/preloader/preloader';
 import ErrorMessage from '@/components/error-message/error-message';
 
 export default function MainPage(): JSX.Element {
+  const MemoHeader = memo(Header);
+  const MemoNavList = memo(NavList);
+  const MemoPlacesEmpty = memo(PlacesEmpty);
+  const MemoPlacesSorting = memo(PlacesSorting);
+  const MemoOffersList = memo(OffersList);
+  const MemoMap = memo(Map);
+
   const currentCity = useAppSelector(getCurrentCity);
   const currentSorting = useAppSelector(getCurrentSorting);
   const offers = useAppSelector(getOffers);
@@ -62,7 +69,7 @@ export default function MainPage(): JSX.Element {
         </title>
       </Helmet>
 
-      <Header />
+      <MemoHeader />
 
       <main
         className={clsx(
@@ -72,7 +79,7 @@ export default function MainPage(): JSX.Element {
       >
         <h1 className="visually-hidden">Cities</h1>
 
-        <NavList
+        <MemoNavList
           city={currentCity}
         />
 
@@ -85,7 +92,7 @@ export default function MainPage(): JSX.Element {
           >
             {
               !isOffersList && (
-                <PlacesEmpty
+                <MemoPlacesEmpty
                   cityName={currentCity}
                 />
               )
@@ -99,8 +106,8 @@ export default function MainPage(): JSX.Element {
                       {filteredOffers.length} places to stay in {currentCity}
                     </b>
 
-                    <PlacesSorting />
-                    <OffersList
+                    <MemoPlacesSorting />
+                    <MemoOffersList
                       offers={sortedOffers}
                       cardClassName={ClassByTypeCard.MainPageCardType}
                     />
@@ -109,7 +116,7 @@ export default function MainPage(): JSX.Element {
                   <div className="cities__right-section">
                     <section className="cities__map map">
 
-                      <Map
+                      <MemoMap
                         points={filteredOffers}
                         startPoint={filteredOffers[0].city}
                       />

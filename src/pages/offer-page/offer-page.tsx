@@ -1,4 +1,4 @@
-import {useEffect} from 'react';
+import {memo, useEffect} from 'react';
 import {Helmet} from 'react-helmet-async';
 import {useParams} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from '@/hooks';
@@ -29,6 +29,15 @@ import Preloader from '@/components/preloader/preloader';
 import ErrorMessage from '@/components/error-message/error-message';
 
 export default function OfferPage(): JSX.Element {
+  const MemoHeader = memo(Header);
+  const MemoReviewsList = memo(ReviewsList);
+  const MemoReviewsForm = memo(ReviewsForm);
+  const MemoMap = memo(Map);
+  const MemoOfferGallery = memo(OfferGallery);
+  const MemoOfferInfo = memo(OfferInfo);
+  const MemoOfferHost = memo(OfferHost);
+  const MemoOffersList = memo(OffersList);
+
   const fullOffer = useAppSelector(getFullOffer);
   const allOffersNearby = useAppSelector(getOffersNearby);
   const comments = useAppSelector(getComments);
@@ -99,12 +108,12 @@ export default function OfferPage(): JSX.Element {
         </title>
       </Helmet>
 
-      <Header />
+      <MemoHeader />
 
       <main className="page__main page__main--offer">
         <section className="offer">
 
-          <OfferGallery
+          <MemoOfferGallery
             images={images}
           />
 
@@ -113,7 +122,7 @@ export default function OfferPage(): JSX.Element {
 
               {
                 id &&
-                  <OfferInfo
+                  <MemoOfferInfo
                     id={id}
                     title={title}
                     type={type}
@@ -127,7 +136,7 @@ export default function OfferPage(): JSX.Element {
                   />
               }
 
-              <OfferHost
+              <MemoOfferHost
                 host={host}
                 description={description}
               />
@@ -135,14 +144,14 @@ export default function OfferPage(): JSX.Element {
               <section className="offer__reviews reviews">
                 {
                   isCommentLoadingError &&
-                  <ReviewsList
+                  <MemoReviewsList
                     comments={commentsList}
                   />
                 }
                 {
                   isAuth &&
                   id && (
-                    <ReviewsForm
+                    <MemoReviewsForm
                       id={id}
                     />
                   )
@@ -153,7 +162,7 @@ export default function OfferPage(): JSX.Element {
           <section className="offer__map map">
             {
               isOffersNearbyLoadingError &&
-              <Map
+              <MemoMap
                 startPoint={fullOffer.city}
                 points={currentWithNearOffers}
               />
@@ -168,7 +177,7 @@ export default function OfferPage(): JSX.Element {
                 Other places in the neighbourhood
               </h2>
 
-              <OffersList
+              <MemoOffersList
                 offers={nearOffersList}
                 cardClassName={ClassByTypeCard.OfferPageCardType}
               />

@@ -8,11 +8,15 @@ import {useAppDispatch, useAppSelector} from '@/hooks';
 import {AppRoute, RequestStatus} from '@/constants';
 
 export default function UserNav(): JSX.Element {
-  const userName = useAppSelector(getUserData);
-  const userAvatar = useAppSelector(getUserData);
+  const userData = useAppSelector(getUserData);
   const favorites = useAppSelector(getFavorites);
   const requestFavoritesStatus = useAppSelector(geFavoritesStatus);
   const isAuth = useAppSelector(getIsAuthStatus);
+
+  const {
+    email,
+    avatarUrl,
+  } = userData ?? {};
 
   const dispatch = useAppDispatch();
 
@@ -41,7 +45,7 @@ export default function UserNav(): JSX.Element {
               {isAuth && (
                 <img
                   className="header__avatar user__avatar"
-                  src={userAvatar?.avatarUrl}
+                  src={avatarUrl}
                   alt="User avatar"
                 />
               )}
@@ -49,7 +53,7 @@ export default function UserNav(): JSX.Element {
             {isAuth && (
               <>
                 <span className="header__user-name user__name">
-                  {userName?.email}
+                  {email}
                 </span>
                 <span className="header__favorite-count">
                   {favorites.length}

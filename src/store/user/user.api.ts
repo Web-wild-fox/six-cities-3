@@ -39,7 +39,8 @@ export const loginAction = createAppAsyncThunk<
       const {data} = await api.post<UserData>(APIRoute.Login, {email, password});
 
       saveToken(data.token);
-      toast.success(AuthNotification.AuthSuccess);
+      toast.success(`${AuthNotification.AuthSuccess}`);
+      toast.success(`${AuthNotification.AuthGreetings}${data.name}`);
 
       return data;
     } catch (err) {

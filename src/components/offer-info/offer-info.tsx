@@ -1,3 +1,4 @@
+import {memo} from 'react';
 import {ClassByTypeButton, MAX_RATING} from '@/constants';
 import BookmarkButton from '../bookmark-button/bookmark-button';
 
@@ -26,6 +27,7 @@ export default function OfferInfo({
   goods,
   maxAdults
 }: OfferInfoProps): JSX.Element {
+  const MemoBookmarkButton = memo(BookmarkButton);
 
   return (
     <>
@@ -41,7 +43,7 @@ export default function OfferInfo({
           {title}
         </h1>
 
-        <BookmarkButton
+        <MemoBookmarkButton
           id={id}
           isFavorite={isFavorite}
           buttonClassName={ClassByTypeButton.FullOfferButtonType}
