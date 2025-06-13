@@ -30,7 +30,6 @@ export default function OffersList({offers, cardClassName}: OfferListProps): JSX
             title={offer.title}
             type={offer.type}
             price={offer.price}
-            isFavorite={offer.isFavorite}
             isPremium={offer.isPremium}
             rating={offer.rating}
             previewImage={offer.previewImage}

@@ -7,7 +7,6 @@ interface OfferInfoProps {
   title: string;
   type: string;
   isPremium: boolean;
-  isFavorite: boolean;
   rating: number;
   price: number;
   bedrooms: number;
@@ -20,7 +19,6 @@ export default function OfferInfo({
   title,
   type,
   isPremium,
-  isFavorite,
   rating,
   price,
   bedrooms,
@@ -45,7 +43,6 @@ export default function OfferInfo({
 
         <MemoBookmarkButton
           id={id}
-          isFavorite={isFavorite}
           buttonClassName={ClassByTypeButton.FullOfferButtonType}
         />
 

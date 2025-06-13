@@ -5,8 +5,6 @@ import {useAppDispatch, useAppSelector} from '@/hooks';
 import {getSortedOffers} from '@/utils';
 import {getCurrentCity, getCurrentSorting} from '@/store/user/user.selectors';
 import {getOffers, selectOffersStatus} from '@/store/offers/offers.selectors';
-import {getUpdatedFavorite} from '@/store/favorites/favorites.selectors';
-import {updatedOffer} from '@/store/offers/offers.slice';
 import {fetchOfferListAction} from '@/store/offers/offers.api';
 import {ClassByTypeCard, PageTitle} from '@/constants';
 import Header from '@/components/header/header';
@@ -29,16 +27,9 @@ export default function MainPage(): JSX.Element {
   const currentCity = useAppSelector(getCurrentCity);
   const currentSorting = useAppSelector(getCurrentSorting);
   const offers = useAppSelector(getOffers);
-  const updatedFavorite = useAppSelector(getUpdatedFavorite);
   const {isLoading, isFailed} = useAppSelector(selectOffersStatus);
 
   const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    if (updatedFavorite) {
-      dispatch(updatedOffer(updatedFavorite));
-    }
-  }, [updatedFavorite, dispatch]);
 
   useEffect(() => {
     dispatch(fetchOfferListAction());

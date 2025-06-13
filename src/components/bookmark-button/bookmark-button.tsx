@@ -1,17 +1,21 @@
 import clsx from 'clsx';
+import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {getIsAuthStatus} from '@/store/user/user.selectors';
+import {selectFavoriteIds} from '@/store/favorites/favorites.selectors';
 import {postFavoriteAction} from '@/store/favorites/favorites.api';
-import {useAppDispatch, useAppSelector} from '@/hooks';
+import {
+  useAppDispatch,
+  useAppSelector
+} from '@/hooks';
 import {
   AppRoute,
   ClassByTypeButton,
-  FavoriteStatus
+  FavoriteStatus,
 } from '@/constants';
 
 interface BookmarkButtonProps {
   id: string;
-  isFavorite: boolean;
   buttonClassName: string;
 }
 
@@ -34,10 +38,15 @@ const typesCard = {
 
 export default function BookmarkButton({
   id,
-  isFavorite,
   buttonClassName,
 }: BookmarkButtonProps) {
+
+  const [isLoadingStatus, setIsLoadingStatus] = useState({
+    [id]: false,
+  });
+
   const isAuth = useAppSelector(getIsAuthStatus);
+  const isFavorite = useAppSelector(selectFavoriteIds).includes(id);
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -56,10 +65,13 @@ export default function BookmarkButton({
     }
 
     if (isAuth) {
+      setIsLoadingStatus(({[id]: true}));
+
       dispatch(postFavoriteAction({
         id,
         status: favoriteStatus
-      }));
+      }))
+        .then(() => setIsLoadingStatus(({[id]: false})));
     }
   };
 
@@ -67,10 +79,11 @@ export default function BookmarkButton({
     <button
       className={clsx(
         `${className}__bookmark-button button`,
-        isFavorite && `${className}__bookmark-button--active`
+        isFavorite && isAuth && `${className}__bookmark-button--active`
       )}
       type="button"
       onClick={handleFavoriteButtonClick}
+      disabled={isLoadingStatus[id]}
     >
       <svg
         className={`${className}__bookmark-icon`}

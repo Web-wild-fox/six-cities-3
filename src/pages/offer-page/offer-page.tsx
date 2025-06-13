@@ -3,11 +3,9 @@ import {Helmet} from 'react-helmet-async';
 import {useParams} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from '@/hooks';
 import {getAddedComment, getIsAuthStatus} from '@/store/user/user.selectors';
-import {getUpdatedFavorite} from '@/store/favorites/favorites.selectors';
 import {getFullOffer, selectFullOfferStatus} from '@/store/full-offer/full-offer.selectors';
 import {getComments, selectCommentsStatus} from '@/store/comments/comments.selectors';
 import {getOffersNearby, selectOffersNearbyStatus} from '@/store/offers-nearby/offers-nearby.selectors';
-import {updatedFullOffer} from '@/store/full-offer/full-offer.slice';
 import {fetchFullOfferAction} from '@/store/full-offer/full-offer.api';
 import {fetchCommentsAction} from '@/store/comments/comments.api';
 import {fetchOffersNearbyAction} from '@/store/offers-nearby/offers-nearby.api';
@@ -42,7 +40,6 @@ export default function OfferPage(): JSX.Element {
   const allOffersNearby = useAppSelector(getOffersNearby);
   const comments = useAppSelector(getComments);
   const addedComment = useAppSelector(getAddedComment);
-  const updatedFavorite = useAppSelector(getUpdatedFavorite);
   const isAuth = useAppSelector(getIsAuthStatus);
   const isCommentLoadingError = !useAppSelector(selectCommentsStatus).isFailed;
   const isOffersNearbyLoadingError = !useAppSelector(selectOffersNearbyStatus).isFailed;
@@ -51,12 +48,6 @@ export default function OfferPage(): JSX.Element {
   const {id} = useParams();
 
   const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    if (updatedFavorite) {
-      dispatch(updatedFullOffer(updatedFavorite));
-    }
-  }, [updatedFavorite, dispatch]);
 
   useEffect(() => {
     if (id) {
@@ -88,7 +79,6 @@ export default function OfferPage(): JSX.Element {
     title,
     type,
     isPremium,
-    isFavorite,
     rating,
     description,
     price,
@@ -127,7 +117,6 @@ export default function OfferPage(): JSX.Element {
                     title={title}
                     type={type}
                     isPremium={isPremium}
-                    isFavorite={isFavorite}
                     rating={rating}
                     price={price}
                     bedrooms={bedrooms}

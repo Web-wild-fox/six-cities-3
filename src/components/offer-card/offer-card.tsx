@@ -16,7 +16,6 @@ interface OfferCardProps {
   title: OfferListItem['title'];
   type: OfferListItem['type'];
   price: OfferListItem['price'];
-  isFavorite: OfferListItem['isFavorite'];
   isPremium: OfferListItem['isPremium'];
   rating: OfferListItem['rating'];
   previewImage: OfferListItem['previewImage'];
@@ -53,7 +52,6 @@ export default function OfferCard(
     title,
     type,
     price,
-    isFavorite,
     isPremium,
     rating,
     previewImage,
@@ -110,7 +108,6 @@ export default function OfferCard(
 
           <MemoBookmarkButton
             id={id}
-            isFavorite={isFavorite}
             buttonClassName={ClassByTypeButton.OfferCardButtonType}
           />
 

@@ -3,14 +3,14 @@ import {Link} from 'react-router-dom';
 import {logoutAction} from '@/store/user/user.api';
 import {fetchFavoritesAction} from '@/store/favorites/favorites.api';
 import {getIsAuthStatus, getUserData} from '@/store/user/user.selectors';
-import {getFavorites, geFavoritesStatus} from '@/store/favorites/favorites.selectors';
+import {getFavorites, getFavoritesStatus} from '@/store/favorites/favorites.selectors';
 import {useAppDispatch, useAppSelector} from '@/hooks';
 import {AppRoute, RequestStatus} from '@/constants';
 
 export default function UserNav(): JSX.Element {
   const userData = useAppSelector(getUserData);
   const favorites = useAppSelector(getFavorites);
-  const requestFavoritesStatus = useAppSelector(geFavoritesStatus);
+  const requestFavoritesStatus = useAppSelector(getFavoritesStatus);
   const isAuth = useAppSelector(getIsAuthStatus);
 
   const {
