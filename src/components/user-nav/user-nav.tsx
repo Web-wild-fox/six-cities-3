@@ -1,15 +1,33 @@
+import {useEffect} from 'react';
 import {Link} from 'react-router-dom';
 import {logoutAction} from '@/store/user/user.api';
+import {fetchFavoritesAction} from '@/store/favorites/favorites.api';
 import {getIsAuthStatus, getUserData} from '@/store/user/user.selectors';
+import {getFavorites, getFavoritesStatus} from '@/store/favorites/favorites.selectors';
 import {useAppDispatch, useAppSelector} from '@/hooks';
-import {AppRoute} from '@/constants';
+import {AppRoute, RequestStatus} from '@/constants';
 
 export default function UserNav(): JSX.Element {
-  const userName = useAppSelector(getUserData);
-  const userAvatar = useAppSelector(getUserData);
+  const userData = useAppSelector(getUserData);
+  const favorites = useAppSelector(getFavorites);
+  const requestFavoritesStatus = useAppSelector(getFavoritesStatus);
   const isAuth = useAppSelector(getIsAuthStatus);
 
+  const {
+    email,
+    avatarUrl,
+  } = userData ?? {};
+
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (
+      requestFavoritesStatus === RequestStatus.Idle &&
+      isAuth
+    ) {
+      dispatch(fetchFavoritesAction());
+    }
+  }, [dispatch, requestFavoritesStatus, isAuth]);
 
   return (
     <nav className="header__nav">
@@ -27,7 +45,7 @@ export default function UserNav(): JSX.Element {
               {isAuth && (
                 <img
                   className="header__avatar user__avatar"
-                  src={userAvatar?.avatarUrl}
+                  src={avatarUrl}
                   alt="User avatar"
                 />
               )}
@@ -35,10 +53,10 @@ export default function UserNav(): JSX.Element {
             {isAuth && (
               <>
                 <span className="header__user-name user__name">
-                  {userName?.email}
+                  {email}
                 </span>
                 <span className="header__favorite-count">
-                  3
+                  {favorites.length}
                 </span>
               </>
             )}

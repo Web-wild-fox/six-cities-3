@@ -1,4 +1,4 @@
-import {useEffect} from 'react';
+import {memo, useEffect} from 'react';
 import {Helmet} from 'react-helmet-async';
 import {useParams} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from '@/hooks';
@@ -13,6 +13,7 @@ import {
   ClassByTypeCard,
   MAX_COMMENTS,
   MAX_NEAR_OFFERS,
+  PageTitle,
 } from '@/constants';
 import Header from '@/components/header/header';
 import ReviewsList from '@/components/reviews-list/reviews-list';
@@ -26,6 +27,15 @@ import Preloader from '@/components/preloader/preloader';
 import ErrorMessage from '@/components/error-message/error-message';
 
 export default function OfferPage(): JSX.Element {
+  const MemoHeader = memo(Header);
+  const MemoReviewsList = memo(ReviewsList);
+  const MemoReviewsForm = memo(ReviewsForm);
+  const MemoMap = memo(Map);
+  const MemoOfferGallery = memo(OfferGallery);
+  const MemoOfferInfo = memo(OfferInfo);
+  const MemoOfferHost = memo(OfferHost);
+  const MemoOffersList = memo(OffersList);
+
   const fullOffer = useAppSelector(getFullOffer);
   const allOffersNearby = useAppSelector(getOffersNearby);
   const comments = useAppSelector(getComments);
@@ -69,7 +79,6 @@ export default function OfferPage(): JSX.Element {
     title,
     type,
     isPremium,
-    isFavorite,
     rating,
     description,
     price,
@@ -84,34 +93,39 @@ export default function OfferPage(): JSX.Element {
     <div className="page">
 
       <Helmet>
-        <title>6 cities | Предложения</title>
+        <title>
+          {PageTitle.OfferPage}
+        </title>
       </Helmet>
 
-      <Header />
+      <MemoHeader />
 
       <main className="page__main page__main--offer">
         <section className="offer">
 
-          <OfferGallery
+          <MemoOfferGallery
             images={images}
           />
 
           <div className="offer__container container">
             <div className="offer__wrapper">
 
-              <OfferInfo
-                title={title}
-                type={type}
-                isPremium={isPremium}
-                isFavorite={isFavorite}
-                rating={rating}
-                price={price}
-                bedrooms={bedrooms}
-                goods={goods}
-                maxAdults={maxAdults}
-              />
+              {
+                id &&
+                  <MemoOfferInfo
+                    id={id}
+                    title={title}
+                    type={type}
+                    isPremium={isPremium}
+                    rating={rating}
+                    price={price}
+                    bedrooms={bedrooms}
+                    goods={goods}
+                    maxAdults={maxAdults}
+                  />
+              }
 
-              <OfferHost
+              <MemoOfferHost
                 host={host}
                 description={description}
               />
@@ -119,14 +133,14 @@ export default function OfferPage(): JSX.Element {
               <section className="offer__reviews reviews">
                 {
                   isCommentLoadingError &&
-                  <ReviewsList
+                  <MemoReviewsList
                     comments={commentsList}
                   />
                 }
                 {
                   isAuth &&
                   id && (
-                    <ReviewsForm
+                    <MemoReviewsForm
                       id={id}
                     />
                   )
@@ -137,7 +151,7 @@ export default function OfferPage(): JSX.Element {
           <section className="offer__map map">
             {
               isOffersNearbyLoadingError &&
-              <Map
+              <MemoMap
                 startPoint={fullOffer.city}
                 points={currentWithNearOffers}
               />
@@ -152,7 +166,7 @@ export default function OfferPage(): JSX.Element {
                 Other places in the neighbourhood
               </h2>
 
-              <OffersList
+              <MemoOffersList
                 offers={nearOffersList}
                 cardClassName={ClassByTypeCard.OfferPageCardType}
               />

@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import {memo} from 'react';
 import {ClassByTypeCard} from '@/constants';
 import {OfferListItem} from '@/types/offers';
 import OfferCard from '@/components/offer-card/offer-card';
@@ -9,6 +10,7 @@ interface OfferListProps {
 }
 
 export default function OffersList({offers, cardClassName}: OfferListProps): JSX.Element {
+  const MemoOfferCard = memo(OfferCard);
 
   return (
     <div className={clsx(
@@ -22,13 +24,12 @@ export default function OffersList({offers, cardClassName}: OfferListProps): JSX
     >
       {
         offers?.map((offer) => (
-          <OfferCard
+          <MemoOfferCard
             key={offer.id}
             id={offer.id}
             title={offer.title}
             type={offer.type}
             price={offer.price}
-            isFavorite={offer.isFavorite}
             isPremium={offer.isPremium}
             rating={offer.rating}
             previewImage={offer.previewImage}

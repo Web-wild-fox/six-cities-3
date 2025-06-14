@@ -1,3 +1,4 @@
+import {memo} from 'react';
 import Logo from '@/components/logo/logo';
 import UserNav from '@/components/user-nav/user-nav';
 
@@ -6,15 +7,20 @@ type headerProps = {
 }
 
 export default function Header({hiddenUserNav = false}: headerProps): JSX.Element {
+  const MemoLogo = memo(Logo);
+  const MemoUserNav = memo(UserNav);
+
   return (
     <header className="header">
       <div className="container">
         <div className="header__wrapper">
           <div className="header__left">
-            <Logo type='header' />
+            <MemoLogo
+              type='header'
+            />
           </div>
 
-          {hiddenUserNav || <UserNav />}
+          {hiddenUserNav || <MemoUserNav />}
         </div>
       </div>
     </header>

@@ -1,11 +1,12 @@
-import clsx from 'clsx';
-import {MAX_RATING} from '@/constants';
+import {memo} from 'react';
+import {ClassByTypeButton, MAX_RATING} from '@/constants';
+import BookmarkButton from '../bookmark-button/bookmark-button';
 
 interface OfferInfoProps {
+  id: string;
   title: string;
   type: string;
   isPremium: boolean;
-  isFavorite: boolean;
   rating: number;
   price: number;
   bedrooms: number;
@@ -14,16 +15,17 @@ interface OfferInfoProps {
 }
 
 export default function OfferInfo({
+  id,
   title,
   type,
   isPremium,
-  isFavorite,
   rating,
   price,
   bedrooms,
   goods,
   maxAdults
 }: OfferInfoProps): JSX.Element {
+  const MemoBookmarkButton = memo(BookmarkButton);
 
   return (
     <>
@@ -38,18 +40,12 @@ export default function OfferInfo({
         <h1 className="offer__name">
           {title}
         </h1>
-        <button
-          className={clsx(
-            'offer__bookmark-button button',
-            isFavorite && 'offer__bookmark-button--active'
-          )}
-          type="button"
-        >
-          <svg className="offer__bookmark-icon" width="31" height="33">
-            <use xlinkHref="#icon-bookmark"></use>
-          </svg>
-          <span className="visually-hidden">To bookmarks</span>
-        </button>
+
+        <MemoBookmarkButton
+          id={id}
+          buttonClassName={ClassByTypeButton.FullOfferButtonType}
+        />
+
       </div>
       <div className="offer__rating rating">
         <div className="offer__stars rating__stars">

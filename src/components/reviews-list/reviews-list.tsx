@@ -1,11 +1,14 @@
-import ReviewItem from '@/components/review-item/review-item';
+import {memo} from 'react';
 import {Comment} from '@/types/offers';
+import ReviewItem from '@/components/review-item/review-item';
 
 interface ReviewsListProps {
   comments?: Comment[];
 }
 
 export default function ReviewsList({comments}: ReviewsListProps): JSX.Element {
+  const MemoReviewItem = memo(ReviewItem);
+
   return (
     <>
       <h2 className="reviews__title">
@@ -18,7 +21,7 @@ export default function ReviewsList({comments}: ReviewsListProps): JSX.Element {
       <ul className="reviews__list">
         {
           comments?.map((comment) => (
-            <ReviewItem
+            <MemoReviewItem
               key={comment.id}
               date={comment.date}
               userName={comment.user.name}

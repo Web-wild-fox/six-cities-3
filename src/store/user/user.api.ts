@@ -39,7 +39,8 @@ export const loginAction = createAppAsyncThunk<
       const {data} = await api.post<UserData>(APIRoute.Login, {email, password});
 
       saveToken(data.token);
-      toast.success(AuthNotification.AuthSuccess);
+      toast.success(`${AuthNotification.AuthSuccess}`);
+      toast.success(`${AuthNotification.AuthGreetings}${data.name}`);
 
       return data;
     } catch (err) {
@@ -77,7 +78,8 @@ export const postCommentAction = createAppAsyncThunk<
     async ({id, comment, rating}, {extra: {api}}) => {
       try {
         const {data} = await api.post<Comment>(
-          `${APIRoute.Comments}${id}`, {comment, rating}
+          `${APIRoute.Comments}/${id}`,
+          {comment, rating}
         );
 
         toast.success(PostCommentNotification.CommentPostSuccess);
