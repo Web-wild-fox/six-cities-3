@@ -3,11 +3,12 @@
   "version": "14.0.0",
   "type": "module",
   "scripts": {
-    "start": "vite",
+    "start": "vite && scan",
     "build": "tsc && vite build",
     "lint": "eslint src --ext ts,tsx",
     "preview": "vite preview",
-    "test": "vitest --passWithNoTests"
+    "test": "vitest --passWithNoTests",
+    "scan": "react-scan --env=development"
   },
   "dependencies": {
     "@reduxjs/toolkit": "1.9.7",
@@ -50,7 +51,7 @@
     "typescript": "5.2.2",
     "vite": "4.4.11",
     "vite-tsconfig-paths": "5.1.4",
-    "vitest": "0.34.6"
+    "vitest": "1.4.0"
   },
   "browserslist": {
     "production": [

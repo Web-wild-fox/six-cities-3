@@ -5,11 +5,13 @@ import {ToastContainer} from 'react-toastify';
 import {Provider} from 'react-redux';
 import {store} from './store';
 import {checkAuthAction} from './store/user/user.api';
-import App from '@/app';
+import App from './components/app/app';
 
-scan({
-  enabled: true,
-});
+if (process.env.NODE_ENV === 'development') {
+  scan({
+    enabled: true,
+  });
+}
 
 store.dispatch(checkAuthAction());
 

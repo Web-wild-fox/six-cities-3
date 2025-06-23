@@ -1,6 +1,6 @@
 import {createSelector} from '@reduxjs/toolkit';
-import {RequestStatus, SortingType} from './constants';
-import {OfferListItem} from './types/offers';
+import {RequestStatus, SortingType} from '../constants';
+import {OfferListItem} from '../types/offers';
 import {State} from '@/types/state';
 
 export const getSortedOffers = (sort: string, offers: OfferListItem[]) => {

@@ -57,6 +57,7 @@ export default function OfferCard(
     previewImage,
     cardClassName,
   }: OfferCardProps): JSX.Element {
+  const roundedRating = Math.round(rating);
   const MemoBookmarkButton = memo(BookmarkButton);
 
   const dispatch = useAppDispatch();
@@ -116,7 +117,7 @@ export default function OfferCard(
           <div className="place-card__stars rating__stars">
             <span
               style={{
-                width: `${rating * (100 / MAX_RATING)}%`
+                width: `${roundedRating * (100 / MAX_RATING)}%`
               }}
             >
             </span>
