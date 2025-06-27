@@ -26,6 +26,7 @@ export default function FavoritesPage(): JSX.Element {
         'page',
         isFavoritesEmpty && 'page--favorites-empty'
       )}
+      data-testid='favorites-page'
     >
 
       <Helmet>

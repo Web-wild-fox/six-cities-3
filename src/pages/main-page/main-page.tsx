@@ -52,7 +52,10 @@ export default function MainPage(): JSX.Element {
   const sortedOffers = getSortedOffers(currentSorting, filteredOffers);
 
   return (
-    <div className="page page--gray page--main">
+    <div
+      className="page page--gray page--main"
+      data-testid="main-page"
+    >
 
       <Helmet>
         <title>

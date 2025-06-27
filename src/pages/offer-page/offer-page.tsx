@@ -98,7 +98,10 @@ export default function OfferPage(): JSX.Element {
   } = fullOffer;
 
   return (
-    <div className="page">
+    <div
+      className="page"
+      data-testid="offer-page"
+    >
 
       <Helmet>
         <title>

@@ -2,7 +2,10 @@ import styles from './preloader.module.css';
 
 export default function Preloader() {
   return (
-    <div className={styles.preloader}>
+    <div
+      className={styles.preloader}
+      data-testid="preloader"
+    >
       <img
         className={styles.preloader__image}
         src="img/preloader.svg"

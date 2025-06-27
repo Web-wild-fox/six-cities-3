@@ -1,4 +1,4 @@
-import {State} from '@/types/state';
+import {ExtraArgument, State} from '@/types/state';
 import {Action} from 'redux';
 import {ThunkDispatch} from '@reduxjs/toolkit';
 import {UserData} from '@/types/user-data';
@@ -6,8 +6,18 @@ import {AuthData} from '@/types/auth-data';
 import {CommentData} from '@/types/comment-data';
 import {Comment, FullOfferItem, OfferListItem} from '@/types/offers';
 import {date, image, internet, lorem, name} from 'faker';
+import {
+  NameSpace,
+  RequestStatus,
+  AuthorizationStatus,
+  DEFAULT_CITY,
+  DEFAULT_SORTING_TYPE,
+} from '@/constants';
+import { FavoriteData } from '@/types/favorite-data';
 
-export type AppThunkDispatch = ThunkDispatch<State, unknown, Action>;
+export type AppThunkDispatch = ThunkDispatch<State, ExtraArgument, Action>;
+
+export const extractActionsTypes = (actions: Action<string>[]) => actions.map(({type}) => type);
 
 const Location = {
   latitude: 0,
@@ -22,7 +32,7 @@ const City = {
 
 const User = {
   isPro: false,
-  name: name.title(),
+  name: name.firstName(),
   avatarUrl: image.imageUrl(),
 };
 
@@ -35,6 +45,11 @@ const MockUserData: UserData = {
 export const MockAuthData: AuthData = {
   login: 'login',
   password: 'password',
+};
+
+export const MockFavoriteData: FavoriteData = {
+  id: 'id',
+  status: 1,
 };
 
 export const MockCommentData: CommentData = {
@@ -86,6 +101,45 @@ export const makeMockCommentData = () => MockCommentData;
 
 export const makeMockAuthData = () => MockAuthData;
 
+export const makeMockFavoriteData = () => MockFavoriteData;
+
 export const makeMockFavorites = makeMockOffers;
 
 export const makeMockOffersNearby = makeMockOffers;
+
+export const makeMockStore = (initialState?: Partial<State>): State => ({
+  [NameSpace.Offers]: {
+    offers: [],
+    errorMessage: null,
+    offersStatus: RequestStatus.Idle,
+  },
+  [NameSpace.FullOffer]: {
+    fullOffer: null,
+    errorMessage: null,
+    fullOfferStatus: RequestStatus.Idle,
+  },
+  [NameSpace.Comments]: {
+    comments: [],
+    errorMessage: null,
+    commentsStatus: RequestStatus.Idle,
+    PostCommentStatus: RequestStatus.Idle,
+  },
+  [NameSpace.Favorites]: {
+    favorites: [],
+    favoritesStatus: RequestStatus.Idle,
+  },
+  [NameSpace.OffersNearby]: {
+    offersNearby: [],
+    errorMessage: null,
+    offersNearbyStatus: RequestStatus.Idle,
+  },
+  [NameSpace.User]: {
+    id: undefined,
+    city: DEFAULT_CITY,
+    sorting: DEFAULT_SORTING_TYPE,
+    authorizationStatus: AuthorizationStatus.Unknown,
+    userData: null,
+    LoginStatus: RequestStatus.Idle,
+  },
+  ...initialState ?? {},
+});

@@ -4,7 +4,10 @@ import styles from './not-found-page.module.css';
 
 export default function NotFoundPage(): JSX.Element {
   return (
-    <div className="page page--gray page--main">
+    <div
+      className="page page--gray page--main"
+      data-testid="not-found-page"
+    >
 
       <Helmet>
         <title>
