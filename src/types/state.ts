@@ -11,7 +11,7 @@ export interface AsyncThunkConfig {
   extra: ExtraArgument;
 }
 
-interface ExtraArgument {
+export interface ExtraArgument {
   api: AxiosInstance;
   router: RouterType;
 }

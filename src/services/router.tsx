@@ -1,3 +1,5 @@
+/* eslint-disable react-refresh/only-export-components */
+import {lazy} from 'react';
 import {Suspense} from 'react';
 import {createBrowserRouter} from 'react-router-dom';
 import {AppRoute} from '@/constants';
@@ -5,10 +7,10 @@ import PrivateRoute from '@/components/private-route/private-route';
 import Preloader from '@/components/preloader/preloader';
 import MainPage from '@/pages/main-page/main-page';
 
-import OfferPage from '@/pages/offer-page/offer-page';
-import FavoritesPage from '@/pages/favorites-page/favorites-page';
-import LoginPage from '@/pages/login-page/login-page';
-import NotFoundPage from '@/pages/not-found-page/not-found-page';
+const OfferPage = lazy(() => import('@/pages/offer-page/offer-page'));
+const FavoritesPage = lazy(() => import('@/pages/favorites-page/favorites-page'));
+const LoginPage = lazy(() => import('@/pages/login-page/login-page'));
+const NotFoundPage = lazy(() => import('@/pages/not-found-page/not-found-page'));
 
 const fallBack = <Preloader/>;
 

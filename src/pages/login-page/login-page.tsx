@@ -17,7 +17,10 @@ export default function LoginPage(): JSX.Element {
   const dispatch = useAppDispatch();
 
   return (
-    <div className="page page--gray page--login">
+    <div
+      className="page page--gray page--login"
+      data-testid="login-page"
+    >
 
       <Helmet>
         <title>

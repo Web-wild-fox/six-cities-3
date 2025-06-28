@@ -1,14 +1,11 @@
 import {createAppAsyncThunk} from '@/hooks';
 import {AuthData} from '@/types/auth-data';
 import {UserData} from '@/types/user-data';
-import {Comment} from '@/types/offers';
-import {CommentData} from '@/types/comment-data';
 import {dropToken, saveToken} from '@/services/token';
 import {toast} from 'react-toastify';
 import {
   APIRoute,
   AuthNotification,
-  PostCommentNotification
 } from '@/constants.js';
 
 export const checkAuthAction = createAppAsyncThunk<
@@ -69,26 +66,3 @@ export const logoutAction = createAppAsyncThunk<
     }
   },
 );
-
-export const postCommentAction = createAppAsyncThunk<
-  Comment,
-  CommentData
-  >(
-    'user/postComment',
-    async ({id, comment, rating}, {extra: {api}}) => {
-      try {
-        const {data} = await api.post<Comment>(
-          `${APIRoute.Comments}/${id}`,
-          {comment, rating}
-        );
-
-        toast.success(PostCommentNotification.CommentPostSuccess);
-
-        return data;
-      } catch (err) {
-        toast.error(PostCommentNotification.CommentPostFailed);
-
-        throw err;
-      }
-    }
-  );

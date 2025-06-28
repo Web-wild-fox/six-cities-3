@@ -25,6 +25,7 @@ export default function OfferInfo({
   goods,
   maxAdults
 }: OfferInfoProps): JSX.Element {
+  const roundedRating = Math.round(rating);
   const MemoBookmarkButton = memo(BookmarkButton);
 
   return (
@@ -51,7 +52,7 @@ export default function OfferInfo({
         <div className="offer__stars rating__stars">
           <span
             style={{
-              width: `${rating * (100 / MAX_RATING)}%`
+              width: `${roundedRating * (100 / MAX_RATING)}%`
             }}
           >
           </span>

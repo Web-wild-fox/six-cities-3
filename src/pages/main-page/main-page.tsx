@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import {Helmet} from 'react-helmet-async';
 import {memo, useEffect} from 'react';
 import {useAppDispatch, useAppSelector} from '@/hooks';
-import {getSortedOffers} from '@/utils';
+import {getSortedOffers} from '@/utils/utils';
 import {getCurrentCity, getCurrentSorting} from '@/store/user/user.selectors';
 import {getOffers, selectOffersStatus} from '@/store/offers/offers.selectors';
 import {fetchOfferListAction} from '@/store/offers/offers.api';
@@ -52,7 +52,10 @@ export default function MainPage(): JSX.Element {
   const sortedOffers = getSortedOffers(currentSorting, filteredOffers);
 
   return (
-    <div className="page page--gray page--main">
+    <div
+      className="page page--gray page--main"
+      data-testid="main-page"
+    >
 
       <Helmet>
         <title>

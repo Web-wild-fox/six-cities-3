@@ -6,8 +6,8 @@ import {
   useRef
 } from 'react';
 import {useAppDispatch, useAppSelector} from '@/hooks';
-import {getPostCommentStatus} from '@/store/user/user.selectors';
-import {postCommentAction} from '@/store/user/user.api';
+import {getPostCommentStatus} from '@/store/comments/comments.selectors';
+import {postCommentAction} from '@/store/comments/comments.api';
 import {OfferRatings, RequestStatus} from '@/constants';
 
 interface ReviewFormProps {
@@ -75,6 +75,7 @@ export default function ReviewsForm({id}: ReviewFormProps): JSX.Element {
           name="rating"
           value={rating}
           type="radio"
+          disabled={isSubmitting}
           onChange={handleFormChange}
         />
         <label
@@ -123,6 +124,7 @@ export default function ReviewsForm({id}: ReviewFormProps): JSX.Element {
         name="review"
         value={review}
         placeholder="Tell how was your stay, what you like and what can be improved"
+        disabled={isSubmitting}
         onChange={handleFormChange}
       >
       </textarea>

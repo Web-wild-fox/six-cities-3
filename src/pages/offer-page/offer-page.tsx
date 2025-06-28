@@ -2,16 +2,17 @@ import {memo, useEffect} from 'react';
 import {Helmet} from 'react-helmet-async';
 import {useParams} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from '@/hooks';
-import {getAddedComment, getIsAuthStatus} from '@/store/user/user.selectors';
+import {setOfferId} from '@/store/user/user.slice';
+import {getIsAuthStatus} from '@/store/user/user.selectors';
 import {getFullOffer, selectFullOfferStatus} from '@/store/full-offer/full-offer.selectors';
-import {getComments, selectCommentsStatus} from '@/store/comments/comments.selectors';
+import {selectCommentsStatus} from '@/store/comments/comments.selectors';
 import {getOffersNearby, selectOffersNearbyStatus} from '@/store/offers-nearby/offers-nearby.selectors';
 import {fetchFullOfferAction} from '@/store/full-offer/full-offer.api';
 import {fetchCommentsAction} from '@/store/comments/comments.api';
 import {fetchOffersNearbyAction} from '@/store/offers-nearby/offers-nearby.api';
+import {OfferListItem} from '@/types/offers';
 import {
   ClassByTypeCard,
-  MAX_COMMENTS,
   MAX_NEAR_OFFERS,
   PageTitle,
 } from '@/constants';
@@ -38,34 +39,41 @@ export default function OfferPage(): JSX.Element {
 
   const fullOffer = useAppSelector(getFullOffer);
   const allOffersNearby = useAppSelector(getOffersNearby);
-  const comments = useAppSelector(getComments);
-  const addedComment = useAppSelector(getAddedComment);
   const isAuth = useAppSelector(getIsAuthStatus);
   const isCommentLoadingError = !useAppSelector(selectCommentsStatus).isFailed;
   const isOffersNearbyLoadingError = !useAppSelector(selectOffersNearbyStatus).isFailed;
   const {isLoading, isFailed} = useAppSelector(selectFullOfferStatus);
-
   const {id} = useParams();
 
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (id) {
+      dispatch(setOfferId(id));
       dispatch(fetchFullOfferAction(id));
       dispatch(fetchCommentsAction(id));
       dispatch(fetchOffersNearbyAction(id));
     }
   }, [dispatch, id]);
 
-  const commentsList = addedComment ?
-    comments
-      .concat([addedComment])
-      .slice(0, MAX_COMMENTS) :
-    comments
-      .slice(0, MAX_COMMENTS);
+  const currentOffer: OfferListItem[] = fullOffer === null ? [] : [{
+    id: fullOffer.id,
+    title: fullOffer.title,
+    price: fullOffer.price,
+    type: fullOffer.type,
+    isFavorite: fullOffer.isFavorite,
+    isPremium: fullOffer.isPremium,
+    city: fullOffer.city,
+    location: fullOffer.location,
+    rating: fullOffer.rating,
+    previewImage: '',
+  }];
 
-  const nearOffersList = allOffersNearby.slice(0, MAX_NEAR_OFFERS - 1);
-  const currentWithNearOffers = allOffersNearby.slice(0, MAX_NEAR_OFFERS);
+  const nearOffersList = allOffersNearby.slice(0, MAX_NEAR_OFFERS);
+  const currentWithNearOffers = [
+    ...currentOffer,
+    ...nearOffersList
+  ];
 
   if (isFailed) {
     return <ErrorMessage/>;
@@ -90,7 +98,10 @@ export default function OfferPage(): JSX.Element {
   } = fullOffer;
 
   return (
-    <div className="page">
+    <div
+      className="page"
+      data-testid="offer-page"
+    >
 
       <Helmet>
         <title>
@@ -133,9 +144,7 @@ export default function OfferPage(): JSX.Element {
               <section className="offer__reviews reviews">
                 {
                   isCommentLoadingError &&
-                  <MemoReviewsList
-                    comments={commentsList}
-                  />
+                  <MemoReviewsList />
                 }
                 {
                   isAuth &&
